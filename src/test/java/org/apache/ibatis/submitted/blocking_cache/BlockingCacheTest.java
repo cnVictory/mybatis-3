@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.submitted.blocking_cache;
 
@@ -31,49 +31,49 @@ import org.junit.jupiter.api.Test;
 // issue #524
 class BlockingCacheTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeEach
-  void setUp() throws Exception {
-    // create a SqlSessionFactory
-    try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/blocking_cache/mybatis-config.xml")) {
-      sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+    @BeforeEach
+    void setUp() throws Exception {
+        // create a SqlSessionFactory
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/blocking_cache/mybatis-config.xml")) {
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        }
+
+        // populate in-memory database
+        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
+                "org/apache/ibatis/submitted/blocking_cache/CreateDB.sql");
     }
 
-    // populate in-memory database
-    BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-            "org/apache/ibatis/submitted/blocking_cache/CreateDB.sql");
-  }
+    @Test
+    void testBlockingCache() {
+        ExecutorService defaultThreadPool = Executors.newFixedThreadPool(2);
 
-  @Test
-  void testBlockingCache() {
-    ExecutorService defaultThreadPool = Executors.newFixedThreadPool(2);
+        long init = System.currentTimeMillis();
 
-    long init = System.currentTimeMillis();
+        for (int i = 0; i < 2; i++) {
+            defaultThreadPool.execute(this::accessDB);
+        }
 
-    for (int i = 0; i < 2; i++) {
-      defaultThreadPool.execute(this::accessDB);
+        defaultThreadPool.shutdown();
+
+        while (!defaultThreadPool.isTerminated()) {
+        }
+
+        long totalTime = System.currentTimeMillis() - init;
+        Assertions.assertTrue(totalTime > 1000);
     }
 
-    defaultThreadPool.shutdown();
-
-    while (!defaultThreadPool.isTerminated()) {
+    private void accessDB() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            PersonMapper pm = sqlSession.getMapper(PersonMapper.class);
+            pm.findAll();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Assertions.fail(e.getMessage());
+            }
+        }
     }
-
-    long totalTime = System.currentTimeMillis() - init;
-    Assertions.assertTrue(totalTime > 1000);
-  }
-
-  private void accessDB() {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      PersonMapper pm = sqlSession.getMapper(PersonMapper.class);
-      pm.findAll();
-      try {
-        Thread.sleep(500);
-      } catch (InterruptedException e) {
-        Assertions.fail(e.getMessage());
-      }
-    }
-  }
 
 }

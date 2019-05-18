@@ -17,12 +17,12 @@
 
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.optional_on_mapper_method.Mapper">
 
-  <select id="getUserUsingXml" resultType="org.apache.ibatis.submitted.optional_on_mapper_method.User">
+    <select id="getUserUsingXml" resultType="org.apache.ibatis.submitted.optional_on_mapper_method.User">
     select * from users where id = #{id}
   </select>
 

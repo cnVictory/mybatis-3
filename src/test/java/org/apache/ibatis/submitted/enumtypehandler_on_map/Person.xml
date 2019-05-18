@@ -17,8 +17,8 @@
 
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.enumtypehandler_on_map.PersonMapper">
 
@@ -38,12 +38,15 @@
 
 
     <select id="getByType" resultMap="personMap" parameterType="map">
-        SELECT <include refid="columns"/>
+        SELECT
+        <include refid="columns"/>
         FROM Person
         WHERE personType = #{type,jdbcType=VARCHAR}
     </select>
-    <select id="getByTypeNoParam" resultMap="personMap" parameterType="org.apache.ibatis.submitted.enumtypehandler_on_map.PersonMapper$TypeName">
-        SELECT <include refid="columns"/>
+    <select id="getByTypeNoParam" resultMap="personMap"
+            parameterType="org.apache.ibatis.submitted.enumtypehandler_on_map.PersonMapper$TypeName">
+        SELECT
+        <include refid="columns"/>
         FROM Person
         WHERE personType = #{type,jdbcType=VARCHAR}
     </select>

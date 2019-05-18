@@ -17,15 +17,15 @@
 
 -->
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-  namespace="org.apache.ibatis.submitted.resolution.deepresultmap.MapperB">
+        namespace="org.apache.ibatis.submitted.resolution.deepresultmap.MapperB">
 
-  <resultMap
-    type="org.apache.ibatis.submitted.resolution.User" id="rmB"
-    extends="org.apache.ibatis.submitted.resolution.deepresultmap.MapperC.rmC">
-  </resultMap>
+    <resultMap
+            type="org.apache.ibatis.submitted.resolution.User" id="rmB"
+            extends="org.apache.ibatis.submitted.resolution.deepresultmap.MapperC.rmC">
+    </resultMap>
 
 </mapper>

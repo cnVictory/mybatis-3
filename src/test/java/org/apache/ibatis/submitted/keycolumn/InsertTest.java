@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.submitted.keycolumn;
 
@@ -46,78 +46,78 @@ import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
 @Tag("EmbeddedPostgresqlTests")
 class InsertTest {
 
-  private static final EmbeddedPostgres postgres = new EmbeddedPostgres();
+    private static final EmbeddedPostgres postgres = new EmbeddedPostgres();
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeAll
-  static void setUp() throws Exception {
-    // Launch PostgreSQL server. Download / unarchive if necessary.
-    String url = postgres.start(EmbeddedPostgres.cachedRuntimeConfig(Paths.get(System.getProperty("java.io.tmpdir"), "pgembed")), "localhost", SocketUtil.findFreePort(), "keycolumn", "postgres", "root", Collections.emptyList());
+    @BeforeAll
+    static void setUp() throws Exception {
+        // Launch PostgreSQL server. Download / unarchive if necessary.
+        String url = postgres.start(EmbeddedPostgres.cachedRuntimeConfig(Paths.get(System.getProperty("java.io.tmpdir"), "pgembed")), "localhost", SocketUtil.findFreePort(), "keycolumn", "postgres", "root", Collections.emptyList());
 
-    Configuration configuration = new Configuration();
-    Environment environment = new Environment("development", new JdbcTransactionFactory(), new UnpooledDataSource(
-        "org.postgresql.Driver", url, null));
-    configuration.setEnvironment(environment);
-    configuration.addMapper(InsertMapper.class);
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
+        Configuration configuration = new Configuration();
+        Environment environment = new Environment("development", new JdbcTransactionFactory(), new UnpooledDataSource(
+                "org.postgresql.Driver", url, null));
+        configuration.setEnvironment(environment);
+        configuration.addMapper(InsertMapper.class);
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
 
-    BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/keycolumn/CreateDB.sql");
-  }
-
-  @AfterAll
-  static void tearDown() {
-    postgres.stop();
-  }
-
-  @Test
-  void testInsertAnnotated() {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      InsertMapper mapper = sqlSession.getMapper(InsertMapper.class);
-      Name name = new Name();
-      name.setFirstName("Fred");
-      name.setLastName("Flintstone");
-
-      int rows = mapper.insertNameAnnotated(name);
-
-      assertNotNull(name.getId());
-      assertEquals(1, rows);
+        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
+                "org/apache/ibatis/submitted/keycolumn/CreateDB.sql");
     }
-  }
 
-  @Test
-  void testInsertMapped() {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      InsertMapper mapper = sqlSession.getMapper(InsertMapper.class);
-      Name name = new Name();
-      name.setFirstName("Fred");
-      name.setLastName("Flintstone");
-
-      int rows = mapper.insertNameMapped(name);
-
-      assertNotNull(name.getId());
-      assertEquals(1, rows);
+    @AfterAll
+    static void tearDown() {
+        postgres.stop();
     }
-  }
 
-  @Test
-  void testInsertMappedBatch() {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH)) {
-      InsertMapper mapper = sqlSession.getMapper(InsertMapper.class);
-      Name name = new Name();
-      name.setFirstName("Fred");
-      name.setLastName("Flintstone");
-      mapper.insertNameMapped(name);
-      Name name2 = new Name();
-      name2.setFirstName("Wilma");
-      name2.setLastName("Flintstone");
-      mapper.insertNameMapped(name2);
-      List<BatchResult> batchResults = sqlSession.flushStatements();
-      assertNotNull(name.getId());
-      assertNotNull(name2.getId());
-      assertEquals(1, batchResults.size());
+    @Test
+    void testInsertAnnotated() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            InsertMapper mapper = sqlSession.getMapper(InsertMapper.class);
+            Name name = new Name();
+            name.setFirstName("Fred");
+            name.setLastName("Flintstone");
+
+            int rows = mapper.insertNameAnnotated(name);
+
+            assertNotNull(name.getId());
+            assertEquals(1, rows);
+        }
     }
-  }
+
+    @Test
+    void testInsertMapped() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            InsertMapper mapper = sqlSession.getMapper(InsertMapper.class);
+            Name name = new Name();
+            name.setFirstName("Fred");
+            name.setLastName("Flintstone");
+
+            int rows = mapper.insertNameMapped(name);
+
+            assertNotNull(name.getId());
+            assertEquals(1, rows);
+        }
+    }
+
+    @Test
+    void testInsertMappedBatch() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH)) {
+            InsertMapper mapper = sqlSession.getMapper(InsertMapper.class);
+            Name name = new Name();
+            name.setFirstName("Fred");
+            name.setLastName("Flintstone");
+            mapper.insertNameMapped(name);
+            Name name2 = new Name();
+            name2.setFirstName("Wilma");
+            name2.setLastName("Flintstone");
+            mapper.insertNameMapped(name2);
+            List<BatchResult> batchResults = sqlSession.flushStatements();
+            assertNotNull(name.getId());
+            assertNotNull(name2.getId());
+            assertEquals(1, batchResults.size());
+        }
+    }
 
 }

@@ -17,8 +17,8 @@
 
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.complex_column.PersonMapper">
 
@@ -33,7 +33,8 @@
         <id property="id" column="id"/>
         <result property="firstName" column="firstName"/>
         <result property="lastName" column="lastName"/>
-        <association property="parent" column="{firstName=parent_firstName,lastName=parent_lastName}" select="getParentWithComplex"/>
+        <association property="parent" column="{firstName=parent_firstName,lastName=parent_lastName}"
+                     select="getParentWithComplex"/>
     </resultMap>
 
 

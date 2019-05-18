@@ -17,8 +17,8 @@
 
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.xml_references.PersonMapper">
 
@@ -35,6 +35,6 @@
         WHERE id = #{id}
     </sql>
     <select id="selectById" resultMap="personMap" parameterType="int">
-    	<include refid="selectByIdScript"/>
+        <include refid="selectByIdScript"/>
     </select>
 </mapper>
