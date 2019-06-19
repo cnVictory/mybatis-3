@@ -15,13 +15,6 @@
  */
 package org.apache.ibatis.submitted.mapper_type_parameter;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.Reader;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -30,13 +23,22 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class MapperTypeParameterTest {
     private static SqlSessionFactory sqlSessionFactory;
 
     @BeforeAll
     static void setUp() throws Exception {
         // create an SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/mapper_type_parameter/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/mapper_type_parameter/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

@@ -15,18 +15,18 @@
  */
 package org.apache.ibatis.reflection;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.binding.MapperMethod.ParamMap;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ResultHandler;
+import org.apache.ibatis.session.RowBounds;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.binding.MapperMethod.ParamMap;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
 
 public class ParamNameResolver {
 
@@ -84,12 +84,12 @@ public class ParamNameResolver {
         names = Collections.unmodifiableSortedMap(map);
     }
 
-    private String getActualParamName(Method method, int paramIndex) {
-        return ParamNameUtil.getParamNames(method).get(paramIndex);
-    }
-
     private static boolean isSpecialParameter(Class<?> clazz) {
         return RowBounds.class.isAssignableFrom(clazz) || ResultHandler.class.isAssignableFrom(clazz);
+    }
+
+    private String getActualParamName(Method method, int paramIndex) {
+        return ParamNameUtil.getParamNames(method).get(paramIndex);
     }
 
     /**

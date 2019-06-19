@@ -15,13 +15,13 @@
  */
 package org.apache.ibatis.type;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.apache.ibatis.domain.misc.RichType;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-import org.apache.ibatis.domain.misc.RichType;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SimpleTypeRegistryTest {
 
@@ -37,7 +37,8 @@ class SimpleTypeRegistryTest {
 
     @Test
     void shouldTestIfMapIsSimpleTypeAndReturnFalse() {
-        assertFalse(SimpleTypeRegistry.isSimpleType(HashMap.class)); // see issue #165, a Map is not a simple type
+        assertFalse(SimpleTypeRegistry.isSimpleType(HashMap.class)); // see issue #165, a Map is not a
+        // simple type
     }
 
 }

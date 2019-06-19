@@ -33,7 +33,8 @@ public class StoredProcedures {
 
     public static void insertAuthor(int id, String username, String password, String email) throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:default:connection")) {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO author (id, username, password, email) VALUES (?,?,?,?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO author (id, username, password, " +
+                    "email) VALUES (?,?,?,?)");
             ps.setInt(1, id);
             ps.setString(2, username);
             ps.setString(3, password);
@@ -42,7 +43,8 @@ public class StoredProcedures {
         }
     }
 
-    public static void selectAuthorViaOutParams(int id, String[] username, String[] password, String[] email, String[] bio) throws SQLException {
+    public static void selectAuthorViaOutParams(int id, String[] username, String[] password,
+                                                String[] email, String[] bio) throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:default:connection")) {
             PreparedStatement ps = conn.prepareStatement("select * from author where id = ?");
             ps.setInt(1, id);

@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -218,7 +218,8 @@ ps.setInt(1,id);]]></source>
                             <td>
                                 <code>resultSetType</code>
                             </td>
-                            <td>FORWARD_ONLY|SCROLL_SENSITIVE|SCROLL_INSENSITIVE|DEFAULT(same as unset)중 하나를 선택할 수 있다.
+                            <td>FORWARD_ONLY|SCROLL_SENSITIVE|SCROLL_INSENSITIVE|DEFAULT(same as unset)중 하나를
+                                선택할 수 있다.
                                 디폴트는 셋팅하지 않는 것이고 드라이버에 다라 다소 지원되지 않을 수 있다.
                             </td>
                         </tr>
@@ -226,7 +227,8 @@ ps.setInt(1,id);]]></source>
                             <td>
                                 <code>databaseId</code>
                             </td>
-                            <td>설정된 databaseIdProvider가 있는 경우 마이바티스는 <code>databaseId</code> 속성이 없는 모든 구문을 로드하거나
+                            <td>설정된 databaseIdProvider가 있는 경우 마이바티스는 <code>databaseId</code> 속성이 없는 모든 구문을
+                                로드하거나
                                 일치하는 <code>databaseId</code>와 함께 로드될 것이다.
                                 같은 구문에서 <code>databaseId</code>가 있거나 없는 경우 모두 있다면 뒤에 나온 것이 무시된다.
                             </td>
@@ -336,7 +338,8 @@ ps.setInt(1,id);]]></source>
                                 <code>useGeneratedKeys</code>
                             </td>
                             <td>(입력(insert, update)에만 적용) 데이터베이스에서 내부적으로 생성한 키
-                                (예를들어 MySQL또는 SQL Server와 같은 RDBMS의 자동 증가 필드)를 받는 JDBC getGeneratedKeys메소드를 사용하도록 설정하다.
+                                (예를들어 MySQL또는 SQL Server와 같은 RDBMS의 자동 증가 필드)를 받는 JDBC getGeneratedKeys메소드를
+                                사용하도록 설정하다.
                                 디폴트는 false 이다.
                             </td>
                         </tr>
@@ -344,7 +347,8 @@ ps.setInt(1,id);]]></source>
                             <td>
                                 <code>keyProperty</code>
                             </td>
-                            <td>(입력(insert, update)에만 적용) getGeneratedKeys 메소드나 insert 구문의 selectKey 하위 엘리먼트에 의해 리턴된 키를
+                            <td>(입력(insert, update)에만 적용) getGeneratedKeys 메소드나 insert 구문의 selectKey 하위 엘리먼트에
+                                의해 리턴된 키를
                                 셋팅할 프로퍼티를 지정.
                                 디폴트는 셋팅하지 않는 것이다.
                                 여러개의 칼럼을 사용한다면 프로퍼티명에 콤마를 구분자로 나열할수 있다.
@@ -363,7 +367,8 @@ ps.setInt(1,id);]]></source>
                             <td>
                                 <code>databaseId</code>
                             </td>
-                            <td>설정된 databaseIdProvider가 있는 경우 마이바티스는 <code>databaseId</code> 속성이 없는 모든 구문을 로드하거나
+                            <td>설정된 databaseIdProvider가 있는 경우 마이바티스는 <code>databaseId</code> 속성이 없는 모든 구문을
+                                로드하거나
                                 일치하는 <code>databaseId</code>와 함께 로드될 것이다.
                                 같은 구문에서 <code>databaseId</code>가 있거나 없는 경우 모두 있다면 뒤에 나온 것이 무시된다.
                             </td>
@@ -486,7 +491,8 @@ ps.setInt(1,id);]]></source>
                                 <code>statementType</code>
                             </td>
                             <td>위 내용과 같다.
-                                마이바티스는 Statement, PreparedStatement 그리고 CallableStatement을 매핑하기 위해 STATEMENT, PREPARED
+                                마이바티스는 Statement, PreparedStatement 그리고 CallableStatement을 매핑하기 위해 STATEMENT,
+                                PREPARED
                                 그리고 CALLABLE 구문타입을 지원한다.
                             </td>
                         </tr>
@@ -558,7 +564,8 @@ ps.setInt(1,id);]]></source>
   values (#{id}, #{username}, #{password})
 </insert>]]></source>
 
-                <p>User타입의 파라미터 객체가 구문으로 전달되면 id, username, password 프로퍼티는 찾아서 PreparedStatement파라미터로 전달된다.</p>
+                <p>User타입의 파라미터 객체가 구문으로 전달되면 id, username, password 프로퍼티는 찾아서 PreparedStatement파라미터로 전달된다.
+                </p>
 
                 <p>비록 파라미터들을 구문에 전달하는 괜찮은 예제이지만 파라미터 매핑을 위한 다른 기능 또한 더 있다.</p>
 
@@ -590,7 +597,8 @@ ps.setInt(1,id);]]></source>
 
                 <p>마지막으로 mode속성은 IN, OUT 또는 INOUT 파라미터를 명시하기 위해 사용한다.
                     파라미터가 OUT 또는 INOUT 이라면 파라미터의 실제 값은 변경될 것이다.
-                    mode=OUT(또는 INOUT) 이고 jdbcType=CURSOR(예를들어 오라클 REFCURSOR)라면 파라미터의 타입에 ResultSet 를 매핑하기 위해 resultMap을
+                    mode=OUT(또는 INOUT) 이고 jdbcType=CURSOR(예를들어 오라클 REFCURSOR)라면 파라미터의 타입에 ResultSet 를 매핑하기 위해
+                    resultMap을
                     명시해야만 한다.
                 </p>
 
@@ -627,9 +635,11 @@ ps.setInt(1,id);]]></source>
                 <p>여기서 마이바티스는 문자열을 변경하거나 이스케이프 처리하지 않는다.</p>
 
                 <p>
-                    String Substitution can be very useful when the metadata(i.e. table name or column name) in the sql
+                    String Substitution can be very useful when the metadata(i.e. table name or column name)
+                    in the sql
                     statement is dynamic,
-                    for example, if you want to <code>select</code> from a table by any one of its columns, instead of
+                    for example, if you want to <code>select</code> from a table by any one of its columns,
+                    instead of
                     writing code like:
                     <source><![CDATA[
 @Select("select * from user where id = #{id}")
@@ -648,7 +658,8 @@ User findByEmail(@Param("email") String email);
 @Select("select * from user where ${column} = #{value}")
 User findByColumn(@Param("column") String column, @Param("value") String value);
 ]]></source>
-                    in which the <code>${column}</code> will be substituted directly and the <code>#{value}</code> will
+                    in which the <code>${column}</code> will be substituted directly and the <code>#{value}
+                </code> will
                     be "prepared".
                     Thus you can just do the same work by:
                     <source><![CDATA[
@@ -915,7 +926,8 @@ public class User {
                                 <code>case</code>
                                 – 몇가지 값에 기초한 결과 매핑
                                 <ul>
-                                    <li>중첩된 결과 매핑 – 이 경우 또한 결과매핑 자체이고 이러한 동일한 엘리먼트를 많이 포함하거나 외부 resultMap을 참조할 수 있다.
+                                    <li>중첩된 결과 매핑 – 이 경우 또한 결과매핑 자체이고 이러한 동일한 엘리먼트를 많이 포함하거나 외부 resultMap을 참조할
+                                        수 있다.
                                     </li>
                                 </ul>
                             </li>
@@ -1173,7 +1185,9 @@ public class User {
 
                 <p>
                     결과를 생성자에 주입하려면 MyBatis 가 어떻게든 생성자를 식별해야 한다.
-                    다음 예제에서 MyBatis는 <code>java.lang.Integer</code>, <code>java.lang.String</code> and <code>int</code> 의
+                    다음 예제에서 MyBatis는 <code>java.lang.Integer</code>, <code>java.lang.String</code> and <code>
+                    int
+                </code> 의
                     순서로 세 개의 매개 변수로 선언 된 생성자를 검색한다.
                 </p>
 
@@ -1186,8 +1200,11 @@ public class User {
                 <p>
                     많은 매개 변수를 가진 생성자를 다루는 경우, arg 엘리먼트의 순서를 유지하는 것은 오류가 발생하기 쉽다.
                     <br/>
-                    3.4.3 부터, 각 매개 변수의 이름을 지정하여 임의의 순서로 arg 엘리먼트를 작성할 수 있다. 이름으로 생성자 매개변수를 참조하려면, <code>@Param</code> annotation
-                    을 추가하거나 '-parameters' 컴파일러 옵션을 통해 프로젝트를 컴파일하고 <code>useActualParamName</code> 을 활성화 할 수 있다. (이 옵션은
+                    3.4.3 부터, 각 매개 변수의 이름을 지정하여 임의의 순서로 arg 엘리먼트를 작성할 수 있다. 이름으로 생성자 매개변수를 참조하려면, <code>
+                    @Param
+                </code> annotation
+                    을 추가하거나 '-parameters' 컴파일러 옵션을 통해 프로젝트를 컴파일하고 <code>useActualParamName</code> 을 활성화 할 수
+                    있다. (이 옵션은
                     기본적으로 활성화 되어있다).
                     다음 예제는 2번째 및 3번째 매개변수의 순서가 선언 된 순서와 일치하지 않더라도 동일한 생성자에 대해 유효하다.
                 </p>
@@ -1274,7 +1291,8 @@ public class User {
                                 <code>name</code>
                             </td>
                             <td>
-                                생성자 매개변수의 이름. name 을 지정함으로써 순서에 상관없이 arg 엘리먼트를 작성할 수 있다. 위의 설명을 보아라. 3.4.3 부터 가능하다.
+                                생성자 매개변수의 이름. name 을 지정함으로써 순서에 상관없이 arg 엘리먼트를 작성할 수 있다. 위의 설명을 보아라. 3.4.3 부터
+                                가능하다.
                             </td>
                         </tr>
                     </tbody>
@@ -1370,7 +1388,8 @@ public class User {
                             </td>
                             <td>데이터베이스의 칼럼명이나 별칭된 칼럼 라벨.
                                 resultSet.getString(columnName)에 전달되는 같은 문자열이다.
-                                Note: 복합키를 다루기 위해서 column=”{prop1=col1,prop2=col2}” 문법을 사용해서 여러개의 칼럼명을 내포된 select 구문에
+                                Note: 복합키를 다루기 위해서 column=”{prop1=col1,prop2=col2}” 문법을 사용해서 여러개의 칼럼명을 내포된
+                                select 구문에
                                 명시할 수 있다.
                                 이것은 대상의 내포된 select 구문의 파라미터 객체에 prop1, prop2 형태로 셋팅하게 될 것이다.
                             </td>
@@ -1381,7 +1400,8 @@ public class User {
                             </td>
                             <td>다른 매핑된 구문의 ID는 이 프로퍼티 매핑이 필요로 하는 복잡한 타입을 로드할 것이다.
                                 column 속성의 칼럼으로 부터 가져온 값은 대상 select 구문에 파라미터로 전달될 것이다.
-                                노트: 복합키를 다루기 위해서 column=”{prop1=col1,prop2=col2}” 문법을 사용해서 여러개의 칼럼명을 내포된 select 구문에 명시할
+                                노트: 복합키를 다루기 위해서 column=”{prop1=col1,prop2=col2}” 문법을 사용해서 여러개의 칼럼명을 내포된
+                                select 구문에 명시할
                                 수 있다.
                                 이것은 대상의 내포된 select 구문의 파라미터 객체에 prop1, prop2 형태로 셋팅하게 될 것이다.
                             </td>
@@ -1598,7 +1618,8 @@ public class User {
 </resultMap>]]></source>
 
                 <p>
-                    결과의 칼럼명은 결과매핑에 정의한 칼럼과는 다르기 때문에 공동저자 결과를 위한 결과매핑을 재사용하기 위해 <code>columnPrefix</code>를 명시할 필요가 있다.
+                    결과의 칼럼명은 결과매핑에 정의한 칼럼과는 다르기 때문에 공동저자 결과를 위한 결과매핑을 재사용하기 위해 <code>columnPrefix</code>를 명시할
+                    필요가 있다.
                 </p>
 
                 <source><![CDATA[<resultMap id="blogResult" type="Blog">
@@ -1920,7 +1941,8 @@ public class User {
 
                 <p>
                     <i>Blog</i>
-                    와 <i>Author</i> 는 자동매핑으로 처리하지만 <i>Author</i>는 <i>id</i> 프로퍼티를 가지고 ResultSet은 <i>id</i> 칼럼을 가진다.
+                    와 <i>Author</i> 는 자동매핑으로 처리하지만 <i>Author</i>는 <i>id</i> 프로퍼티를 가지고 ResultSet은 <i>id</i> 칼럼을
+                    가진다.
                     그래서 기대한 것과는 달리 저자(Author)의 id는 블로그(Blog)의 id로 채워질것이다.
                     <code>FULL</code>
                     는 이런 위험을 가진다.
@@ -1962,9 +1984,11 @@ public class User {
                 <p>
                     <span class="label important">NOTE</span>
                     The cache will only apply to statements declared in the mapping file
-                    where the cache tag is located. If you are using the Java API in conjunction with the XML mapping
+                    where the cache tag is located. If you are using the Java API in conjunction with the XML
+                    mapping
                     files, then
-                    statements declared in the companion interface will not be cached by default. You will need to refer
+                    statements declared in the companion interface will not be cached by default. You will
+                    need to refer
                     to the
                     cache region using the @CacheNamespaceRef annotation.
                 </p>
@@ -2062,7 +2086,8 @@ public class User {
 
                 <p>
                     3.4.2 부터, MyBatis 는 모든 properties 를 설정한 후 초기화 메서드를 호출하도록 지원한다.
-                    이 기능을 사용하려면, custom 캐시 클래스에서 <code>org.apache.ibatis.builder.InitializingObject</code> interface 를
+                    이 기능을 사용하려면, custom 캐시 클래스에서 <code>org.apache.ibatis.builder.InitializingObject</code> interface
+                    를
                     구현해야 한다.
                 </p>
 

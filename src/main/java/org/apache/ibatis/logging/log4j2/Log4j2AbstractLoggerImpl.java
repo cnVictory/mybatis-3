@@ -37,7 +37,8 @@ public class Log4j2AbstractLoggerImpl implements Log {
     private final ExtendedLoggerWrapper log;
 
     public Log4j2AbstractLoggerImpl(AbstractLogger abstractLogger) {
-        log = new ExtendedLoggerWrapper(abstractLogger, abstractLogger.getName(), abstractLogger.getMessageFactory());
+        log = new ExtendedLoggerWrapper(abstractLogger, abstractLogger.getName(),
+                abstractLogger.getMessageFactory());
     }
 
     @Override

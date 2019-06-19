@@ -115,7 +115,8 @@ public class ClassLoaderWrapper {
                 // try to find the resource as passed
                 InputStream returnValue = cl.getResourceAsStream(resource);
 
-                // now, some class loaders want this leading "/", so we'll add it and try again if we didn't find the resource
+                // now, some class loaders want this leading "/", so we'll add it and try again if we
+                // didn't find the resource
                 if (null == returnValue) {
                     returnValue = cl.getResourceAsStream("/" + resource);
                 }
@@ -153,7 +154,8 @@ public class ClassLoaderWrapper {
                 }
 
                 // "It's always in the last place I look for it!"
-                // ... because only an idiot would keep looking for it after finding it, so stop looking already.
+                // ... because only an idiot would keep looking for it after finding it, so stop looking
+                // already.
                 if (null != url) {
                     return url;
                 }
@@ -173,7 +175,8 @@ public class ClassLoaderWrapper {
      * @param name        - the class to load
      * @param classLoader - the group of classloaders to examine
      * @return the class
-     * @throws ClassNotFoundException - Remember the wisdom of Judge Smails: Well, the world needs ditch diggers, too.
+     * @throws ClassNotFoundException - Remember the wisdom of Judge Smails: Well, the world needs ditch
+     * diggers, too.
      */
     Class<?> classForName(String name, ClassLoader[] classLoader) throws ClassNotFoundException {
 

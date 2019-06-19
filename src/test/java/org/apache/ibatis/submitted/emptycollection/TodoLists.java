@@ -19,14 +19,13 @@ import java.util.List;
 
 public class TodoLists {
 
+    private int id;
+    private List<TodoItem> todoItems;
+
     @Override
     public String toString() {
         return "TodoLists [id=" + id + ", todoItems=" + todoItems + "]";
     }
-
-    private int id;
-
-    private List<TodoItem> todoItems;
 
     public int getId() {
         return id;

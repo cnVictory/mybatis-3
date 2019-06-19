@@ -33,20 +33,20 @@ public class Department implements Serializable {
         this.id = id;
     }
 
-    public void setAttribute(Attribute attribute) {
-        this.attribute = attribute;
-    }
-
     public Attribute getAttribute() {
         return attribute;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setAttribute(Attribute attribute) {
+        this.attribute = attribute;
     }
 
     public Person getPerson() {
         return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
 }

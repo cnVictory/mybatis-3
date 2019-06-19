@@ -15,18 +15,14 @@
  */
 package org.apache.ibatis.type;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.Test;
-
 class EnumOrdinalTypeHandlerTest extends BaseTypeHandlerTest {
-
-    enum MyEnum {
-        ONE, TWO
-    }
 
     private static final TypeHandler<MyEnum> TYPE_HANDLER = new EnumOrdinalTypeHandler<MyEnum>(MyEnum.class);
 
@@ -89,6 +85,10 @@ class EnumOrdinalTypeHandlerTest extends BaseTypeHandlerTest {
         when(cs.getInt(1)).thenReturn(0);
         when(cs.wasNull()).thenReturn(true);
         assertNull(TYPE_HANDLER.getResult(cs, 1));
+    }
+
+    enum MyEnum {
+        ONE, TWO
     }
 
 }

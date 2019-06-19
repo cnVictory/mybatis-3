@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.multipleresultsetswithassociation;
 
-import java.io.Reader;
-import java.sql.Connection;
-import java.util.List;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +23,10 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.Reader;
+import java.sql.Connection;
+import java.util.List;
 
 /*
  * This class contains tests for multiple result sets with an association mapping.
@@ -39,22 +39,27 @@ class MultipleResultSetTest {
 
     @BeforeAll
     static void setUp() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/multipleresultsetswithassociation/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/multipleresultsetswithassociation/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 
         // populate in-memory database
-        // Could not get the table creation, procedure creation, and data population to work from the same script.
+        // Could not get the table creation, procedure creation, and data population to work from the same
+        // script.
         // Once it was in three scripts, all seemed well.
         try (SqlSession session = sqlSessionFactory.openSession();
              Connection conn = session.getConnection()) {
-            try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/multipleresultsetswithassociation/CreateDB1.sql")) {
+            try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                    "/multipleresultsetswithassociation/CreateDB1.sql")) {
                 runReaderScript(conn, reader);
             }
-            try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/multipleresultsetswithassociation/CreateDB2.sql")) {
+            try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                    "/multipleresultsetswithassociation/CreateDB2.sql")) {
                 runReaderScript(conn, reader);
             }
-            try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/multipleresultsetswithassociation/CreateDB3.sql")) {
+            try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                    "/multipleresultsetswithassociation/CreateDB3.sql")) {
                 runReaderScript(conn, reader);
             }
         }

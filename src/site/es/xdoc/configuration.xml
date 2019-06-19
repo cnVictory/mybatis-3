@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -27,7 +27,8 @@
 
     <body>
         <section name="Configuración">
-            <p>El fichero de configuración XML contiene parámetros y configuraciones que tienen un efecto crucial en
+            <p>El fichero de configuración XML contiene parámetros y configuraciones que tienen un efecto
+                crucial en
                 cómo se comporta MyBatis. A alto nivel contiene:
             </p>
 
@@ -75,15 +76,18 @@
                 </li>
             </ul>
             <subsection name="properties">
-                <p>Contiene propiedades externalizables y sustituibles que se pueden configurar en un típico properties
-                    de Java o bien puede definirse su contenido directamente mediante subelementos property. Por
+                <p>Contiene propiedades externalizables y sustituibles que se pueden configurar en un típico
+                    properties
+                    de Java o bien puede definirse su contenido directamente mediante subelementos property.
+                    Por
                     ejemplo:
                 </p>
                 <source><![CDATA[<properties resource="org/mybatis/example/config.properties">
   <property name="username" value="dev_user"/>
   <property name="password" value="F2Fa3!33TYyg"/>
 </properties>]]></source>
-                <p>Las propiedades pueden usarse a lo largo del fichero de configuración para sustituir valores que
+                <p>Las propiedades pueden usarse a lo largo del fichero de configuración para sustituir
+                    valores que
                     deben configurarse dinámicamente. Por ejemplo:
                 </p>
                 <source><![CDATA[<dataSource type="POOLED">
@@ -92,11 +96,13 @@
   <property name="username" value="${username}"/>
   <property name="password" value="${password}"/>
 </dataSource>]]></source>
-                <p>El usuario y password de este ejemplo se reemplazarán por los valores de los elementos de tipo
+                <p>El usuario y password de este ejemplo se reemplazarán por los valores de los elementos de
+                    tipo
                     property. El driver y la url se reemplazarán por los valores contenidos en el fichero
                     config.properties. Esto aumenta mucho las posibilidades de configuración.
                 </p>
-                <p>Las propiedades también pueden pasarse como parámetro al método SqlSessionFactoryBuilder.build(). Por
+                <p>Las propiedades también pueden pasarse como parámetro al método
+                    SqlSessionFactoryBuilder.build(). Por
                     ejemplo:
                 </p>
                 <source><![CDATA[SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, props);
@@ -110,14 +116,17 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                 <ul>
                     <li>Primero se leen las propiedades especificadas en el elemento XML properties,
                     </li>
-                    <li>Posteriormente se cargan las propiedades de recursos de tipo classpath o url del elementos
+                    <li>Posteriormente se cargan las propiedades de recursos de tipo classpath o url del
+                        elementos
                         properties, si hubiera una propiedad repetida sería sobrescrita,
                     </li>
                     <li>Y finalmente se leen las propiedades pasadas como parámetro, que en caso de duplicidad
-                        sobrescriben las propiedades que se hayan cargado del elemento properties o de recursos/url.
+                        sobrescriben las propiedades que se hayan cargado del elemento properties o de
+                        recursos/url.
                     </li>
                 </ul>
-                <p>Por tanto las properties más prioritarias son las pasadas como parámetro, seguidas de los atributos
+                <p>Por tanto las properties más prioritarias son las pasadas como parámetro, seguidas de los
+                    atributos
                     tipo classpath/url y finalmente las propiedades especificadas en el elemento properties..
                 </p>
 
@@ -143,10 +152,12 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
                 <p>
                     <span class="label important">NOTE</span>
-                    Also If you are used already the <code>":"</code> as property key(e.g. <code>db:username</code>)
+                    Also If you are used already the <code>":"</code> as property key(e.g. <code>
+                    db:username</code>)
                     or you are used already the ternary operator of OGNL expression(e.g. <code>
                     ${tableName != null ? tableName : 'global_constants'}</code>) on your sql definition,
-                    you should be change the character that separate key and default value by adding a special property
+                    you should be change the character that separate key and default value by adding a special
+                    property
                     as follow:
                 </p>
 
@@ -163,7 +174,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
             </subsection>
             <subsection name="settings">
-                <p>Son muy importantes para definir cómo se comporta MyBatis en ejecución. La siguiente tabla describe
+                <p>Son muy importantes para definir cómo se comporta MyBatis en ejecución. La siguiente tabla
+                    describe
                     las configuraciones (settings), sus significados y sus valores por defecto.
                 </p>
                 <table>
@@ -194,7 +206,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 lazyLoadingEnabled
                             </td>
                             <td>
-                                Habilita o inhabilita globalmente la carga diferida (lazy loading). Cuando está activo,
+                                Habilita o inhabilita globalmente la carga diferida (lazy loading). Cuando
+                                está activo,
                                 todas las relaciones se cargan en modo diferido.
                                 Este valor se puede sobrescribir en cada relación usando el atributo <code>
                                 fetchType</code>.
@@ -226,7 +239,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             <td>
                                 multipleResultSetsEnabled
                             </td>
-                            <td>Habilita o inhabilita la obtención de múltiples ResultSets con una sola sentencia (se
+                            <td>Habilita o inhabilita la obtención de múltiples ResultSets con una sola
+                                sentencia (se
                                 requiere un driver compatible)
                             </td>
                             <td>
@@ -240,8 +254,10 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             <td>
                                 useColumnLabel
                             </td>
-                            <td>Utiliza la etiqueta de columna (label) en lugar del nombre de conlumna. Algunos drivers
-                                se comportan distinto en lo que a esto respecta. Consulta la documentación del driver o
+                            <td>Utiliza la etiqueta de columna (label) en lugar del nombre de conlumna.
+                                Algunos drivers
+                                se comportan distinto en lo que a esto respecta. Consulta la documentación del
+                                driver o
                                 prueba ambos modos para descubrir cómo funciona tu driver
                             </td>
                             <td>
@@ -255,9 +271,12 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             <td>
                                 useGeneratedKeys
                             </td>
-                            <td>Habilita el uso del soporte JDBC para claves autogeneradas. Se requiere un driver
-                                compatible. Este parámetro fuerza el uso de las claves autogeneradas si está habilitado.
-                                Algunos drivers indican que no son compatibles aunque funcionan correctamente (ej.
+                            <td>Habilita el uso del soporte JDBC para claves autogeneradas. Se requiere un
+                                driver
+                                compatible. Este parámetro fuerza el uso de las claves autogeneradas si está
+                                habilitado.
+                                Algunos drivers indican que no son compatibles aunque funcionan correctamente
+                                (ej.
                                 Derby)
                             </td>
                             <td>
@@ -273,7 +292,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             </td>
                             <td>Especifica cómo deben mapearse de forma automática las columnas a los
                                 campos/propiedades. NONE desactiva el mapeo automático. PARTIAL sólo mapea
-                                automáticamente los resultados que no contienen result maps anidados en su interior.
+                                automáticamente los resultados que no contienen result maps anidados en su
+                                interior.
                                 FULL mapea resultados de cualquier complejidad (contengan anidados o no).
                             </td>
                             <td>
@@ -288,7 +308,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 autoMappingUnknownColumnBehavior
                             </td>
                             <td>
-                                Specify the behavior when detects an unknown column (or unknown property type) of
+                                Specify the behavior when detects an unknown column (or unknown property type)
+                                of
                                 automatic mapping target.
                                 <ul>
                                     <li><code>NONE</code>: Do nothing
@@ -297,7 +318,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                         'org.apache.ibatis.session.AutoMappingUnknownColumnBehavior'
                                     </code> must be set to <code>WARN</code>)
                                     </li>
-                                    <li><code>FAILING</code>: Fail mapping (Throw <code>SqlSessionException</code>)
+                                    <li><code>FAILING</code>: Fail mapping (Throw <code>
+                                        SqlSessionException</code>)
                                     </li>
                                 </ul>
                             </td>
@@ -312,8 +334,10 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             <td>
                                 defaultExecutorType
                             </td>
-                            <td>Configura el ejecutor (executor) por defecto. SIMPLE no hace nada especial. REUSE reúsa
-                                prepared statements. BATCH reúsa statements y ejecuta actualizaciones en batch.
+                            <td>Configura el ejecutor (executor) por defecto. SIMPLE no hace nada especial.
+                                REUSE reúsa
+                                prepared statements. BATCH reúsa statements y ejecuta actualizaciones en
+                                batch.
                             </td>
                             <td>
                                 SIMPLE
@@ -328,7 +352,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             <td>
                                 defaultStatementTimeout
                             </td>
-                            <td>Establece el número de segundos que debe esperar el driver la respuesta de la base de
+                            <td>Establece el número de segundos que debe esperar el driver la respuesta de la
+                                base de
                                 datos.
                             </td>
                             <td>
@@ -386,7 +411,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             <td>
                                 mapUnderscoreToCamelCase
                             </td>
-                            <td>Mapea automáticamente los nombres clásicos de columnas de base de datos A_COLUMN a
+                            <td>Mapea automáticamente los nombres clásicos de columnas de base de datos
+                                A_COLUMN a
                                 nombres clásicos de propiedades Java aColumn.
                             </td>
                             <td>
@@ -401,11 +427,14 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 localCacheScope
                             </td>
                             <td>
-                                MyBatis usa una cache local para evitar dependencias circulares y acelerar ejecuciones
+                                MyBatis usa una cache local para evitar dependencias circulares y acelerar
+                                ejecuciones
                                 repeticas de queries anidadas.
-                                Por defecto (SESSION) todas las queries ejecutadas en una sesión se cachean. Si
+                                Por defecto (SESSION) todas las queries ejecutadas en una sesión se cachean.
+                                Si
                                 localCacheScope=STATEMENT
-                                la sesión local solo se usará durante la ejecución de un statement, no se comparten
+                                la sesión local solo se usará durante la ejecución de un statement, no se
+                                comparten
                                 datos entre distintas llamadas
                                 a SqlSession.
                             </td>
@@ -422,9 +451,11 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             </td>
                             <td>
                                 Permite especificar el tipo JDBC que
-                                Especifica el tipo JDBC para valores nulos cuando no se ha especificado un tipo concreto
+                                Especifica el tipo JDBC para valores nulos cuando no se ha especificado un
+                                tipo concreto
                                 para el parámetro.
-                                Algunos drivers requieren que se indique el tipo JDBC de la columna pero otros permite
+                                Algunos drivers requieren que se indique el tipo JDBC de la columna pero otros
+                                permite
                                 valores genéricos como NULL, VARCHAR or OTHER.
                             </td>
                             <td>
@@ -467,7 +498,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 defaultEnumTypeHandler
                             </td>
                             <td>
-                                Specifies the <code>TypeHandler</code> used by default for Enum. (Since: 3.4.5)
+                                Specifies the <code>TypeHandler</code> used by default for Enum. (Since:
+                                3.4.5)
                             </td>
                             <td>
                                 A type alias or fully qualified class name.
@@ -481,9 +513,11 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 callSettersOnNulls
                             </td>
                             <td>
-                                Permite especificar si se invocarán a los setters y a los métodos put de los mapas si el
+                                Permite especificar si se invocarán a los setters y a los métodos put de los
+                                mapas si el
                                 valor obtenido es null.
-                                Te en cuenta que si se activa las propiedades que puedan ser informadas con nulos no
+                                Te en cuenta que si se activa las propiedades que puedan ser informadas con
+                                nulos no
                                 pueden ser de tipos primitivos.
                             </td>
                             <td>
@@ -498,10 +532,12 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 returnInstanceForEmptyRow
                             </td>
                             <td>
-                                MyBatis, by default, returns <code>null</code> when all the columns of a returned row
+                                MyBatis, by default, returns <code>null</code> when all the columns of a
+                                returned row
                                 are NULL.
                                 When this setting is enabled, MyBatis returns an empty instance instead.
-                                Note that it is also applied to nested results (i.e. collectioin and association).
+                                Note that it is also applied to nested results (i.e. collectioin and
+                                association).
                                 Since: 3.4.2
                             </td>
                             <td>
@@ -530,11 +566,13 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 logImpl
                             </td>
                             <td>
-                                Permite especificar qué implementación de logging utilizar. Si no está informado la
+                                Permite especificar qué implementación de logging utilizar. Si no está
+                                informado la
                                 impelmentación se descubrirá automaticamente.
                             </td>
                             <td>
-                                SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING
+                                SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING |
+                                NO_LOGGING
                             </td>
                             <td>
                                 No informado
@@ -545,7 +583,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 proxyFactory
                             </td>
                             <td>
-                                Permite especificar qué herramienta de generación de proxys se usará para crear los
+                                Permite especificar qué herramienta de generación de proxys se usará para
+                                crear los
                                 objetos con capacidad de carga lazy.
                             </td>
                             <td>
@@ -574,9 +613,11 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 useActualParamName
                             </td>
                             <td>
-                                Allow referencing statement parameters by their actual names declared in the method
+                                Allow referencing statement parameters by their actual names declared in the
+                                method
                                 signature.
-                                To use this feature, your project must be compiled in Java 8 with <code>-parameters
+                                To use this feature, your project must be compiled in Java 8 with <code>
+                                -parameters
                             </code> option. (Since: 3.4.1)
                             </td>
                             <td>
@@ -592,7 +633,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             </td>
                             <td>
                                 Specifies the class that provides an instance of <code>Configuration</code>.
-                                The returned Configuration instance is used to load lazy properties of deserialized
+                                The returned Configuration instance is used to load lazy properties of
+                                deserialized
                                 objects.
                                 This class must have a method with a signature <code>static Configuration
                                 getConfiguration()</code>. (Since: 3.2.3)
@@ -629,8 +671,10 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
             </subsection>
             <subsection name="typeAliases">
-                <p>Un type alias es simplemente un alias (un nombre más corto) para un tipo Java. Solo es importante
-                    para la configuración XML y existe para reducir la cantidad de texto al teclear nombres de clase
+                <p>Un type alias es simplemente un alias (un nombre más corto) para un tipo Java. Solo es
+                    importante
+                    para la configuración XML y existe para reducir la cantidad de texto al teclear nombres de
+                    clase
                     cualificados (fully qualified). Por ejemplo:
                 </p>
                 <source><![CDATA[<typeAliases>
@@ -647,18 +691,21 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                     <code>domain.blog.Blog</code>
                 </p>
                 <p>
-                    Tambien puedes indicar un paquete para que MyBatis busque beans de tipo alias. Por ejemplo:
+                    Tambien puedes indicar un paquete para que MyBatis busque beans de tipo alias. Por
+                    ejemplo:
                 </p>
                 <source><![CDATA[<typeAliases>
   <package name="domain.blog"/>
 </typeAliases>
 ]]></source>
                 <p>
-                    Cada bean encontrado en <code>domain.blog</code>, en caso de que no contenga ninguna anotación,
+                    Cada bean encontrado en <code>domain.blog</code>, en caso de que no contenga ninguna
+                    anotación,
                     se registrará como alias usando su nombre no cualificado en minúsculas. Es decir,
                     <code>domain.blog.Author</code>
                     se registrará como will be registered as <code>author</code>.
-                    Si se encuentra la anotación <code>@Alias</code> se usará su valor como alias. Mira el ejemplo a
+                    Si se encuentra la anotación <code>@Alias</code> se usará su valor como alias. Mira el
+                    ejemplo a
                     continuación:
                 </p>
                 <source><![CDATA[@Alias("author")
@@ -666,7 +713,8 @@ public class Author {
     ...
 }
 ]]></source>
-                <p>Hay muchos type aliases pre construidos. No son sensibles a mayúsculas/minúsculas. Observa los
+                <p>Hay muchos type aliases pre construidos. No son sensibles a mayúsculas/minúsculas. Observa
+                    los
                     nombres especiales de los tipos primitivos dadas las colisiones de nombres.
                 </p>
                 <table>
@@ -901,8 +949,10 @@ public class Author {
                 </table>
             </subsection>
             <subsection name="typeHandlers">
-                <p>Cuando MyBatis establece el valor de un parámetro de un PreparedStatement u obtiene un valor de un
-                    ResultSet, se utiliza un TypeHandler para convertir el valor al tipo Java apropiado. La siguiente
+                <p>Cuando MyBatis establece el valor de un parámetro de un PreparedStatement u obtiene un
+                    valor de un
+                    ResultSet, se utiliza un TypeHandler para convertir el valor al tipo Java apropiado. La
+                    siguiente
                     tabla recoge los TypeHandlers predefinidos.
                 </p>
                 <p>
@@ -1216,7 +1266,8 @@ public class Author {
                                 Enumeration Type
                             </td>
                             <td>
-                                Cualquiera compatible con <code>NUMERIC</code> o <code>DOUBLE</code> por que se guarda
+                                Cualquiera compatible con <code>NUMERIC</code> o <code>DOUBLE</code> por que
+                                se guarda
                                 la posición (no el código).
                             </td>
                         </tr>
@@ -1357,10 +1408,13 @@ public class Author {
                     </tbody>
                 </table>
                 <p>
-                    Es posible sobrescribir los TypeHanders o crear TypeHanders personalizados para tratar tipos no
+                    Es posible sobrescribir los TypeHanders o crear TypeHanders personalizados para tratar
+                    tipos no
                     soportados o no estándares.
-                    Para ello, debes implementar la interfaz <code>org.apache.ibatis.type.TypeHandler</code> o extender
-                    la clase de ayuda <code>org.apache.ibatis.type.BaseTypeHandler</code> y opcionalmente mapear el
+                    Para ello, debes implementar la interfaz <code>org.apache.ibatis.type.TypeHandler</code> o
+                    extender
+                    la clase de ayuda <code>org.apache.ibatis.type.BaseTypeHandler</code> y opcionalmente
+                    mapear el
                     TypeHandler a un tipo JDBC.
                     Por ejemplo:
                 </p>
@@ -1397,23 +1451,29 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
 </typeHandlers>
 ]]></source>
 
-                <p>Al usar este TypeHandler se sobrescribe el TypeHandler existente para los tipos String y los
-                    parámetros y resultados VARCHAR. Observa que MyBatis no introspecciona la base de datos para conocer
+                <p>Al usar este TypeHandler se sobrescribe el TypeHandler existente para los tipos String y
+                    los
+                    parámetros y resultados VARCHAR. Observa que MyBatis no introspecciona la base de datos
+                    para conocer
                     el tipo así que debes especificar que se trata de un VARCHAR en los mapeos de parámetros y
-                    resultados para que se use el TypeHandler adecuado. Esto se debe a que MyBatis no conoce nada sobre
+                    resultados para que se use el TypeHandler adecuado. Esto se debe a que MyBatis no conoce
+                    nada sobre
                     los tipos de datos hasta que la sentencia ha sido ejecutada.
                 </p>
                 <p>
-                    MyBatis conoce el tipo Java que quieres gestionar introspecionando tipo genérico del TypeHandler,
+                    MyBatis conoce el tipo Java que quieres gestionar introspecionando tipo genérico del
+                    TypeHandler,
                     pero puedes modificar este comportamiento de dos maneras.
                 </p>
                 <ul>
                     <li>Añadir un atributo <code>javaType</code> al elemento typeHandler (por ejemplo: <code>
                         javaType="String"</code>)
                     </li>
-                    <li>Añadir una anotación <code>@MappedTypes</code> a tu clase TypeHandler especificando la lista de
+                    <li>Añadir una anotación <code>@MappedTypes</code> a tu clase TypeHandler especificando la
+                        lista de
                         tipos java a la que asociarlo.
-                        Esta anotación será ignorada si se ha especificado también un atributo <code>javaType</code>.
+                        Esta anotación será ignorada si se ha especificado también un atributo <code>
+                            javaType</code>.
                     </li>
                 </ul>
 
@@ -1421,22 +1481,28 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
                 <p>El tipo JDBC asociado se puede especificar de dos maneras:</p>
                 <ul>
                     <li>
-                        Añadiendo un atributo <code>jdbcType</code> al lemento typeHandler (por ejemplo: <code>
+                        Añadiendo un atributo <code>jdbcType</code> al lemento typeHandler (por
+                        ejemplo: <code>
                         jdbcType="VARCHAR"</code>).
                     </li>
-                    <li>Añadiendo una anotación <code>@MappedJdbcTypes</code> a tu clase TypeHandler especificando la
+                    <li>Añadiendo una anotación <code>@MappedJdbcTypes</code> a tu clase TypeHandler
+                        especificando la
                         lista de tipos JDBC a la que asociarlo.
-                        Esta anotación será ignorada si se ha especificado también un atributo <code>jdbcType</code>.
+                        Esta anotación será ignorada si se ha especificado también un atributo <code>
+                            jdbcType</code>.
                     </li>
                 </ul>
 
                 <p>
                     When deciding which TypeHandler to use in a <code>ResultMap</code>, the Java type is known
-                    (from the result type), but the JDBC type is unknown. MyBatis therefore uses the combination
+                    (from the result type), but the JDBC type is unknown. MyBatis therefore uses the
+                    combination
                     <code>javaType=[TheJavaType], jdbcType=null</code>
                     to choose a TypeHandler. This means that
-                    using a <code>@MappedJdbcTypes</code> annotation <i>restricts</i> the scope of a TypeHandler
-                    and makes it unavailable for use in <code>ResultMap</code>s unless explicity set. To make a
+                    using a <code>@MappedJdbcTypes</code> annotation <i>restricts</i> the scope of a
+                    TypeHandler
+                    and makes it unavailable for use in <code>ResultMap</code>s unless explicity set. To make
+                    a
                     TypeHandler available for use in a <code>ResultMap</code>, set
                     <code>includeNullJdbcType=true</code>
                     on the <code>@MappedJdbcTypes</code> annotation. Since Mybatis 3.4.0 however, if a
@@ -1454,14 +1520,17 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
 ]]></source>
 
                 <p>
-                    Observa que cuando usas la función de búsqueda los tipos JDBC sólo se pueden especificar usando
+                    Observa que cuando usas la función de búsqueda los tipos JDBC sólo se pueden especificar
+                    usando
                     anotaciones.
                 </p>
 
                 <p>
-                    Puedes crear un TypeHandler genérico que sea capaz de manejar más de un tipo de clase. Para ello
+                    Puedes crear un TypeHandler genérico que sea capaz de manejar más de un tipo de clase.
+                    Para ello
                     añade
-                    un constructor que recibe una clase como parámetro y MyBatis le pasará la clase actual cuando
+                    un constructor que recibe una clase como parámetro y MyBatis le pasará la clase actual
+                    cuando
                     construya
                     el TypeHandler.
                 </p>
@@ -1510,7 +1579,8 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
                     Sin embargo, puede que no queramos guardar nombres. Nuestro DBA puede insistir en que
                     usemos un entero en su lugar. Muy sencillo: añade un
                     <code>EnumOrdinalTypeHandler</code>
-                    a las sección de <code>typeHandlers</code> de tu fichero de configuración y ahora todos los
+                    a las sección de <code>typeHandlers</code> de tu fichero de configuración y ahora todos
+                    los
                     <code>RoundingMode</code>
                     se mapearán a un entero usando su valor ordinal.
                 </p>
@@ -1520,7 +1590,8 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
 </typeHandlers>
 ]]></source>
                 <p>
-                    Pero ¿y si quieres mapear el mismo <code>Enum</code> a un string en un sitio pero a un entero en
+                    Pero ¿y si quieres mapear el mismo <code>Enum</code> a un string en un sitio pero a un
+                    entero en
                     otro?
                 </p>
                 <p>
@@ -1529,7 +1600,8 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
                     debemos indicarlo establiencidolo esplícitamente su uso en los statements.
                 </p>
                 <p>
-                    Los mappers no se tratarán hasta la sección siguiente asi que si esta es tu primera lectura de
+                    Los mappers no se tratarán hasta la sección siguiente asi que si esta es tu primera
+                    lectura de
                     la documentación quizá prefieras saltarte esta sección por ahora y volver más tarde).
                 </p>
                 <source><![CDATA[<!DOCTYPE mapper
@@ -1578,10 +1650,14 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
             </subsection>
 
             <subsection name="objectFactory">
-                <p>Cada vez que MyBatis crea una nueva instancia de un objeto de resultado usa una instancia de
-                    ObjectFactory para hacerlo. El ObjectFactory por defecto no hace mucho más que instanciar la clase
-                    destino usando su constructor por defecto, o el constructor que se ha parametrizado en su caso. Es
-                    posible sobrescribir el comportamiento por defecto creando tu propio ObjectFactory. Por ejemplo:
+                <p>Cada vez que MyBatis crea una nueva instancia de un objeto de resultado usa una instancia
+                    de
+                    ObjectFactory para hacerlo. El ObjectFactory por defecto no hace mucho más que instanciar
+                    la clase
+                    destino usando su constructor por defecto, o el constructor que se ha parametrizado en su
+                    caso. Es
+                    posible sobrescribir el comportamiento por defecto creando tu propio ObjectFactory. Por
+                    ejemplo:
                 </p>
                 <source><![CDATA[// ExampleObjectFactory.java
 public class ExampleObjectFactory extends DefaultObjectFactory {
@@ -1603,16 +1679,20 @@ public class ExampleObjectFactory extends DefaultObjectFactory {
 <objectFactory type="org.mybatis.example.ExampleObjectFactory">
   <property name="someProperty" value="100"/>
 </objectFactory>]]></source>
-                <p>La interfaz ObjectFactory es muy sencilla. Contiene solo dos métodos de creación, uno para el
+                <p>La interfaz ObjectFactory es muy sencilla. Contiene solo dos métodos de creación, uno para
+                    el
                     constructor por defecto y otro para el constructor parametrizado. Adicionalmente el método
-                    setProperties sirve para configurar el ObjectFactory. Las propiedades definidas en el cuerpo del
-                    elemento objectFactory se pasan al método setProperties después de que el ObjectFactory haya sido
+                    setProperties sirve para configurar el ObjectFactory. Las propiedades definidas en el
+                    cuerpo del
+                    elemento objectFactory se pasan al método setProperties después de que el ObjectFactory
+                    haya sido
                     inicializado.
                 </p>
 
             </subsection>
             <subsection name="plugins">
-                <p>MyBatis permite interceptar las llamadas en ciertos puntos de la ejecución de un mapped statement.
+                <p>MyBatis permite interceptar las llamadas en ciertos puntos de la ejecución de un mapped
+                    statement.
                     Por defecto, MyBatis permite incluir plugins que intercepten las llamadas de:
                 </p>
                 <ul>
@@ -1635,14 +1715,20 @@ public class ExampleObjectFactory extends DefaultObjectFactory {
                         (prepare, parameterize, batch, update, query)
                     </li>
                 </ul>
-                <p>Los detalles de estos métodos se pueden conocer observando sus firmas y el código fuente de los
-                    mismos que está disponible en el sitio de MyBatis. Es recomendable que comprendas el funcionamiento
-                    del método que estas sobrescribiendo siempre que vayas a hacer algo más complejo que monitorizar
-                    llamadas. Ten en cuenta que si modificas el comportamiento de alguno de estos métodos existe la
-                    posibilidad de que rompas el funcionamiento de MyBatis. Estas clases son de bajo nivel y por tanto
+                <p>Los detalles de estos métodos se pueden conocer observando sus firmas y el código fuente de
+                    los
+                    mismos que está disponible en el sitio de MyBatis. Es recomendable que comprendas el
+                    funcionamiento
+                    del método que estas sobrescribiendo siempre que vayas a hacer algo más complejo que
+                    monitorizar
+                    llamadas. Ten en cuenta que si modificas el comportamiento de alguno de estos métodos
+                    existe la
+                    posibilidad de que rompas el funcionamiento de MyBatis. Estas clases son de bajo nivel y
+                    por tanto
                     debes usar los plugins con cuidado.
                 </p>
-                <p>Utilizar un plugin es muy sencillo para la potencia que ofrecen. Simplemente implementa el interfaz
+                <p>Utilizar un plugin es muy sencillo para la potencia que ofrecen. Simplemente implementa el
+                    interfaz
                     Interceptor y asegúrate de especificar las signaturas que quieres interceptar.
                 </p>
 
@@ -1668,7 +1754,8 @@ public class ExamplePlugin implements Interceptor {
     <property name="someProperty" value="100"/>
   </plugin>
 </plugins>]]></source>
-                <p>El plugin anterior interceptará cualquier llamada al método “update” en la instancia de Executor, que
+                <p>El plugin anterior interceptará cualquier llamada al método “update” en la instancia de
+                    Executor, que
                     es un objeto interno que se encarga de la ejecución a bajo nivel de los mapped statements.
                 </p>
                 <p>
@@ -1677,25 +1764,34 @@ public class ExamplePlugin implements Interceptor {
                     </strong>
                 </p>
                 <p>Además de modificar el comportamiento de MyBatis mediante los plugins, también es posible
-                    sobrescribir la clase Configuración por completo. Extiende la clase, sobrescribe sus métodos y
-                    pásala como parámetro en la llamada al método SqlSessionFactoryBuilder.build(myConfig). Nuevamente,
-                    ten cuenta que esto puede afectar seriamente al funcionamiento de MyBatis así que úsalo con cuidado.
+                    sobrescribir la clase Configuración por completo. Extiende la clase, sobrescribe sus
+                    métodos y
+                    pásala como parámetro en la llamada al método SqlSessionFactoryBuilder.build(myConfig).
+                    Nuevamente,
+                    ten cuenta que esto puede afectar seriamente al funcionamiento de MyBatis así que úsalo
+                    con cuidado.
                 </p>
             </subsection>
             <subsection name="environments">
-                <p>En MyBatis pueden configurarse varios entornos. De esta forma puedes usar tus SQL Maps en distintas
-                    bases de datos por muchos motivos. Por ejemplo puede que tengas una configuración distinta para tus
-                    entornos de desarrollo, pruebas y producción. O quizá tengas varias bases de datos en producción que
-                    comparten el esquema y quieres usar los mismos SQL maps sobre todas ellas. Como ves, hay muchos
+                <p>En MyBatis pueden configurarse varios entornos. De esta forma puedes usar tus SQL Maps en
+                    distintas
+                    bases de datos por muchos motivos. Por ejemplo puede que tengas una configuración distinta
+                    para tus
+                    entornos de desarrollo, pruebas y producción. O quizá tengas varias bases de datos en
+                    producción que
+                    comparten el esquema y quieres usar los mismos SQL maps sobre todas ellas. Como ves, hay
+                    muchos
                     casos.
                 </p>
                 <p>
-                    <strong>Debes recordar un asunto importante. Cuando configures varios entornos, solo será posible
+                    <strong>Debes recordar un asunto importante. Cuando configures varios entornos, solo será
+                        posible
                         usar UNO por cada instancia de SqlSessionFactory.
                     </strong>
                 </p>
                 <p>Por lo tanto, si quieres conectar a dos bases de datos, deberás crear dos instancias de
-                    SqlSessionFactory, una para cada cual. Para el caso de tres bases de datos necesitarás tres
+                    SqlSessionFactory, una para cada cual. Para el caso de tres bases de datos necesitarás
+                    tres
                     instancias y así sucesivamente. Es fácil de recordar:
                 </p>
                 <ul>
@@ -1703,7 +1799,8 @@ public class ExamplePlugin implements Interceptor {
                         <strong>Una instancia de SqlSessionFactory por base de datos</strong>
                     </li>
                 </ul>
-                <p>Para indicar qué entorno debe utilizarse, debes informar el parámetro opcional correspondiente en la
+                <p>Para indicar qué entorno debe utilizarse, debes informar el parámetro opcional
+                    correspondiente en la
                     llamada al SqlSessionFactoryBuilder. Existen dos métodos que aceptan el entorno:
                 </p>
 
@@ -1739,8 +1836,10 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                     <li>La configuración del TransactionManager (ej. type=”JDBC”)</li>
                     <li>La configuración del DataSource (ej. type=”POOLED”)</li>
                 </ul>
-                <p>El ID del entorno por defecto y de los entornos existentes son auto-explicativos. Puedes nombrarlos
-                    como más te guste, tan sólo asegúrate de que el valor por defecto coincide con un entorno existente.
+                <p>El ID del entorno por defecto y de los entornos existentes son auto-explicativos. Puedes
+                    nombrarlos
+                    como más te guste, tan sólo asegúrate de que el valor por defecto coincide con un entorno
+                    existente.
                 </p>
                 <p>
                     <strong>transactionManager</strong>
@@ -1748,13 +1847,18 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                 <p>MyBatis incluye dos tipos de TransactionManager (ej. type=”[JDBC|MANAGED]”):
                 </p>
                 <ul>
-                    <li>JDBC – Este TransactionManager simplemente hace uso del las capacidades de commit y rollback de
+                    <li>JDBC – Este TransactionManager simplemente hace uso del las capacidades de commit y
+                        rollback de
                         JDBC. Utiliza la conexión obtenida del DataSource para gestionar la transacción.
                     </li>
-                    <li>MANAGED – Este TransactionManager no hace nada. No hace commit ni rollback sobre la conexión. En
-                        su lugar, permite que el contenedor gestione el ciclo de vida completo de la transacción (ej.
-                        Spring o un servidor de aplicaciones JEE). Por defecto cierra la conexión. Sin embargo, algunos
-                        contenedores no esperan que la conexión se cierre y por tanto, si necesitas cambiar este
+                    <li>MANAGED – Este TransactionManager no hace nada. No hace commit ni rollback sobre la
+                        conexión. En
+                        su lugar, permite que el contenedor gestione el ciclo de vida completo de la
+                        transacción (ej.
+                        Spring o un servidor de aplicaciones JEE). Por defecto cierra la conexión. Sin
+                        embargo, algunos
+                        contenedores no esperan que la conexión se cierre y por tanto, si necesitas cambiar
+                        este
                         comportamiento, informa la propiedad closeConnection a false. Por ejemplo:
                         <source><![CDATA[<transactionManager type="MANAGED">
   <property name="closeConnection" value="false"/>
@@ -1763,12 +1867,16 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                 </ul>
                 <p>
                     <span class="label important">NOTA</span>
-                    Si estás pensando en usar MyBatis con Spring no necesitas configurar ningún TransactionManager
-                    porque el módulo de Spring configurará el suyo propio sobrescribiendo cualquier otra configuración
+                    Si estás pensando en usar MyBatis con Spring no necesitas configurar ningún
+                    TransactionManager
+                    porque el módulo de Spring configurará el suyo propio sobrescribiendo cualquier otra
+                    configuración
                     previa.
                 </p>
-                <p>Ninguno de estos TransactionManagers necesita ninguna propiedad. Sin embargo ambos son Type Aliases,
-                    es decir, en lugar de usarlos puedes informar el nombre totalmente cualificado o el Type Alias de tu
+                <p>Ninguno de estos TransactionManagers necesita ninguna propiedad. Sin embargo ambos son Type
+                    Aliases,
+                    es decir, en lugar de usarlos puedes informar el nombre totalmente cualificado o el Type
+                    Alias de tu
                     propia implementación del interfaz TransactionFactory:
                 </p>
                 <source><![CDATA[public interface TransactionFactory {
@@ -1777,7 +1885,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
   Transaction newTransaction(DataSource dataSource, TransactionIsolationLevel level, boolean autoCommit);
 }]]></source>
                 <p>Todas las propiedades que configures en el XML se pasarán al método setProperties() tras la
-                    instanciación de la clase. Tu implementación debe crear una implementación de Transaction, que a su
+                    instanciación de la clase. Tu implementación debe crear una implementación de Transaction,
+                    que a su
                     vez es también un interfaz muy sencillo:
                 </p>
                 <source><![CDATA[public interface Transaction {
@@ -1787,29 +1896,38 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
   void close() throws SQLException;
   Integer getTimeout() throws SQLException;
 }]]></source>
-                <p>Con estos dos interfaces puedes personalizar por completo la forma en la que MyBatis gestiona las
+                <p>Con estos dos interfaces puedes personalizar por completo la forma en la que MyBatis
+                    gestiona las
                     transacciones.
                 </p>
                 <p>
                     <strong>dataSource</strong>
                 </p>
-                <p>El elemento dataSource sirve para configurar la forma de obtener conexiones JDBC mediante la interfaz
+                <p>El elemento dataSource sirve para configurar la forma de obtener conexiones JDBC mediante
+                    la interfaz
                     DataSource JDBC estándar.
                 </p>
                 <ul>
-                    <li>La mayoría de las aplicaciones que usen MyBatis configurarán el dataSource como se muestra en el
-                        ejemplo. Sin embargo, esta configuración no es obligatoria. Ten en cuenta, aun así, que el
+                    <li>La mayoría de las aplicaciones que usen MyBatis configurarán el dataSource como se
+                        muestra en el
+                        ejemplo. Sin embargo, esta configuración no es obligatoria. Ten en cuenta, aun así,
+                        que el
                         dataSource es necesario para utilizar Lazy Loading.
                     </li>
                 </ul>
                 <p>Hay tres tipos de dataSources pre-construidos (ej. type=”????”):</p>
                 <p>
                     <strong>UNPOOLED</strong>
-                    – Esta implementación de DataSource abre y cierra una conexión JDBC cada vez que se solcita una
-                    conexión. Aunque es un poco lento, es una buena elección para aplicaciones que no necesitan la
-                    velocidad de tener conexiones abiertas de forma inmediata. Las bases de datos tienen un rendimiento
-                    distinto en cuanto al rendimiento que aportan con este tipo de DataSource, para algunas de ellas no
-                    es muy importante tener un pool y por tanto esta configuración es apropiada. El DataSource UNPOOLED
+                    – Esta implementación de DataSource abre y cierra una conexión JDBC cada vez que se
+                    solcita una
+                    conexión. Aunque es un poco lento, es una buena elección para aplicaciones que no
+                    necesitan la
+                    velocidad de tener conexiones abiertas de forma inmediata. Las bases de datos tienen un
+                    rendimiento
+                    distinto en cuanto al rendimiento que aportan con este tipo de DataSource, para algunas de
+                    ellas no
+                    es muy importante tener un pool y por tanto esta configuración es apropiada. El DataSource
+                    UNPOOLED
                     tiene cinco opciones de configuración:
                 </p>
                 <ul>
@@ -1835,7 +1953,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                         – El nivel de aislamiento por defecto con el que se crearán las conexiones.
                     </li>
                 </ul>
-                <p>Opcionalmente, puedes también pasar propiedades al driver de la base de datos. Para ello prefija las
+                <p>Opcionalmente, puedes también pasar propiedades al driver de la base de datos. Para ello
+                    prefija las
                     propiedades con “driver.”, por ejemplo:
                 </p>
                 <ul>
@@ -1844,23 +1963,29 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                     </li>
                 </ul>
                 <p>
-                    Esto pasaría la propiedad “encoding” con el valor “UTF8” al driver de base datos mediante el método
+                    Esto pasaría la propiedad “encoding” con el valor “UTF8” al driver de base datos mediante
+                    el método
                     DriverManager.getConnection(url, driverProperties).
                 </p>
                 <p>
                     <strong>POOLED</strong>
-                    – Esta implementación de DataSource hace usa un pool de conexiones para evitar el tiempo necesario
-                    en realizar la conexión y autenticación cada vez que se solicita una nueva instancia de conexión.
-                    Este es un enfoque habitual en aplicaciones Web concurrentes para obtener el mejor tiempo de
+                    – Esta implementación de DataSource hace usa un pool de conexiones para evitar el tiempo
+                    necesario
+                    en realizar la conexión y autenticación cada vez que se solicita una nueva instancia de
+                    conexión.
+                    Este es un enfoque habitual en aplicaciones Web concurrentes para obtener el mejor tiempo
+                    de
                     respuesta posible.
                 </p>
-                <p>Además de las propiedades de (UNPOOLED) hay otras muchas propiedades que se pueden usar para
+                <p>Además de las propiedades de (UNPOOLED) hay otras muchas propiedades que se pueden usar
+                    para
                     configurar el DataSource POOLED:
                 </p>
                 <ul>
                     <li>
                         <code>poolMaximumActiveConnections</code>
-                        – Número máximo de conexiónes activas que pueden existir de forma simultánea. Por defecto: 10
+                        – Número máximo de conexiónes activas que pueden existir de forma simultánea. Por
+                        defecto: 10
                     </li>
                     <li>
                         <code>poolMaximumIdleConnections</code>
@@ -1868,21 +1993,27 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                     </li>
                     <li>
                         <code>poolMaximumCheckoutTime</code>
-                        – Tiempo máximo que puede permanecer una conexión fuera del pool antes de que sea forzosamente
+                        – Tiempo máximo que puede permanecer una conexión fuera del pool antes de que sea
+                        forzosamente
                         devuelta. Por defecto: 20000ms (20 segundos)
                     </li>
                     <li>
                         <code>poolTimeToWait</code>
-                        – Este es un parámetro de bajo nivel que permite escribir un log y reintentar la adquisición de
-                        una conexión en caso de que no se haya conseguido la conexión transcurrido un tiempo razonable
-                        (esto evita que se produzcan fallos constantes y silenciosos si el pool está mal configurado).
+                        – Este es un parámetro de bajo nivel que permite escribir un log y reintentar la
+                        adquisición de
+                        una conexión en caso de que no se haya conseguido la conexión transcurrido un tiempo
+                        razonable
+                        (esto evita que se produzcan fallos constantes y silenciosos si el pool está mal
+                        configurado).
                         Por defecto: 20000ms (20 segundos)
                     </li>
                     <li>
                         <code>poolMaximumLocalBadConnectionTolerance</code>
                         – This is a low level setting about
-                        tolerance of bad connections got for any thread. If a thread got a bad connection, it may
-                        still have another chance to re-attempt to get another connection which is valid. But the
+                        tolerance of bad connections got for any thread. If a thread got a bad connection, it
+                        may
+                        still have another chance to re-attempt to get another connection which is valid. But
+                        the
                         retrying times should not more than the sum of
                         <code>poolMaximumIdleConnections</code>
                         and <code>poolMaximumLocalBadConnectionTolerance</code>.
@@ -1891,44 +2022,59 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                     </li>
                     <li>
                         <code>poolPingQuery</code>
-                        – La query de ping (sondeo) que se envía a la base de datos para verificar que la conexión
-                        funciona correctamente y que está lista para aceptar nuevas peticiones de conexión. El valor por
-                        defecto es "NO PING QUERY SET", que hará que la mayoría de los drivers de base de datos
+                        – La query de ping (sondeo) que se envía a la base de datos para verificar que la
+                        conexión
+                        funciona correctamente y que está lista para aceptar nuevas peticiones de conexión. El
+                        valor por
+                        defecto es "NO PING QUERY SET", que hará que la mayoría de los drivers de base de
+                        datos
                         devuelvan un error con un mensaje de error decente.
                     </li>
                     <li>
                         <code>poolPingEnabled</code>
-                        – Habilita o inhabilita la query de ping. Si está habilitada deberías informar también la
-                        propiedad poolPingQuery con una sentencia SQL (preferentemente una rápida). Por defecto: false.
+                        – Habilita o inhabilita la query de ping. Si está habilitada deberías informar también
+                        la
+                        propiedad poolPingQuery con una sentencia SQL (preferentemente una rápida). Por
+                        defecto: false.
                     </li>
                     <li>
                         <code>poolPingConnectionsNotUsedFor</code>
-                        – Configura la frecuencia con la que se ejecutará la sentencia poolPingQuery. Normalmente se
-                        iguala al timeout de la conexión de base de datos para evitar pings innecesarios. Por defecto: 0
-                        (todas las conexiones se testean continuamente – solo si se ha habilitado poolPingEnabled).
+                        – Configura la frecuencia con la que se ejecutará la sentencia poolPingQuery.
+                        Normalmente se
+                        iguala al timeout de la conexión de base de datos para evitar pings innecesarios. Por
+                        defecto: 0
+                        (todas las conexiones se testean continuamente – solo si se ha habilitado
+                        poolPingEnabled).
                     </li>
                 </ul>
                 <p>
                     <strong>JNDI</strong>
-                    – Esta implementación de DataSource está pensada para ser usada en contenedores como Spring o los
-                    servidores de aplicaciones JEE en los que es posible configurar un DataSource de forma externa y
-                    alojarlo en el contexto JNDI. Esta configuración de DataSource requiere solo dos propiedades:
+                    – Esta implementación de DataSource está pensada para ser usada en contenedores como
+                    Spring o los
+                    servidores de aplicaciones JEE en los que es posible configurar un DataSource de forma
+                    externa y
+                    alojarlo en el contexto JNDI. Esta configuración de DataSource requiere solo dos
+                    propiedades:
                 </p>
                 <ul>
                     <li>
                         <code>initial_context</code>
                         – Propiedad que se usa para realizar el lookup en el InitialContext
-                        (initialContext.lookup(initial_context)). Esta propiedad es opcional, si no se informa, se
+                        (initialContext.lookup(initial_context)). Esta propiedad es opcional, si no se
+                        informa, se
                         buscará directamente la propiedad data_source.
                     </li>
                     <li>
                         <code>data_source</code>
-                        – Es el contexto donde se debe buscar el DataSource. El DataSource se buscará en el contexto
-                        resultado de buscar data_source en el InitialContext o si no se ha informado la propiedad se
+                        – Es el contexto donde se debe buscar el DataSource. El DataSource se buscará en el
+                        contexto
+                        resultado de buscar data_source en el InitialContext o si no se ha informado la
+                        propiedad se
                         buscará directamente sobre InitialContext.
                     </li>
                 </ul>
-                <p>Al igual que en las otras configuraciones de DataSource. Es posible enviar propiedades directamente
+                <p>Al igual que en las otras configuraciones de DataSource. Es posible enviar propiedades
+                    directamente
                     al InitialContext prefijando las propiedades con “env.”, por ejemplo:
                 </p>
                 <ul>
@@ -1937,7 +2083,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                     </li>
                 </ul>
                 <p>
-                    Enviará la propiedad “encoding” y el valor “UTF-8” al constructor del InitialContext durante su
+                    Enviará la propiedad “encoding” y el valor “UTF-8” al constructor del InitialContext
+                    durante su
                     instanciación.
                 </p>
 
@@ -1952,7 +2099,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
 }]]></source>
 
                 <p>
-                    The <code>org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory</code> puede extenderse
+                    The <code>org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory</code> puede
+                    extenderse
                     para crear nuevos
                     adaptadores. Por ejemplo, este es el código necesario para integrar C3P0:
                 </p>
@@ -1984,12 +2132,16 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
 
             <subsection name="databaseIdProvider">
                 <p>
-                    MyBatis puede ejeutar sentencias distintas en función del fabricante (vendor) de tu base de datos.
-                    El soporte de múltiples bases de datos se basa en el atributo de <code>databaseId</code> de los
+                    MyBatis puede ejeutar sentencias distintas en función del fabricante (vendor) de tu base
+                    de datos.
+                    El soporte de múltiples bases de datos se basa en el atributo de <code>databaseId</code> de
+                    los
                     mapped statements.
-                    MyBatis cargará todos los statements que no tengan atributo <code>databaseId</code> attribute o
+                    MyBatis cargará todos los statements que no tengan atributo <code>databaseId</code> attribute
+                    o
                     aquellos
-                    cuyo <code>databaseId</code> coincida con el valor en curso. Si se encuentra un statement con y sin
+                    cuyo <code>databaseId</code> coincida con el valor en curso. Si se encuentra un statement
+                    con y sin
                     atributo
                     <code>databaseId</code>
                     el último se descartará.
@@ -2002,11 +2154,14 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
 ]]></source>
 
                 <p>
-                    La implementación DB_VENDOR del databaseIdProvider establece como databaseId el String devuelto por
+                    La implementación DB_VENDOR del databaseIdProvider establece como databaseId el String
+                    devuelto por
                     <code>DatabaseMetaData#getDatabaseProductName()</code>.
-                    Como normalmente este string es demasiado largo, y además, distintas versiones del mismo producto
+                    Como normalmente este string es demasiado largo, y además, distintas versiones del mismo
+                    producto
                     devuelven valores
-                    similares, puedes traducirlo a un valor más corto añadiendo propiedades de la siguente forma:
+                    similares, puedes traducirlo a un valor más corto añadiendo propiedades de la siguente
+                    forma:
                 </p>
 
                 <source><![CDATA[<databaseIdProvider type="DB_VENDOR">
@@ -2018,9 +2173,11 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
                 <p>
                     Cuando se añaden propiedades, el databaseIdProvider DB_VENDOR devuelve el primer valor que
                     corresponde a la primera clave
-                    encontrada en el nombre devuelto por <code>DatabaseMetaData#getDatabaseProductName()</code> o "null"
+                    encontrada en el nombre devuelto por <code>DatabaseMetaData#getDatabaseProductName()
+                </code> o "null"
                     si no se encuentra ninguna.
-                    En este caso, si <code>getDatabaseProductName()</code> devuelve "Oracle (DataDirect)" el databaseId
+                    En este caso, si <code>getDatabaseProductName()</code> devuelve "Oracle (DataDirect)" el
+                    databaseId
                     se informará con "oracle".
                 </p>
 
@@ -2039,10 +2196,13 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
 
             <subsection name="mappers">
                 <p>
-                    Ahora que se ha configurado el comportamiento de MyBatis con todos los elementos de configuración
-                    comentados estamos listos para definir los SQL mapped statements (sentencias SQL mapeadas).
+                    Ahora que se ha configurado el comportamiento de MyBatis con todos los elementos de
+                    configuración
+                    comentados estamos listos para definir los SQL mapped statements (sentencias SQL
+                    mapeadas).
                     Primeramente necesitaremos indicarle a MyBatis dónde encontrarlos. Java no ofrece muchas
-                    posibilidades de auto-descubrimiento así que la mejor forma es simplemente decirle a MyBatis donde
+                    posibilidades de auto-descubrimiento así que la mejor forma es simplemente decirle a
+                    MyBatis donde
                     encontrar los ficheros de mapeo. Puedes utilizar referencias tipo classpath, o tipo path o
                     referencias url completamente cualificadas (incluyendo file:///) . Por ejemplo:
                 </p>
@@ -2074,7 +2234,8 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
 
                 <p>
                     Esta configuración sólo indica a MyBatis cuáles son los ficheros de mapeo. El resto de la
-                    configuración se encuentra dentro de estos ficheros, y eso es de lo que hablaremos en el siguiente
+                    configuración se encuentra dentro de estos ficheros, y eso es de lo que hablaremos en el
+                    siguiente
                     apartado.
                 </p>
             </subsection>

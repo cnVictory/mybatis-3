@@ -15,11 +15,11 @@
  */
 package org.apache.ibatis.submitted.constructor_columnprefix;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Arg;
 import org.apache.ibatis.annotations.ConstructorArgs;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface Mapper {
 

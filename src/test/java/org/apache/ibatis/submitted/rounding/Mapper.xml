@@ -41,7 +41,8 @@
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="funkyNumber" property="funkyNumber"/>
-        <result column="roundingMode" property="roundingMode" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+        <result column="roundingMode" property="roundingMode"
+                typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
     </resultMap>
     <select id="getUser2" resultMap="usermap2">
 		select * from users2

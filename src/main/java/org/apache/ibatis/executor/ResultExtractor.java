@@ -15,12 +15,12 @@
  */
 package org.apache.ibatis.executor;
 
-import java.lang.reflect.Array;
-import java.util.List;
-
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.session.Configuration;
+
+import java.lang.reflect.Array;
+import java.util.List;
 
 /**
  * @author Andrew Gustafson
@@ -55,7 +55,8 @@ public class ResultExtractor {
             }
         } else {
             if (list != null && list.size() > 1) {
-                throw new ExecutorException("Statement returned more than one row, where no more than one was expected.");
+                throw new ExecutorException("Statement returned more than one row, where no more than one " +
+                        "was expected.");
             } else if (list != null && list.size() == 1) {
                 value = list.get(0);
             }

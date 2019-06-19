@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.submitted.xml_external_ref;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.sql.SQLException;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -30,11 +24,23 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class NonFullyQualifiedNamespaceTest {
+    private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
+        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
+                "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
+    }
+
     @Test
     void testCrossReferenceXmlConfig() throws Exception {
         try (Reader configReader = Resources
-                .getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref/NonFullyQualifiedNamespaceConfig.xml")) {
+                .getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref" +
+                        "/NonFullyQualifiedNamespaceConfig.xml")) {
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configReader);
 
             Configuration configuration = sqlSessionFactory.getConfiguration();
@@ -60,11 +66,6 @@ class NonFullyQualifiedNamespaceTest {
                 assertEquals((Integer) 2, pet2.getOwner().getId());
             }
         }
-    }
-
-    private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
-        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-                "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
     }
 
 }

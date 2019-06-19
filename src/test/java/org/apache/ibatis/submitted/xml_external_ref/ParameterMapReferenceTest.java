@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.submitted.xml_external_ref;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.sql.SQLException;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.io.Resources;
@@ -32,7 +26,18 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ParameterMapReferenceTest {
+
+    private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
+        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
+                "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
+    }
 
     @Test
     void testCrossReferenceXmlConfig() throws Exception {
@@ -46,7 +51,8 @@ class ParameterMapReferenceTest {
 
     private void testCrossReference(SqlSessionFactory sqlSessionFactory) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            ParameterMapReferencePersonMapper personMapper = sqlSession.getMapper(ParameterMapReferencePersonMapper.class);
+            ParameterMapReferencePersonMapper personMapper =
+                    sqlSession.getMapper(ParameterMapReferencePersonMapper.class);
             Person parameter = new Person();
             parameter.setId(1);
             Person person = personMapper.select(parameter);
@@ -56,7 +62,8 @@ class ParameterMapReferenceTest {
 
     private SqlSessionFactory getSqlSessionFactoryXmlConfig() throws Exception {
         try (Reader configReader = Resources
-                .getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref/ParameterMapReferenceMapperConfig.xml")) {
+                .getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref" +
+                        "/ParameterMapReferenceMapperConfig.xml")) {
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configReader);
 
             initDb(sqlSessionFactory);
@@ -67,7 +74,8 @@ class ParameterMapReferenceTest {
 
     private SqlSessionFactory getSqlSessionFactoryJavaConfig() throws Exception {
         Configuration configuration = new Configuration();
-        Environment environment = new Environment("development", new JdbcTransactionFactory(), new UnpooledDataSource(
+        Environment environment = new Environment("development", new JdbcTransactionFactory(),
+                new UnpooledDataSource(
                 "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:xmlextref", null));
         configuration.setEnvironment(environment);
         configuration.addMapper(ParameterMapReferencePersonMapper.class);
@@ -78,12 +86,6 @@ class ParameterMapReferenceTest {
         initDb(sqlSessionFactory);
 
         return sqlSessionFactory;
-    }
-
-
-    private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
-        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-                "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
     }
 
 }

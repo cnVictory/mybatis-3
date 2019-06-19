@@ -16,11 +16,6 @@
 package org.apache.ibatis.submitted.xml_references;
 
 public class Person {
-    public enum Type {
-        EMPLOYEE,
-        DIRECTOR
-    }
-
     private Long id;
     private String firstName;
     private String lastName;
@@ -47,5 +42,10 @@ public class Person {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public enum Type {
+        EMPLOYEE,
+        DIRECTOR
     }
 }

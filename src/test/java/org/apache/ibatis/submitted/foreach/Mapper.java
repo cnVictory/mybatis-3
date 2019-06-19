@@ -15,9 +15,9 @@
  */
 package org.apache.ibatis.submitted.foreach;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface Mapper {
 
@@ -31,7 +31,9 @@ public interface Mapper {
 
     int typoInItemProperty(List<User> users);
 
-    int itemVariableConflict(@Param("id") Integer id, @Param("ids") List<Integer> ids, @Param("ids2") List<Integer> ids2);
+    int itemVariableConflict(@Param("id") Integer id, @Param("ids") List<Integer> ids,
+                             @Param("ids2") List<Integer> ids2);
 
-    int indexVariableConflict(@Param("idx") Integer id, @Param("idxs") List<Integer> ids, @Param("idxs2") List<Integer> ids2);
+    int indexVariableConflict(@Param("idx") Integer id, @Param("idxs") List<Integer> ids,
+                              @Param("idxs2") List<Integer> ids2);
 }

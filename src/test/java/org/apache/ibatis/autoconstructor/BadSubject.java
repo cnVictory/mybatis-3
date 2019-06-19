@@ -22,7 +22,8 @@ public class BadSubject {
     private final Height height;
     private final Double weight;
 
-    public BadSubject(final int id, final String name, final int age, final Height height, final Double weight) {
+    public BadSubject(final int id, final String name, final int age, final Height height,
+                      final Double weight) {
         this.id = id;
         this.name = name;
         this.age = age;

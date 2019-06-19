@@ -15,9 +15,6 @@
  */
 package org.apache.ibatis.submitted.primitives;
 
-import java.io.Reader;
-import java.util.List;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +24,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+import java.util.List;
+
 class PrimitivesTest {
 
     private static SqlSessionFactory sqlSessionFactory;
@@ -34,7 +34,8 @@ class PrimitivesTest {
     @BeforeAll
     static void setUp() throws Exception {
         // create an SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/primitives/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/primitives/mybatis" +
+                "-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

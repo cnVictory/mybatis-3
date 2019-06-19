@@ -15,8 +15,6 @@
  */
 package org.apache.ibatis.scripting;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -26,7 +24,9 @@ import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.apache.ibatis.session.Configuration;
 import org.junit.jupiter.api.Test;
 
-import static com.googlecode.catchexception.apis.BDDCatchException.*;
+import static com.googlecode.catchexception.apis.BDDCatchException.caughtException;
+import static com.googlecode.catchexception.apis.BDDCatchException.when;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
 /**
@@ -65,7 +65,8 @@ class LanguageDriverRegistryTest {
     void registerByTypeDoesNotCreateNewInstance() {
         when(registry).register(PrivateLanguageDriver.class);
         then(caughtException()).isInstanceOf(ScriptingException.class)
-                .hasMessage("Failed to load language driver for org.apache.ibatis.scripting.LanguageDriverRegistryTest$PrivateLanguageDriver");
+                .hasMessage("Failed to load language driver for org.apache.ibatis.scripting" +
+                        ".LanguageDriverRegistryTest$PrivateLanguageDriver");
     }
 
     @Test
@@ -103,7 +104,8 @@ class LanguageDriverRegistryTest {
     static private class PrivateLanguageDriver implements LanguageDriver {
 
         @Override
-        public ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
+        public ParameterHandler createParameterHandler(MappedStatement mappedStatement,
+                                                       Object parameterObject, BoundSql boundSql) {
             return null;
         }
 

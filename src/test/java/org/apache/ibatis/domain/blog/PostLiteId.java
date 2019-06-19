@@ -22,16 +22,16 @@ public class PostLiteId {
 
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public PostLiteId(int aId) {
         id = aId;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -14,6 +14,8 @@
  * limitations under the License.
  * <p>
  * logger using JDK logging feature.
+ * <p>
+ * logger using JDK logging feature.
  */
 /**
  * logger using JDK logging feature.

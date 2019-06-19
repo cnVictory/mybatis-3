@@ -14,6 +14,8 @@
  * limitations under the License.
  * <p>
  * logger using Commons Logging feature.
+ * <p>
+ * logger using Commons Logging feature.
  */
 /**
  * logger using Commons Logging feature.

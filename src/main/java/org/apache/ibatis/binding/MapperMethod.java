@@ -15,15 +15,6 @@
  */
 package org.apache.ibatis.binding;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import org.apache.ibatis.annotations.Flush;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.cursor.Cursor;
@@ -37,6 +28,15 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Clinton Begin
@@ -115,7 +115,8 @@ public class MapperMethod {
         } else if (Boolean.class.equals(method.getReturnType()) || Boolean.TYPE.equals(method.getReturnType())) {
             result = rowCount > 0;
         } else {
-            throw new BindingException("Mapper method '" + command.getName() + "' has an unsupported return type: " + method.getReturnType());
+            throw new BindingException("Mapper method '" + command.getName() + "' has an unsupported return" +
+                    " type: " + method.getReturnType());
         }
         return result;
     }
@@ -295,7 +296,8 @@ public class MapperMethod {
                 this.returnType = method.getReturnType();
             }
             this.returnsVoid = void.class.equals(this.returnType);
-            this.returnsMany = configuration.getObjectFactory().isCollection(this.returnType) || this.returnType.isArray();
+            this.returnsMany =
+                    configuration.getObjectFactory().isCollection(this.returnType) || this.returnType.isArray();
             this.returnsCursor = Cursor.class.equals(this.returnType);
             this.returnsOptional = Optional.class.equals(this.returnType);
             this.mapKey = getMapKey(method);
@@ -351,6 +353,7 @@ public class MapperMethod {
 
         /**
          * return whether return type is {@code java.util.Optional}.
+         *
          * @return return {@code true}, if return type is {@code java.util.Optional}
          * @since 3.5.0
          */

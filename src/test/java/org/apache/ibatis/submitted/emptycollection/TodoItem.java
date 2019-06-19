@@ -17,13 +17,13 @@ package org.apache.ibatis.submitted.emptycollection;
 
 public class TodoItem {
 
+    private int order;
+    private String description;
+
     @Override
     public String toString() {
         return "TodoItem [order=" + order + ", description=" + description + "]";
     }
-
-    private int order;
-    private String description;
 
     public int getOrder() {
         return order;

@@ -32,7 +32,8 @@ class ComplexColumnTest {
 
     @BeforeAll
     static void initDatabase() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/complex_column/ibatisConfig.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/complex_column" +
+                "/ibatisConfig.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

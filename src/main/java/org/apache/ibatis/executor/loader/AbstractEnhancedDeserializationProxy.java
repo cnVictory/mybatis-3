@@ -15,17 +15,16 @@
  */
 package org.apache.ibatis.executor.loader;
 
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import org.apache.ibatis.executor.ExecutorException;
-
 import org.apache.ibatis.reflection.ExceptionUtil;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.property.PropertyCopier;
 import org.apache.ibatis.reflection.property.PropertyNamer;
+
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Clinton Begin
@@ -42,8 +41,11 @@ public abstract class AbstractEnhancedDeserializationProxy {
     private final Object reloadingPropertyLock;
     private boolean reloadingProperty;
 
-    protected AbstractEnhancedDeserializationProxy(Class<?> type, Map<String, ResultLoaderMap.LoadPair> unloadedProperties,
-                                                   ObjectFactory objectFactory, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
+    protected AbstractEnhancedDeserializationProxy(Class<?> type,
+                                                   Map<String, ResultLoaderMap.LoadPair> unloadedProperties,
+                                                   ObjectFactory objectFactory,
+                                                   List<Class<?>> constructorArgTypes,
+                                                   List<Object> constructorArgs) {
         this.type = type;
         this.unloadedProperties = unloadedProperties;
         this.objectFactory = objectFactory;
@@ -65,7 +67,8 @@ public abstract class AbstractEnhancedDeserializationProxy {
                 }
 
                 PropertyCopier.copyBeanProperties(type, enhanced, original);
-                return this.newSerialStateHolder(original, unloadedProperties, objectFactory, constructorArgTypes, constructorArgs);
+                return this.newSerialStateHolder(original, unloadedProperties, objectFactory,
+                        constructorArgTypes, constructorArgs);
             } else {
                 synchronized (this.reloadingPropertyLock) {
                     if (!FINALIZE_METHOD.equals(methodName) && PropertyNamer.isProperty(methodName) && !reloadingProperty) {
@@ -83,7 +86,8 @@ public abstract class AbstractEnhancedDeserializationProxy {
                             } else {
                                 /* I'm not sure if this case can really happen or is just in tests -
                                  * we have an unread property but no loadPair to load it. */
-                                throw new ExecutorException("An attempt has been made to read a not loaded lazy property '"
+                                throw new ExecutorException("An attempt has been made to read a not loaded " +
+                                        "lazy property '"
                                         + property + "' of a disconnected object");
                             }
                         }

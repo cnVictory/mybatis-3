@@ -15,16 +15,17 @@
  */
 package org.apache.ibatis.reflection;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import static com.googlecode.catchexception.apis.BDDCatchException.*;
+import static com.googlecode.catchexception.apis.BDDCatchException.caughtException;
+import static com.googlecode.catchexception.apis.BDDCatchException.when;
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReflectorTest {
 
@@ -47,30 +48,6 @@ class ReflectorTest {
         ReflectorFactory reflectorFactory = new DefaultReflectorFactory();
         Reflector reflector = reflectorFactory.findForClass(Section.class);
         Assertions.assertFalse(reflector.hasGetter("class"));
-    }
-
-    interface Entity<T> {
-        T getId();
-
-        void setId(T id);
-    }
-
-    static abstract class AbstractEntity implements Entity<Long> {
-
-        private Long id;
-
-        @Override
-        public Long getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(Long id) {
-            this.id = id;
-        }
-    }
-
-    static class Section extends AbstractEntity implements Entity<Long> {
     }
 
     @Test
@@ -133,45 +110,6 @@ class ReflectorTest {
         assertEquals(String.class, clazz.getComponentType());
     }
 
-    static abstract class Parent<T extends Serializable> {
-        protected T id;
-        protected List<T> list;
-        protected T[] array;
-        private T fld;
-        public T pubFld;
-
-        public T getId() {
-            return id;
-        }
-
-        public void setId(T id) {
-            this.id = id;
-        }
-
-        public List<T> getList() {
-            return list;
-        }
-
-        public void setList(List<T> list) {
-            this.list = list;
-        }
-
-        public T[] getArray() {
-            return array;
-        }
-
-        public void setArray(T[] array) {
-            this.array = array;
-        }
-
-        public T getFld() {
-            return fld;
-        }
-    }
-
-    static class Child extends Parent<String> {
-    }
-
     @Test
     void shouldResoleveReadonlySetterWithOverload() {
         class BeanClass implements BeanInterface<String> {
@@ -183,10 +121,6 @@ class ReflectorTest {
         ReflectorFactory reflectorFactory = new DefaultReflectorFactory();
         Reflector reflector = reflectorFactory.findForClass(BeanClass.class);
         assertEquals(String.class, reflector.getSetterType("id"));
-    }
-
-    interface BeanInterface<T> {
-        void setId(T id);
     }
 
     @Test
@@ -228,5 +162,72 @@ class ReflectorTest {
         ReflectorFactory reflectorFactory = new DefaultReflectorFactory();
         Reflector reflector = reflectorFactory.findForClass(Bean.class);
         assertTrue((Boolean) reflector.getGetInvoker("bool").invoke(new Bean(), new Byte[0]));
+    }
+
+    interface Entity<T> {
+        T getId();
+
+        void setId(T id);
+    }
+
+    interface BeanInterface<T> {
+        void setId(T id);
+    }
+
+    static abstract class AbstractEntity implements Entity<Long> {
+
+        private Long id;
+
+        @Override
+        public Long getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(Long id) {
+            this.id = id;
+        }
+    }
+
+    static class Section extends AbstractEntity implements Entity<Long> {
+    }
+
+    static abstract class Parent<T extends Serializable> {
+        public T pubFld;
+        protected T id;
+        protected List<T> list;
+        protected T[] array;
+        private T fld;
+
+        public T getId() {
+            return id;
+        }
+
+        public void setId(T id) {
+            this.id = id;
+        }
+
+        public List<T> getList() {
+            return list;
+        }
+
+        public void setList(List<T> list) {
+            this.list = list;
+        }
+
+        public T[] getArray() {
+            return array;
+        }
+
+        public void setArray(T[] array) {
+            this.array = array;
+        }
+
+        public T getFld() {
+            return fld;
+        }
+    }
+
+    static class Child extends Parent<String> {
     }
 }

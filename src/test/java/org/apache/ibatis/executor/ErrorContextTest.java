@@ -15,16 +15,17 @@
  */
 package org.apache.ibatis.executor;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ErrorContextTest {
 
     @Test
     void shouldShowProgressiveErrorContextBuilding() {
         ErrorContext context = ErrorContext.instance();
-        context.resource("somefile.xml").activity("some activity").object("some object").message("Here's more info.");
+        context.resource("somefile.xml").activity("some activity").object("some object").message("Here's " +
+                "more info.");
         context.toString().startsWith("### The error occurred in somefile.xml.");
         context.reset();
 

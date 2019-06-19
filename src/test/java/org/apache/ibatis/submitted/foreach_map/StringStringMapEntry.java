@@ -16,6 +16,9 @@
 package org.apache.ibatis.submitted.foreach_map;
 
 public class StringStringMapEntry {
+    private String key;
+    private String value;
+
     public StringStringMapEntry() {
     }
 
@@ -68,7 +71,4 @@ public class StringStringMapEntry {
     public String toString() {
         return '{' + key.toString() + '=' + value + '}';
     }
-
-    private String key;
-    private String value;
 }

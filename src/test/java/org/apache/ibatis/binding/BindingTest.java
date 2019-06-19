@@ -15,47 +15,31 @@
  */
 package org.apache.ibatis.binding;
 
-import static com.googlecode.catchexception.apis.BDDCatchException.*;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import javassist.util.proxy.Proxy;
-
-import javax.sql.DataSource;
-
 import net.sf.cglib.proxy.Factory;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.cursor.Cursor;
-import org.apache.ibatis.domain.blog.Author;
-import org.apache.ibatis.domain.blog.Blog;
-import org.apache.ibatis.domain.blog.DraftPost;
-import org.apache.ibatis.domain.blog.Post;
-import org.apache.ibatis.domain.blog.Section;
+import org.apache.ibatis.domain.blog.*;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.result.DefaultResultHandler;
 import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.session.*;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.*;
+
+import static com.googlecode.catchexception.apis.BDDCatchException.caughtException;
+import static com.googlecode.catchexception.apis.BDDCatchException.when;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BindingTest {
     private static SqlSessionFactory sqlSessionFactory;
@@ -148,7 +132,8 @@ class BindingTest {
                 when(mapper).insertAuthorInvalidSelectKey(author);
                 then(caughtException()).isInstanceOf(PersistenceException.class).hasMessageContaining(
                         "### The error may exist in org/apache/ibatis/binding/BoundAuthorMapper.xml" + System.lineSeparator() +
-                                "### The error may involve org.apache.ibatis.binding.BoundAuthorMapper.insertAuthorInvalidSelectKey!selectKey" + System.lineSeparator() +
+                                "### The error may involve org.apache.ibatis.binding.BoundAuthorMapper" +
+                                ".insertAuthorInvalidSelectKey!selectKey" + System.lineSeparator() +
                                 "### The error occurred while executing a query");
             } finally {
                 session.rollback();
@@ -165,7 +150,8 @@ class BindingTest {
                 when(mapper).insertAuthorInvalidInsert(author);
                 then(caughtException()).isInstanceOf(PersistenceException.class).hasMessageContaining(
                         "### The error may exist in org/apache/ibatis/binding/BoundAuthorMapper.xml" + System.lineSeparator() +
-                                "### The error may involve org.apache.ibatis.binding.BoundAuthorMapper.insertAuthorInvalidInsert" + System.lineSeparator() +
+                                "### The error may involve org.apache.ibatis.binding.BoundAuthorMapper" +
+                                ".insertAuthorInvalidInsert" + System.lineSeparator() +
                                 "### The error occurred while executing an update");
             } finally {
                 session.rollback();
@@ -577,7 +563,8 @@ class BindingTest {
         try (SqlSession session = sqlSessionFactory.openSession()) {
 
             // Create another mapper instance with a method cache we can test against:
-            final MapperProxyFactory<BoundBlogMapper> mapperProxyFactory = new MapperProxyFactory<BoundBlogMapper>(BoundBlogMapper.class);
+            final MapperProxyFactory<BoundBlogMapper> mapperProxyFactory =
+                    new MapperProxyFactory<BoundBlogMapper>(BoundBlogMapper.class);
             assertEquals(BoundBlogMapper.class, mapperProxyFactory.getMapperInterface());
             final BoundBlogMapper mapper = mapperProxyFactory.newInstance(session);
             assertNotSame(mapper, mapperProxyFactory.newInstance(session));
@@ -585,7 +572,8 @@ class BindingTest {
 
             // Mapper methods we will call later:
             final Method selectBlog = BoundBlogMapper.class.getMethod("selectBlog", Integer.TYPE);
-            final Method selectBlogByIdUsingConstructor = BoundBlogMapper.class.getMethod("selectBlogByIdUsingConstructor", Integer.TYPE);
+            final Method selectBlogByIdUsingConstructor = BoundBlogMapper.class.getMethod(
+                    "selectBlogByIdUsingConstructor", Integer.TYPE);
 
             // Call mapper method and verify it is cached:
             mapper.selectBlog(1);
@@ -684,7 +672,8 @@ class BindingTest {
 
     @Test
     void registeredMappers() {
-        Collection<Class<?>> mapperClasses = sqlSessionFactory.getConfiguration().getMapperRegistry().getMappers();
+        Collection<Class<?>> mapperClasses =
+                sqlSessionFactory.getConfiguration().getMapperRegistry().getMappers();
         assertEquals(2, mapperClasses.size());
         assertTrue(mapperClasses.contains(BoundBlogMapper.class));
         assertTrue(mapperClasses.contains(BoundAuthorMapper.class));

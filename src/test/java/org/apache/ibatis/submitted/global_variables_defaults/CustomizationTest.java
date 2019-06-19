@@ -43,12 +43,14 @@ class CustomizationTest {
         props.setProperty(PropertyParser.KEY_ENABLE_DEFAULT_VALUE, "true");
         props.setProperty(PropertyParser.KEY_DEFAULT_VALUE_SEPARATOR, "?:");
 
-        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/global_variables_defaults/mybatis-config-custom-separator.xml");
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/global_variables_defaults/mybatis-config-custom-separator.xml");
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, props);
         Configuration configuration = factory.getConfiguration();
         configuration.addMapper(CustomDefaultValueSeparatorMapper.class);
 
-        SupportClasses.CustomCache cache = SupportClasses.Utils.unwrap(configuration.getCache(CustomDefaultValueSeparatorMapper.class.getName()));
+        SupportClasses.CustomCache cache =
+                SupportClasses.Utils.unwrap(configuration.getCache(CustomDefaultValueSeparatorMapper.class.getName()));
 
         Assertions.assertThat(configuration.getJdbcTypeForNull()).isEqualTo(JdbcType.NULL);
         Assertions.assertThat(((UnpooledDataSource) configuration.getEnvironment().getDataSource()).getUrl())
@@ -59,7 +61,8 @@ class CustomizationTest {
         Assertions.assertThat(cache.getName()).isEqualTo("default");
 
         try (SqlSession sqlSession = factory.openSession()) {
-            CustomDefaultValueSeparatorMapper mapper = sqlSession.getMapper(CustomDefaultValueSeparatorMapper.class);
+            CustomDefaultValueSeparatorMapper mapper =
+                    sqlSession.getMapper(CustomDefaultValueSeparatorMapper.class);
             Assertions.assertThat(mapper.selectValue(null)).isEqualTo("default");
         }
 
@@ -77,12 +80,14 @@ class CustomizationTest {
         props.setProperty("objectFactory:name", "customObjectFactory");
         props.setProperty("cache:name", "customCache");
 
-        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/global_variables_defaults/mybatis-config-custom-separator.xml");
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/global_variables_defaults/mybatis-config-custom-separator.xml");
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, props);
         Configuration configuration = factory.getConfiguration();
         configuration.addMapper(CustomDefaultValueSeparatorMapper.class);
 
-        SupportClasses.CustomCache cache = SupportClasses.Utils.unwrap(configuration.getCache(CustomDefaultValueSeparatorMapper.class.getName()));
+        SupportClasses.CustomCache cache =
+                SupportClasses.Utils.unwrap(configuration.getCache(CustomDefaultValueSeparatorMapper.class.getName()));
 
         Assertions.assertThat(configuration.getJdbcTypeForNull()).isEqualTo(JdbcType.CHAR);
         Assertions.assertThat(((UnpooledDataSource) configuration.getEnvironment().getDataSource()).getUrl())
@@ -93,7 +98,8 @@ class CustomizationTest {
         Assertions.assertThat(cache.getName()).isEqualTo("customCache");
 
         try (SqlSession sqlSession = factory.openSession()) {
-            CustomDefaultValueSeparatorMapper mapper = sqlSession.getMapper(CustomDefaultValueSeparatorMapper.class);
+            CustomDefaultValueSeparatorMapper mapper =
+                    sqlSession.getMapper(CustomDefaultValueSeparatorMapper.class);
             Assertions.assertThat(mapper.selectValue("3333")).isEqualTo("3333");
         }
 

@@ -15,14 +15,9 @@
  */
 package org.apache.ibatis.scripting.xmltags;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.StringTokenizer;
-
 import org.apache.ibatis.session.Configuration;
+
+import java.util.*;
 
 /**
  * @author Clinton Begin
@@ -36,25 +31,20 @@ public class TrimSqlNode implements SqlNode {
     private final List<String> suffixesToOverride;
     private final Configuration configuration;
 
-    public TrimSqlNode(Configuration configuration, SqlNode contents, String prefix, String prefixesToOverride, String suffix, String suffixesToOverride) {
-        this(configuration, contents, prefix, parseOverrides(prefixesToOverride), suffix, parseOverrides(suffixesToOverride));
+    public TrimSqlNode(Configuration configuration, SqlNode contents, String prefix,
+                       String prefixesToOverride, String suffix, String suffixesToOverride) {
+        this(configuration, contents, prefix, parseOverrides(prefixesToOverride), suffix,
+                parseOverrides(suffixesToOverride));
     }
 
-    protected TrimSqlNode(Configuration configuration, SqlNode contents, String prefix, List<String> prefixesToOverride, String suffix, List<String> suffixesToOverride) {
+    protected TrimSqlNode(Configuration configuration, SqlNode contents, String prefix,
+                          List<String> prefixesToOverride, String suffix, List<String> suffixesToOverride) {
         this.contents = contents;
         this.prefix = prefix;
         this.prefixesToOverride = prefixesToOverride;
         this.suffix = suffix;
         this.suffixesToOverride = suffixesToOverride;
         this.configuration = configuration;
-    }
-
-    @Override
-    public boolean apply(DynamicContext context) {
-        FilteredDynamicContext filteredDynamicContext = new FilteredDynamicContext(context);
-        boolean result = contents.apply(filteredDynamicContext);
-        filteredDynamicContext.applyAll();
-        return result;
     }
 
     private static List<String> parseOverrides(String overrides) {
@@ -67,6 +57,14 @@ public class TrimSqlNode implements SqlNode {
             return list;
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public boolean apply(DynamicContext context) {
+        FilteredDynamicContext filteredDynamicContext = new FilteredDynamicContext(context);
+        boolean result = contents.apply(filteredDynamicContext);
+        filteredDynamicContext.applyAll();
+        return result;
     }
 
     private class FilteredDynamicContext extends DynamicContext {

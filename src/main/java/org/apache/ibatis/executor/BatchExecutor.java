@@ -15,14 +15,6 @@
  */
 package org.apache.ibatis.executor;
 
-import java.sql.BatchUpdateException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
@@ -34,6 +26,14 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.transaction.Transaction;
+
+import java.sql.BatchUpdateException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Jeff Butler
@@ -54,7 +54,8 @@ public class BatchExecutor extends BaseExecutor {
     @Override
     public int doUpdate(MappedStatement ms, Object parameterObject) throws SQLException {
         final Configuration configuration = ms.getConfiguration();
-        final StatementHandler handler = configuration.newStatementHandler(this, ms, parameterObject, RowBounds.DEFAULT, null, null);
+        final StatementHandler handler = configuration.newStatementHandler(this, ms, parameterObject,
+                RowBounds.DEFAULT, null, null);
         final BoundSql boundSql = handler.getBoundSql();
         final String sql = boundSql.getSql();
         final Statement stmt;
@@ -79,13 +80,15 @@ public class BatchExecutor extends BaseExecutor {
     }
 
     @Override
-    public <E> List<E> doQuery(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql)
+    public <E> List<E> doQuery(MappedStatement ms, Object parameterObject, RowBounds rowBounds,
+                               ResultHandler resultHandler, BoundSql boundSql)
             throws SQLException {
         Statement stmt = null;
         try {
             flushStatements();
             Configuration configuration = ms.getConfiguration();
-            StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameterObject, rowBounds, resultHandler, boundSql);
+            StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameterObject,
+                    rowBounds, resultHandler, boundSql);
             Connection connection = getConnection(ms.getStatementLog());
             stmt = handler.prepare(connection, transaction.getTimeout());
             handler.parameterize(stmt);
@@ -96,10 +99,12 @@ public class BatchExecutor extends BaseExecutor {
     }
 
     @Override
-    protected <E> Cursor<E> doQueryCursor(MappedStatement ms, Object parameter, RowBounds rowBounds, BoundSql boundSql) throws SQLException {
+    protected <E> Cursor<E> doQueryCursor(MappedStatement ms, Object parameter, RowBounds rowBounds,
+                                          BoundSql boundSql) throws SQLException {
         flushStatements();
         Configuration configuration = ms.getConfiguration();
-        StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, null, boundSql);
+        StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds,
+                null, boundSql);
         Connection connection = getConnection(ms.getStatementLog());
         Statement stmt = handler.prepare(connection, transaction.getTimeout());
         stmt.closeOnCompletion();
@@ -143,7 +148,8 @@ public class BatchExecutor extends BaseExecutor {
                     if (i > 0) {
                         message.append(" ")
                                 .append(i)
-                                .append(" prior sub executor(s) completed successfully, but will be rolled back.");
+                                .append(" prior sub executor(s) completed successfully, but will be rolled " +
+                                        "back.");
                     }
                     throw new BatchExecutorException(message.toString(), e, results, batchResult);
                 }

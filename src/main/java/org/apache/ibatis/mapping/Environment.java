@@ -15,9 +15,9 @@
  */
 package org.apache.ibatis.mapping;
 
-import javax.sql.DataSource;
-
 import org.apache.ibatis.transaction.TransactionFactory;
+
+import javax.sql.DataSource;
 
 /**
  * @author Clinton Begin
@@ -40,6 +40,18 @@ public final class Environment {
         }
         this.transactionFactory = transactionFactory;
         this.dataSource = dataSource;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public TransactionFactory getTransactionFactory() {
+        return this.transactionFactory;
+    }
+
+    public DataSource getDataSource() {
+        return this.dataSource;
     }
 
     public static class Builder {
@@ -69,18 +81,6 @@ public final class Environment {
             return new Environment(this.id, this.transactionFactory, this.dataSource);
         }
 
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public TransactionFactory getTransactionFactory() {
-        return this.transactionFactory;
-    }
-
-    public DataSource getDataSource() {
-        return this.dataSource;
     }
 
 }

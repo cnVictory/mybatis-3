@@ -29,7 +29,8 @@
     <typeAliases>
         <typeAlias alias="Child" type="org.apache.ibatis.submitted.lazyload_common_property.Child"/>
         <typeAlias alias="Father" type="org.apache.ibatis.submitted.lazyload_common_property.Father"/>
-        <typeAlias alias="GrandFather" type="org.apache.ibatis.submitted.lazyload_common_property.GrandFather"/>
+        <typeAlias alias="GrandFather"
+                   type="org.apache.ibatis.submitted.lazyload_common_property.GrandFather"/>
     </typeAliases>
 
     <environments default="test">

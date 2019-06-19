@@ -15,22 +15,20 @@
  */
 package org.apache.ibatis.cache;
 
+import org.apache.ibatis.reflection.ArrayUtil;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
-
-import org.apache.ibatis.reflection.ArrayUtil;
 
 /**
  * @author Clinton Begin
  */
 public class CacheKey implements Cloneable, Serializable {
 
-    private static final long serialVersionUID = 1146682552656046210L;
-
     public static final CacheKey NULL_CACHE_KEY = new NullCacheKey();
-
+    private static final long serialVersionUID = 1146682552656046210L;
     private static final int DEFAULT_MULTIPLYER = 37;
     private static final int DEFAULT_HASHCODE = 17;
 
@@ -38,7 +36,8 @@ public class CacheKey implements Cloneable, Serializable {
     private int hashcode;
     private long checksum;
     private int count;
-    // 8/21/2017 - Sonarlint flags this as needing to be marked transient.  While true if content is not serializable, this is not always true and thus should not be marked transient.
+    // 8/21/2017 - Sonarlint flags this as needing to be marked transient.  While true if content is not
+    // serializable, this is not always true and thus should not be marked transient.
     private List<Object> updateList;
 
     public CacheKey() {

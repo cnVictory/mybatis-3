@@ -15,22 +15,11 @@
  */
 package org.apache.ibatis.executor.loader.cglib;
 
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-
-import org.apache.ibatis.executor.loader.AbstractEnhancedDeserializationProxy;
-import org.apache.ibatis.executor.loader.AbstractSerialStateHolder;
-import org.apache.ibatis.executor.loader.ProxyFactory;
-import org.apache.ibatis.executor.loader.ResultLoaderMap;
-import org.apache.ibatis.executor.loader.WriteReplaceInterface;
+import org.apache.ibatis.executor.loader.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -39,6 +28,12 @@ import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.property.PropertyCopier;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 import org.apache.ibatis.session.Configuration;
+
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Clinton Begin
@@ -52,25 +47,13 @@ public class CglibProxyFactory implements ProxyFactory {
         try {
             Resources.classForName("net.sf.cglib.proxy.Enhancer");
         } catch (Throwable e) {
-            throw new IllegalStateException("Cannot enable lazy loading because CGLIB is not available. Add CGLIB to your classpath.", e);
+            throw new IllegalStateException("Cannot enable lazy loading because CGLIB is not available. Add" +
+                    " CGLIB to your classpath.", e);
         }
     }
 
-    @Override
-    public Object createProxy(Object target, ResultLoaderMap lazyLoader, Configuration configuration, ObjectFactory objectFactory, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
-        return EnhancedResultObjectProxyImpl.createProxy(target, lazyLoader, configuration, objectFactory, constructorArgTypes, constructorArgs);
-    }
-
-    public Object createDeserializationProxy(Object target, Map<String, ResultLoaderMap.LoadPair> unloadedProperties, ObjectFactory objectFactory, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
-        return EnhancedDeserializationProxyImpl.createProxy(target, unloadedProperties, objectFactory, constructorArgTypes, constructorArgs);
-    }
-
-    @Override
-    public void setProperties(Properties properties) {
-        // Not Implemented
-    }
-
-    static Object crateProxy(Class<?> type, Callback callback, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
+    static Object crateProxy(Class<?> type, Callback callback, List<Class<?>> constructorArgTypes,
+                             List<Object> constructorArgs) {
         Enhancer enhancer = new Enhancer();
         enhancer.setCallback(callback);
         enhancer.setSuperclass(type);
@@ -78,7 +61,8 @@ public class CglibProxyFactory implements ProxyFactory {
             type.getDeclaredMethod(WRITE_REPLACE_METHOD);
             // ObjectOutputStream will call writeReplace of objects returned by writeReplace
             if (LogHolder.log.isDebugEnabled()) {
-                LogHolder.log.debug(WRITE_REPLACE_METHOD + " method was found on bean " + type + ", make sure it returns this");
+                LogHolder.log.debug(WRITE_REPLACE_METHOD + " method was found on bean " + type + ", make " +
+                        "sure it returns this");
             }
         } catch (NoSuchMethodException e) {
             enhancer.setInterfaces(new Class[]{WriteReplaceInterface.class});
@@ -96,6 +80,28 @@ public class CglibProxyFactory implements ProxyFactory {
         return enhanced;
     }
 
+    @Override
+    public Object createProxy(Object target, ResultLoaderMap lazyLoader, Configuration configuration,
+                              ObjectFactory objectFactory, List<Class<?>> constructorArgTypes,
+                              List<Object> constructorArgs) {
+        return EnhancedResultObjectProxyImpl.createProxy(target, lazyLoader, configuration, objectFactory,
+                constructorArgTypes, constructorArgs);
+    }
+
+    public Object createDeserializationProxy(Object target,
+                                             Map<String, ResultLoaderMap.LoadPair> unloadedProperties,
+                                             ObjectFactory objectFactory,
+                                             List<Class<?>> constructorArgTypes,
+                                             List<Object> constructorArgs) {
+        return EnhancedDeserializationProxyImpl.createProxy(target, unloadedProperties, objectFactory,
+                constructorArgTypes, constructorArgs);
+    }
+
+    @Override
+    public void setProperties(Properties properties) {
+        // Not Implemented
+    }
+
     private static class EnhancedResultObjectProxyImpl implements MethodInterceptor {
 
         private final Class<?> type;
@@ -106,7 +112,10 @@ public class CglibProxyFactory implements ProxyFactory {
         private final List<Class<?>> constructorArgTypes;
         private final List<Object> constructorArgs;
 
-        private EnhancedResultObjectProxyImpl(Class<?> type, ResultLoaderMap lazyLoader, Configuration configuration, ObjectFactory objectFactory, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
+        private EnhancedResultObjectProxyImpl(Class<?> type, ResultLoaderMap lazyLoader,
+                                              Configuration configuration, ObjectFactory objectFactory,
+                                              List<Class<?>> constructorArgTypes,
+                                              List<Object> constructorArgs) {
             this.type = type;
             this.lazyLoader = lazyLoader;
             this.aggressive = configuration.isAggressiveLazyLoading();
@@ -116,9 +125,12 @@ public class CglibProxyFactory implements ProxyFactory {
             this.constructorArgs = constructorArgs;
         }
 
-        public static Object createProxy(Object target, ResultLoaderMap lazyLoader, Configuration configuration, ObjectFactory objectFactory, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
+        public static Object createProxy(Object target, ResultLoaderMap lazyLoader,
+                                         Configuration configuration, ObjectFactory objectFactory,
+                                         List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
             final Class<?> type = target.getClass();
-            EnhancedResultObjectProxyImpl callback = new EnhancedResultObjectProxyImpl(type, lazyLoader, configuration, objectFactory, constructorArgTypes, constructorArgs);
+            EnhancedResultObjectProxyImpl callback = new EnhancedResultObjectProxyImpl(type, lazyLoader,
+                    configuration, objectFactory, constructorArgTypes, constructorArgs);
             Object enhanced = crateProxy(type, callback, constructorArgTypes, constructorArgs);
             PropertyCopier.copyBeanProperties(type, target, enhanced);
             return enhanced;
@@ -138,7 +150,8 @@ public class CglibProxyFactory implements ProxyFactory {
                         }
                         PropertyCopier.copyBeanProperties(type, enhanced, original);
                         if (lazyLoader.size() > 0) {
-                            return new CglibSerialStateHolder(original, lazyLoader.getProperties(), objectFactory, constructorArgTypes, constructorArgs);
+                            return new CglibSerialStateHolder(original, lazyLoader.getProperties(),
+                                    objectFactory, constructorArgTypes, constructorArgs);
                         } else {
                             return original;
                         }
@@ -167,15 +180,21 @@ public class CglibProxyFactory implements ProxyFactory {
 
     private static class EnhancedDeserializationProxyImpl extends AbstractEnhancedDeserializationProxy implements MethodInterceptor {
 
-        private EnhancedDeserializationProxyImpl(Class<?> type, Map<String, ResultLoaderMap.LoadPair> unloadedProperties, ObjectFactory objectFactory,
-                                                 List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
+        private EnhancedDeserializationProxyImpl(Class<?> type,
+                                                 Map<String, ResultLoaderMap.LoadPair> unloadedProperties,
+                                                 ObjectFactory objectFactory,
+                                                 List<Class<?>> constructorArgTypes,
+                                                 List<Object> constructorArgs) {
             super(type, unloadedProperties, objectFactory, constructorArgTypes, constructorArgs);
         }
 
-        public static Object createProxy(Object target, Map<String, ResultLoaderMap.LoadPair> unloadedProperties, ObjectFactory objectFactory,
+        public static Object createProxy(Object target,
+                                         Map<String, ResultLoaderMap.LoadPair> unloadedProperties,
+                                         ObjectFactory objectFactory,
                                          List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
             final Class<?> type = target.getClass();
-            EnhancedDeserializationProxyImpl callback = new EnhancedDeserializationProxyImpl(type, unloadedProperties, objectFactory, constructorArgTypes, constructorArgs);
+            EnhancedDeserializationProxyImpl callback = new EnhancedDeserializationProxyImpl(type,
+                    unloadedProperties, objectFactory, constructorArgTypes, constructorArgs);
             Object enhanced = crateProxy(type, callback, constructorArgTypes, constructorArgs);
             PropertyCopier.copyBeanProperties(type, target, enhanced);
             return enhanced;
@@ -188,9 +207,12 @@ public class CglibProxyFactory implements ProxyFactory {
         }
 
         @Override
-        protected AbstractSerialStateHolder newSerialStateHolder(Object userBean, Map<String, ResultLoaderMap.LoadPair> unloadedProperties, ObjectFactory objectFactory,
-                                                                 List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
-            return new CglibSerialStateHolder(userBean, unloadedProperties, objectFactory, constructorArgTypes, constructorArgs);
+        protected AbstractSerialStateHolder newSerialStateHolder(Object userBean, Map<String,
+                ResultLoaderMap.LoadPair> unloadedProperties, ObjectFactory objectFactory,
+                                                                 List<Class<?>> constructorArgTypes,
+                                                                 List<Object> constructorArgs) {
+            return new CglibSerialStateHolder(userBean, unloadedProperties, objectFactory,
+                    constructorArgTypes, constructorArgs);
         }
     }
 

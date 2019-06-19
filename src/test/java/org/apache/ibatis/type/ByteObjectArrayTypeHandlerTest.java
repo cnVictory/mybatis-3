@@ -18,9 +18,7 @@ package org.apache.ibatis.type;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ByteObjectArrayTypeHandlerTest extends BaseTypeHandlerTest {
 

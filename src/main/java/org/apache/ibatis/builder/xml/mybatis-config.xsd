@@ -17,8 +17,8 @@
 
 -->
 <xs:schema
-        xmlns="http://mybatis.org/schema/mybatis-config"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns="http://mybatis.org/schema/mybatis-config"
         targetNamespace="http://mybatis.org/schema/mybatis-config"
         elementFormDefault="qualified">
     <xs:element name="configuration">

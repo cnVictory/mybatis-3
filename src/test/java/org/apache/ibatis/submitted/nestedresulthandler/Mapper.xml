@@ -50,7 +50,8 @@
 		order by p.id, i.id
 	</select>
 
-    <resultMap id="personItemPairResult" type="org.apache.ibatis.submitted.nestedresulthandler.PersonItemPair">
+    <resultMap id="personItemPairResult"
+               type="org.apache.ibatis.submitted.nestedresulthandler.PersonItemPair">
         <association property="person" javaType="org.apache.ibatis.submitted.nestedresulthandler.Person">
             <id property="id" column="person_id"/>
             <result property="name" column="person_name"/>

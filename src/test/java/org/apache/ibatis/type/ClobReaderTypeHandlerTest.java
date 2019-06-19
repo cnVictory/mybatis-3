@@ -30,20 +30,23 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import javax.sql.DataSource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.sql.Clob;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
  * Tests for {@link ClobReaderTypeHandler}.
  *
- * @since 3.4.0
  * @author Kazuki Shimizu
+ * @since 3.4.0
  */
 class ClobReaderTypeHandlerTest extends BaseTypeHandlerTest {
 
@@ -56,7 +59,8 @@ class ClobReaderTypeHandlerTest extends BaseTypeHandlerTest {
 
     @BeforeAll
     static void setupSqlSessionFactory() throws Exception {
-        DataSource dataSource = BaseDataTest.createUnpooledDataSource("org/apache/ibatis/type/jdbc.properties");
+        DataSource dataSource = BaseDataTest.createUnpooledDataSource("org/apache/ibatis/type/jdbc" +
+                ".properties");
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
         Environment environment = new Environment("Production", transactionFactory, dataSource);
         Configuration configuration = new Configuration(environment);

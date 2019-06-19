@@ -23,10 +23,9 @@ import java.util.List;
  */
 public class PoolState {
 
-    protected PooledDataSource dataSource;
-
     protected final List<PooledConnection> idleConnections = new ArrayList<>();
     protected final List<PooledConnection> activeConnections = new ArrayList<>();
+    protected PooledDataSource dataSource;
     protected long requestCount = 0;
     protected long accumulatedRequestTime = 0;
     protected long accumulatedCheckoutTime = 0;
@@ -66,7 +65,8 @@ public class PoolState {
     }
 
     public synchronized long getAverageOverdueCheckoutTime() {
-        return claimedOverdueConnectionCount == 0 ? 0 : accumulatedCheckoutTimeOfOverdueConnections / claimedOverdueConnectionCount;
+        return claimedOverdueConnectionCount == 0 ? 0 :
+                accumulatedCheckoutTimeOfOverdueConnections / claimedOverdueConnectionCount;
     }
 
     public synchronized long getAverageCheckoutTime() {
@@ -89,7 +89,8 @@ public class PoolState {
         builder.append("\n jdbcDriver                     ").append(dataSource.getDriver());
         builder.append("\n jdbcUrl                        ").append(dataSource.getUrl());
         builder.append("\n jdbcUsername                   ").append(dataSource.getUsername());
-        builder.append("\n jdbcPassword                   ").append(dataSource.getPassword() == null ? "NULL" : "************");
+        builder.append("\n jdbcPassword                   ").append(dataSource.getPassword() == null ?
+                "NULL" : "************");
         builder.append("\n poolMaxActiveConnections       ").append(dataSource.poolMaximumActiveConnections);
         builder.append("\n poolMaxIdleConnections         ").append(dataSource.poolMaximumIdleConnections);
         builder.append("\n poolMaxCheckoutTime            ").append(dataSource.poolMaximumCheckoutTime);

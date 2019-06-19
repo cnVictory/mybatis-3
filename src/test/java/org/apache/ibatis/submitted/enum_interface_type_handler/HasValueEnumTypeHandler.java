@@ -15,20 +15,20 @@
  */
 package org.apache.ibatis.submitted.enum_interface_type_handler;
 
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedTypes;
-
 @MappedTypes(HasValue.class)
 public class HasValueEnumTypeHandler<E extends Enum<E> & HasValue> extends
         BaseTypeHandler<E> {
-    private Class<E> type;
     private final E[] enums;
+    private Class<E> type;
 
     public HasValueEnumTypeHandler(Class<E> type) {
         if (type == null)

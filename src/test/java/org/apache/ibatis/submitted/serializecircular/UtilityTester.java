@@ -15,11 +15,7 @@
  */
 package org.apache.ibatis.submitted.serializecircular;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class UtilityTester {
 
@@ -51,7 +47,8 @@ public class UtilityTester {
 
     private static Object deserialzeObject(byte[] aSerializedObject) {
         // Deserialize from a byte array
-        try (ObjectInputStream myObjectInputStream = new ObjectInputStream(new ByteArrayInputStream(aSerializedObject))) {
+        try (ObjectInputStream myObjectInputStream =
+                     new ObjectInputStream(new ByteArrayInputStream(aSerializedObject))) {
             return myObjectInputStream.readObject();
         } catch (Exception anException) {
             throw new RuntimeException("Problem deserializing", anException);

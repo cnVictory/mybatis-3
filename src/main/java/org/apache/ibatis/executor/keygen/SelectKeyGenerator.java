@@ -15,9 +15,6 @@
  */
 package org.apache.ibatis.executor.keygen;
 
-import java.sql.Statement;
-import java.util.List;
-
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.ExecutorException;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -25,6 +22,9 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
+
+import java.sql.Statement;
+import java.util.List;
 
 /**
  * @author Clinton Begin
@@ -64,8 +64,10 @@ public class SelectKeyGenerator implements KeyGenerator {
                 if (keyProperties != null) {
                     // Do not close keyExecutor.
                     // The transaction will be closed by parent executor.
-                    Executor keyExecutor = configuration.newExecutor(executor.getTransaction(), ExecutorType.SIMPLE);
-                    List<Object> values = keyExecutor.query(keyStatement, parameter, RowBounds.DEFAULT, Executor.NO_RESULT_HANDLER);
+                    Executor keyExecutor = configuration.newExecutor(executor.getTransaction(),
+                            ExecutorType.SIMPLE);
+                    List<Object> values = keyExecutor.query(keyStatement, parameter, RowBounds.DEFAULT,
+                            Executor.NO_RESULT_HANDLER);
                     if (values.size() == 0) {
                         throw new ExecutorException("SelectKey returned no data.");
                     } else if (values.size() > 1) {
@@ -89,7 +91,8 @@ public class SelectKeyGenerator implements KeyGenerator {
         } catch (ExecutorException e) {
             throw e;
         } catch (Exception e) {
-            throw new ExecutorException("Error selecting key or setting result to parameter object. Cause: " + e, e);
+            throw new ExecutorException("Error selecting key or setting result to parameter object. Cause: "
+                    + e, e);
         }
     }
 
@@ -104,7 +107,8 @@ public class SelectKeyGenerator implements KeyGenerator {
             }
         } else {
             if (keyColumns.length != keyProperties.length) {
-                throw new ExecutorException("If SelectKey has key columns, the number must match the number of key properties.");
+                throw new ExecutorException("If SelectKey has key columns, the number must match the number" +
+                        " of key properties.");
             }
             for (int i = 0; i < keyProperties.length; i++) {
                 setValue(metaParam, keyProperties[i], metaResult.getValue(keyColumns[i]));

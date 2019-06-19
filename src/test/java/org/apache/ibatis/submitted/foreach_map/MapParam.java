@@ -19,6 +19,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MapParam {
+    private Map<Object, Object> map = new LinkedHashMap<>();
+
     public Map<Object, Object> getMap() {
         return map;
     }
@@ -26,6 +28,4 @@ public class MapParam {
     public void setMap(Map<Object, Object> map) {
         this.map = map;
     }
-
-    private Map<Object, Object> map = new LinkedHashMap<>();
 }

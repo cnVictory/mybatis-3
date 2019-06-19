@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.named_constructor_args;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.Reader;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.Configuration;
@@ -28,6 +24,10 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class NamedConstructorArgsTest {
 
     private static SqlSessionFactory sqlSessionFactory;
@@ -35,7 +35,8 @@ class NamedConstructorArgsTest {
     @BeforeAll
     static void setUp() throws Exception {
         // create an SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/named_constructor_args/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/named_constructor_args/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

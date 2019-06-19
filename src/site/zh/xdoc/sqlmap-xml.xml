@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -76,7 +76,8 @@
             <p>下一部分将从语句本身开始来描述每个元素的细节。</p>
 
             <subsection name="select" id="select">
-                <p>查询语句是 MyBatis 中最常用的元素之一，光能把数据存到数据库中价值并不大，只有还能重新取出来才有用，多数应用也都是查询比修改要频繁。对每个插入、更新或删除操作，通常间隔多个查询操作。这是
+                <p>查询语句是 MyBatis
+                    中最常用的元素之一，光能把数据存到数据库中价值并不大，只有还能重新取出来才有用，多数应用也都是查询比修改要频繁。对每个插入、更新或删除操作，通常间隔多个查询操作。这是
                     MyBatis 的基本原则之一，也是将焦点和努力放在查询和结果映射的原因。简单查询的 select 元素是非常简单的。比如：
                 </p>
 
@@ -366,7 +367,8 @@ ps.setInt(1,id);]]></source>
                             </td>
                             <td>
                                 （仅对 insert 和 update 有用）唯一标记一个属性，MyBatis 会通过
-                                getGeneratedKeys 的返回值或者通过 insert 语句的 selectKey 子元素设置它的键值，默认值：未设置（<code>unset</code>）。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。
+                                getGeneratedKeys 的返回值或者通过 insert 语句的 selectKey 子元素设置它的键值，默认值：未设置（<code>
+                                unset</code>）。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。
                             </td>
                         </tr>
                         <tr>
@@ -412,7 +414,8 @@ ps.setInt(1,id);]]></source>
 
                 <p>如前所述，插入语句的配置规则更加丰富，在插入语句里面有一些额外的属性和子元素用来处理主键的生成，而且有多种生成方式。</p>
 
-                <p>首先，如果你的数据库支持自动生成主键的字段（比如 MySQL 和 SQL Server），那么你可以设置 useGeneratedKeys=”true”，然后再把 keyProperty
+                <p>首先，如果你的数据库支持自动生成主键的字段（比如 MySQL 和 SQL Server），那么你可以设置 useGeneratedKeys=”true”，然后再把
+                    keyProperty
                     设置到目标属性上就 OK 了。例如，如果上面的 Author 表已经对 id 使用了自动生成的列类型，那么语句可以修改为：
                 </p>
 
@@ -749,7 +752,8 @@ User userOfEmail = userMapper.findByColumn("email", "noone@nowhere.com");
 </select>]]></source>
 
                 <p>
-                    上述语句只是简单地将所有的列映射到 <code>HashMap</code> 的键上，这由 <code>resultType</code> 属性指定。虽然在大部分情况下都够用，但是 HashMap
+                    上述语句只是简单地将所有的列映射到 <code>HashMap</code> 的键上，这由 <code>resultType</code> 属性指定。虽然在大部分情况下都够用，但是
+                    HashMap
                     不是一个很好的领域模型。你的程序更可能会使用 JavaBean 或 POJO（Plain Old Java Objects，普通老式 Java 对象）作为领域模型。MyBatis
                     对两者都提供了支持。看看下面这个 JavaBean：
                 </p>
@@ -2328,7 +2332,8 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}]]></source>
 
                 <p>
                     你可以使用所有简单类型作为 JavaBean 属性的类型，MyBatis 会进行转换。
-                    你也可以使用占位符（如 <code>${cache.file}</code>），以便替换成在<a href="configuration.html#properties">配置文件属性</a>中定义的值。
+                    你也可以使用占位符（如 <code>${cache.file}</code>），以便替换成在<a href="configuration.html#properties">
+                    配置文件属性</a>中定义的值。
                 </p>
 
                 <p>
@@ -2360,7 +2365,8 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}]]></source>
 <delete ... flushCache="true"/>]]></source>
 
                 <p>
-                    鉴于这是默认行为，显然你永远不应该以这样的方式显式配置一条语句。但如果你想改变默认的行为，只需要设置 flushCache 和 useCache 属性。比如，某些情况下你可能希望特定 select
+                    鉴于这是默认行为，显然你永远不应该以这样的方式显式配置一条语句。但如果你想改变默认的行为，只需要设置 flushCache 和 useCache
+                    属性。比如，某些情况下你可能希望特定 select
                     语句的结果排除于缓存之外，或希望一条 select 语句清空缓存。类似地，你可能希望某些 update 语句执行时不要刷新缓存。
                 </p>
 

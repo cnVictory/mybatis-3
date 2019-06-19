@@ -15,14 +15,6 @@
  */
 package org.apache.ibatis.submitted.lazy_deserialize;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Reader;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.executor.ExecutorException;
 import org.apache.ibatis.io.Resources;
@@ -33,10 +25,13 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
- *
- * @since 2011-04-06T10:58:55+0200
  * @author Franta Mejta
+ * @since 2011-04-06T10:58:55+0200
  */
 class LazyDeserializeTest {
 
@@ -87,7 +82,8 @@ class LazyDeserializeTest {
                 deserializedFoo.getLazyObjectBar();
                 fail();
             } catch (ExecutorException e) {
-                assertTrue(e.getMessage().contains("Cannot get Configuration as configuration factory was not set."));
+                assertTrue(e.getMessage().contains("Cannot get Configuration as configuration factory was " +
+                        "not set."));
             }
         }
     }

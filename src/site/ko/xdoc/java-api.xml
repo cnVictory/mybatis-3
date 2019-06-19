@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -86,13 +86,15 @@
                     우리는 SqlSession에 대해서 좀더 얘기해볼 것이지만 먼저 SqlSession의 인스턴스를 만드는 방법을 배워보자.
                     SqlSession은 SqlSessionFactory인스턴스를 사용해서 만든다.
                     SqlSessionFactory는 몇가지 방법으로 SqlSession인스턴스를 생성하기 위한 메소드를 포함하고 있다.
-                    SqlSessionFactory자체는 XML, 애노테이션 또는 자바 설정에서 SqlSessonFactory를 생성할 수 있는 SqlSessionFactoryBuilder를 통해
+                    SqlSessionFactory자체는 XML, 애노테이션 또는 자바 설정에서 SqlSessonFactory를 생성할 수 있는
+                    SqlSessionFactoryBuilder를 통해
                     만들어진다.
                 </p>
                 <p>
                     <span class="label important">참고</span>
                     스프링이나 쥬스와 같은 의존성 삽입 프레임워크와 함께 사용할때 SqlSessions은 DI프레임워크에 의해 생성되고 삽입된다.
-                    그래서 SqlSessionFactoryBuilder나 SqlSessionFactory가 필요하지 않을 것이기 때문에 SqlSession섹션으로 바로 넘어가도 무방하다.
+                    그래서 SqlSessionFactoryBuilder나 SqlSessionFactory가 필요하지 않을 것이기 때문에 SqlSession섹션으로 바로 넘어가도
+                    무방하다.
                     추가적인 정보는 MyBatis-Spring이나 MyBatis-Guice를 참고하길 바란다.
                 </p>
                 <h4>SqlSessionFactoryBuilder</h4>
@@ -225,7 +227,8 @@
                     </li>
                     <li><strong>Connection</strong>: 설정된 DataSource에서 Connection 을 회득하고 싶은가?
                     </li>
-                    <li><strong>Execution</strong>: PreparedStatements그리고/또는 배치(insert, delete를 포함해서) 업데이트를 재사용하고 싶은가?
+                    <li><strong>Execution</strong>: PreparedStatements그리고/또는 배치(insert, delete를 포함해서) 업데이트를
+                        재사용하고 싶은가?
                     </li>
                 </ul>
                 <p>오버로드된 메소드인 openSession() 이 3가지를 적절히 혼합해서 사용할 수 있다.</p>
@@ -267,7 +270,8 @@
                     </li>
                     <li><code>ExecutorType.REUSE</code>: 이 타입의 실행자는 PreparedStatements를 재사용할 것이다.
                     </li>
-                    <li><code>ExecutorType.BATCH</code>: 이 실행자는 모든 update구문을 배치처리하고 중간에 select 가 실행될 경우 필요하다면 경계를 표시한다.
+                    <li><code>ExecutorType.BATCH</code>: 이 실행자는 모든 update구문을 배치처리하고 중간에 select 가 실행될 경우 필요하다면
+                        경계를 표시한다.
                         이러한 과정은 행위를 좀더 이해하기 쉽게 하기 위함이다.
                     </li>
                 </ul>
@@ -312,7 +316,9 @@ int delete(String statement, Object parameter)]]></source>
                     이 경우 결과 객체의 프로퍼티 중 하나를 키로 사용하게 된다.
                     모든 구문이 파라미터를 필요로 하지는 않기 때문에 파라미터 객체를 요구하지 않는 형태로 오버로드되었다.
                 </p>
-                <p>A Cursor offers the same results as a List, except it fetches data lazily using an Iterator.</p>
+                <p>A Cursor offers the same results as a List, except it fetches data lazily using an
+                    Iterator.
+                </p>
                 <source><![CDATA[try (Cursor<MyEntity> entities = session.selectCursor(statement, param)) {
    for (MyEntity entity:entities) {
       // process one entity
@@ -349,7 +355,8 @@ void select (String statement, Object parameter, RowBounds rowBounds, ResultHand
                     List에 추가할수도 있고 Map, Set을 만들수도 있으며 각각의 결과를 그냥 던질수도 있다.
                     ResultHandler로 많은 것을 할 수 있고 마이바티스는 결과셋을 다루기 위해 내부적으로 사용한다.
                 </p>
-                <p>Since 3.4.6, ResultHandler passed to a CALLABLE statement is used on every REFCURSOR output parameter
+                <p>Since 3.4.6, ResultHandler passed to a CALLABLE statement is used on every REFCURSOR output
+                    parameter
                     of the stored procedure if there is any.
                 </p>
                 <p>인터페이스는 매우 간단하다.</p>
@@ -364,8 +371,10 @@ public interface ResultHandler<T> {
 
                 <ul>
                     <li>Data got from an method called with a ResultHandler will not be cached.</li>
-                    <li>When using advanced resultmaps MyBatis will probably require several rows to build an object. If
-                        a ResultHandler is used you may be given an object whose associations or collections are not yet
+                    <li>When using advanced resultmaps MyBatis will probably require several rows to build an
+                        object. If
+                        a ResultHandler is used you may be given an object whose associations or collections
+                        are not yet
                         filled.
                     </li>
                 </ul>
@@ -523,7 +532,8 @@ public interface ResultHandler<T> {
                                 <code>&lt;cache&gt;</code>
                             </td>
                             <td>명명공간을 위한 캐시 설정
-                                사용가능한 속성들 : implementation, eviction, flushInterval, size, readWrite, blocking 그리고
+                                사용가능한 속성들 : implementation, eviction, flushInterval, size, readWrite, blocking
+                                그리고
                                 properties.
                             </td>
                         </tr>
@@ -535,8 +545,10 @@ public interface ResultHandler<T> {
                             <td>
                                 <code>&lt;property&gt;</code>
                             </td>
-                            <td>property 값 또는 placeholder(<code>mybatis-config.xml</code> 에 정의된 configuration properties
-                                로 대체 할 수 있음) 를 지정한다. 사용가능한 속성들: <code>name</code>, <code>value</code>. (MyBatis 3.4.2
+                            <td>property 값 또는 placeholder(<code>mybatis-config.xml</code> 에 정의된 configuration
+                                properties
+                                로 대체 할 수 있음) 를 지정한다. 사용가능한 속성들: <code>name</code>, <code>value</code>.
+                                (MyBatis 3.4.2
                                 이상에서 사용 가능)
                             </td>
                         </tr>
@@ -551,12 +563,14 @@ public interface ResultHandler<T> {
                                 <code>&lt;cacheRef&gt;</code>
                             </td>
                             <td>
-                                다른 명명공간의 캐시에 대한 참조 Note that caches declared in an XML mapper file are considered a
+                                다른 명명공간의 캐시에 대한 참조 Note that caches declared in an XML mapper file are
+                                considered a
                                 separate namespace, even if they share the same FQCN. 사용가능한 속성들 : <code>
                                 value</code>, <code>name</code>.
                                 이 annotation 을 사용하려면 <code>value</code> 또는 <code>name</code> 속성을 지정해야 한다.
                                 <code>value</code>
-                                속성은 namespace(namespace 이름은 지정된 java type 의 FQCN 이 된다) 를 나타내는 java type 을 지정한다,
+                                속성은 namespace(namespace 이름은 지정된 java type 의 FQCN 이 된다) 를 나타내는 java type 을
+                                지정한다,
                                 그리고 <code>name</code> 속성(이 속성은 3.4.2 부터 사용가능하다) 은 namespace 를 나타내는 이름을 지정한다.
                             </td>
                         </tr>
@@ -807,12 +821,15 @@ public interface ResultHandler<T> {
                                     </li>
                                 </ul>
                             </td>
-                            <td>실행시 SQL 을 리턴할 클래스 과 메소드명을 명시하도록 해주는 대체수단의 애노테이션이다 (Since 3.4.6, you can specify the <code>
-                                CharSequence
-                            </code> instead of <code>String</code> as a method return type).
+                            <td>실행시 SQL 을 리턴할 클래스 과 메소드명을 명시하도록 해주는 대체수단의 애노테이션이다 (Since 3.4.6, you can
+                                specify the <code>
+                                    CharSequence
+                                </code> instead of <code>String</code> as a method return type).
                                 매핑된 구문을 실행할 때 마이바티스는 클래스의 인스턴스를 만들고 메소드를 실행한다.
-                                Mapper 메서드의 인수인 "Mapper interface type" 과 <code>ProviderContext</code>(Mybatis 3.4.5 부터)
-                                를 이용한 "Mapper method" 로 전달 된 객체를 메서드 매개변수로 전달할 수 있다.(마이바티스 3.4이상에서는 복수 파라미터를 허용한다.)
+                                Mapper 메서드의 인수인 "Mapper interface type" 과 <code>ProviderContext</code>(Mybatis
+                                3.4.5 부터)
+                                를 이용한 "Mapper method" 로 전달 된 객체를 메서드 매개변수로 전달할 수 있다.(마이바티스 3.4이상에서는 복수 파라미터를
+                                허용한다.)
                                 사용가능한 속성들 : type, method.
                                 type 속성은 클래스.
                                 method 속성은 메소드명이다.
@@ -843,7 +860,8 @@ public interface ResultHandler<T> {
                             <td>
                                 <code>&lt;selectKey&gt;</code>
                             </td>
-                            <td>이 애노테이션은 @Insert, @InsertProvider, @Update 또는 @UpdateProvider 애노테이션을 사용하는 메소드에서 &lt;selectKey&gt;와
+                            <td>이 애노테이션은 @Insert, @InsertProvider, @Update 또는 @UpdateProvider 애노테이션을 사용하는
+                                메소드에서 &lt;selectKey&gt;와
                                 똑같다.
                                 다른 메소드에서는 무시된다.
                                 @SelectKey애노테이션을 명시하면 마이바티스는 @Options애노테이션이나 설정 프로퍼티를 통해 설정된 key프로퍼티를 무시할 것이다.
@@ -862,7 +880,8 @@ public interface ResultHandler<T> {
                                 <code>Method</code>
                             </td>
                             <td>N/A</td>
-                            <td>이 애노테이션은 @Select또는 @SelectProvider애노테이션을 위해 XML 매퍼의 &lt;resultMap&gt; 엘리먼트의 id를 제공하기 위해
+                            <td>이 애노테이션은 @Select또는 @SelectProvider애노테이션을 위해 XML 매퍼의 &lt;resultMap&gt; 엘리먼트의
+                                id를 제공하기 위해
                                 사용된다.
                                 XML 에 정의된 결과매핑을 재사용하도록 해준다.
                                 이 애노테이션은 @Results나 @ConstructorArgs를 오버라이드 할 것이다.
@@ -904,7 +923,8 @@ public interface ResultHandler<T> {
                 <h5>Mapper애노테이션 예제</h5>
                 <p>이 예제는 insert 하기전에 일련번호를 가져오기 위해 @SelectKey 애노테이션을 사용하는 것을 보여준다.</p>
                 <source>@Insert("insert into table3 (id, name) values(#{nameId}, #{name})")
-                    @SelectKey(statement="call next value for TestSequence", keyProperty="nameId", before=<strong>
+                    @SelectKey(statement="call next value for TestSequence", keyProperty="nameId",
+                    before=<strong>
                         true</strong>, resultType=<strong>int.class</strong>)
                     <strong>int</strong>
                     insertTable3(Name name);
@@ -912,7 +932,8 @@ public interface ResultHandler<T> {
 
                 <p>이 예제는 insert한 후에 값을 가져오기 위해 @SelectKey애노테이션을 사용하는 것으로 보여준다.</p>
                 <source>@Insert("insert into table2 (name) values(#{name})")
-                    @SelectKey(statement="call identity()", keyProperty="nameId", before=<strong>false</strong>,
+                    @SelectKey(statement="call identity()", keyProperty="nameId", before=<strong>
+                        false</strong>,
                     resultType=<strong>int.class</strong>)
                     <strong>int</strong>
                     insertTable2(Name name);

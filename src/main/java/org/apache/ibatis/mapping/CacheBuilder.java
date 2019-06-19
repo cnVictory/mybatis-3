@@ -15,32 +15,27 @@
  */
 package org.apache.ibatis.mapping;
 
+import org.apache.ibatis.builder.InitializingObject;
+import org.apache.ibatis.cache.Cache;
+import org.apache.ibatis.cache.CacheException;
+import org.apache.ibatis.cache.decorators.*;
+import org.apache.ibatis.cache.impl.PerpetualCache;
+import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.reflection.SystemMetaObject;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.ibatis.builder.InitializingObject;
-import org.apache.ibatis.cache.Cache;
-import org.apache.ibatis.cache.CacheException;
-import org.apache.ibatis.cache.decorators.BlockingCache;
-import org.apache.ibatis.cache.decorators.LoggingCache;
-import org.apache.ibatis.cache.decorators.LruCache;
-import org.apache.ibatis.cache.decorators.ScheduledCache;
-import org.apache.ibatis.cache.decorators.SerializedCache;
-import org.apache.ibatis.cache.decorators.SynchronizedCache;
-import org.apache.ibatis.cache.impl.PerpetualCache;
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.reflection.SystemMetaObject;
-
 /**
  * @author Clinton Begin
  */
 public class CacheBuilder {
     private final String id;
-    private Class<? extends Cache> implementation;
     private final List<Class<? extends Cache>> decorators;
+    private Class<? extends Cache> implementation;
     private Integer size;
     private Long clearInterval;
     private boolean readWrite;
@@ -171,7 +166,8 @@ public class CacheBuilder {
                             || Double.class == type) {
                         metaCache.setValue(name, Double.valueOf(value));
                     } else {
-                        throw new CacheException("Unsupported property type for cache: '" + name + "' of type " + type);
+                        throw new CacheException("Unsupported property type for cache: '" + name + "' of " +
+                                "type " + type);
                     }
                 }
             }
@@ -191,7 +187,8 @@ public class CacheBuilder {
         try {
             return cacheConstructor.newInstance(id);
         } catch (Exception e) {
-            throw new CacheException("Could not instantiate cache implementation (" + cacheClass + "). Cause: " + e, e);
+            throw new CacheException("Could not instantiate cache implementation (" + cacheClass + "). " +
+                    "Cause: " + e, e);
         }
     }
 
@@ -200,7 +197,8 @@ public class CacheBuilder {
             return cacheClass.getConstructor(String.class);
         } catch (Exception e) {
             throw new CacheException("Invalid base cache implementation (" + cacheClass + ").  "
-                    + "Base cache implementations must have a constructor that takes a String id as a parameter.  Cause: " + e, e);
+                    + "Base cache implementations must have a constructor that takes a String id as a " +
+                    "parameter.  Cause: " + e, e);
         }
     }
 
@@ -218,7 +216,8 @@ public class CacheBuilder {
             return cacheClass.getConstructor(Cache.class);
         } catch (Exception e) {
             throw new CacheException("Invalid cache decorator (" + cacheClass + ").  "
-                    + "Cache decorators must have a constructor that takes a Cache instance as a parameter.  Cause: " + e, e);
+                    + "Cache decorators must have a constructor that takes a Cache instance as a parameter." +
+                    "  Cause: " + e, e);
         }
     }
 }

@@ -16,21 +16,15 @@
 package org.apache.ibatis.submitted.enumtypehandler_on_annotation;
 
 /**
- * @since #444
  * @author Kazuki Shimizu
+ * @since #444
  */
 public class Person {
-
-    enum PersonType {
-        PERSON,
-        EMPLOYEE
-    }
 
     private Integer id;
     private String firstName;
     private String lastName;
     private PersonType personType;
-
     public Person() {
     }
 
@@ -71,6 +65,11 @@ public class Person {
 
     public void setPersonType(PersonType personType) {
         this.personType = personType;
+    }
+
+    enum PersonType {
+        PERSON,
+        EMPLOYEE
     }
 
 }

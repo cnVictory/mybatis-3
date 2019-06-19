@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -50,7 +50,8 @@
                     MyBatis アプリケーションは、SqlSessionFactory のインスタンスを中心に構成されています。
                     <br/>
                     SqlSessionFactory のインスタンスは、SqlSessionFactoryBuilder を使って取得することができます。
-                    SqlSessionFactoryBuilder が SqlSessionFactory を生成する際の設定は、XML 形式の設定ファイルを読み込むか、独自に用意した Configuration
+                    SqlSessionFactoryBuilder が SqlSessionFactory を生成する際の設定は、XML 形式の設定ファイルを読み込むか、独自に用意した
+                    Configuration
                     クラスのインスタンスを渡すことで行います。
                 </p>
                 <p>
@@ -66,7 +67,8 @@ InputStream inputStream = Resources.getResourceAsStream(resource);
 SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);]]></source>
                 <p>
                     XML 形式の設定ファイルには、MyBatis システムの基本設定が含まれます。
-                    例えば、データベースから Connection のインスタンスを取得する DataSource や、トランザクションの制御方法を決定する TransactionManager などです。
+                    例えば、データベースから Connection のインスタンスを取得する DataSource や、トランザクションの制御方法を決定する TransactionManager
+                    などです。
                     <br/>
                     XML 形式の設定ファイルの詳細については後ほど改めて説明しますが、ここでは簡単なサンプルを挙げておきます。
                 </p>
@@ -120,7 +122,8 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
                     アノテーションの制約と MyBatis のマッピング機能の複雑さのため、高度なマッピングを定義する際に XML
                     形式の Mapper が必要となる場合があります（ネストされた結合クエリの結果をマッピングする場合など）。
                     <br/>
-                    このため、MyBatis は対になる XML ファイルを探して自動的に読み込むようになっています（この例では、BlogMapper.class のクラスパスと名前を元に BlogMapper.xml
+                    このため、MyBatis は対になる XML ファイルを探して自動的に読み込むようになっています（この例では、BlogMapper.class のクラスパスと名前を元に
+                    BlogMapper.xml
                     という XML ファイルが読み込まれます）。
                     この動作については、後ほど詳しく説明します。
                 </p>
@@ -184,10 +187,12 @@ try {
                     <br/>
                     ひとつの Mapper XML ファイルに複数の Mapped Statement を定義することができるので、XML ヘッダや doctype 宣言は一度書くだけです。
                     <br/>
-                    残りの部分はほぼ自明ですが、「org.mybatis.example.BlogMapper」というネームスペースの中に「selectBlog」という名前の Mapped Statement
+                    残りの部分はほぼ自明ですが、「org.mybatis.example.BlogMapper」というネームスペースの中に「selectBlog」という名前の Mapped
+                    Statement
                     を定義しています。
                     <br/>
-                    上のサンプルと同じですが、この Mapped Statement を実行するには、以下のように完全修飾名「org.mybatis.example.BlogMapper.selectBlog」を指定して
+                    上のサンプルと同じですが、この Mapped Statement
+                    を実行するには、以下のように完全修飾名「org.mybatis.example.BlogMapper.selectBlog」を指定して
                     SqlSession のメソッドを呼び出します。
                 </p>
                 <source>
@@ -227,7 +232,8 @@ Blog blog = mapper.selectBlog(101);]]></source>
                     タイピング量を減らすため、MyBatis は次のようなルールに則って設定要素（Statement, Result Map, Cache など）の名前解決を行います。
                 </p>
                 <ul>
-                    <li>完全修飾名（例えば「com.mypackage.MyMapper.selectAllThings」）で指定した場合は、指定された完全修飾名で要素を探し、もし見つかればその要素を参照します。
+                    <li>
+                        完全修飾名（例えば「com.mypackage.MyMapper.selectAllThings」）で指定した場合は、指定された完全修飾名で要素を探し、もし見つかればその要素を参照します。
                     </li>
                     <li>短縮名（例えば「selectAllThings」）で指定した場合は、短縮名部分が一致する要素を参照します。
                         ただし、同じ短縮名を持った要素が２つ以上存在する場合（例えば「com.foo.selectAllThings」と「com.bar.selectAllThings」）は、
@@ -245,7 +251,8 @@ public interface BlogMapper {
   Blog selectBlog(int id);
 }]]></source>
                 <p>
-                    アノテーションを使うと単純な SQL 文をスッキリ書くことができますが、複雑な SQL 文をアノテーションを使って書こうとすると可読性が落ちますし、アノテーション固有の制限もありますので、複雑な
+                    アノテーションを使うと単純な SQL 文をスッキリ書くことができますが、複雑な SQL
+                    文をアノテーションを使って書こうとすると可読性が落ちますし、アノテーション固有の制限もありますので、複雑な
                     Mapped Statement を扱わなくてはならない場合には XML を使うことをお勧めします。
                 </p>
                 <p>
@@ -265,7 +272,8 @@ public interface BlogMapper {
                     <strong>オブジェクトのライフサイクルと依存性注入（Dependency Injection）フレームワーク</strong>
                 </p>
                 <p>
-                    Dependency Injection フレームワークを使うと、スレッドセーフでトランザクション管理された SqlSession や Mapper のインスタンスを作成し、あなたの Bean
+                    Dependency Injection フレームワークを使うと、スレッドセーフでトランザクション管理された SqlSession や Mapper
+                    のインスタンスを作成し、あなたの Bean
                     にインジェクトすることもできます。
                     こうすることで、SqlSession や Mapper のライフサイクルについてアプリケーションロジックと分離することができます。
                     MyBatis と DI フレームワークの組み合わせについては、サブプロジェクトである MyBatis-Spring または MyBatis-Guice を参照してください。

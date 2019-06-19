@@ -15,9 +15,6 @@
  */
 package org.apache.ibatis.submitted.propertiesinmapperfiles;
 
-import java.io.Reader;
-import java.util.Properties;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -26,6 +23,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.Reader;
+import java.util.Properties;
 
 class PropertiesInMappersTest {
 
@@ -39,7 +39,8 @@ class PropertiesInMappersTest {
         p.put("property", "id");
 
         // create a SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/propertiesinmapperfiles/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/propertiesinmapperfiles/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader, p);
         }
 

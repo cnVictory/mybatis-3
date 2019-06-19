@@ -14,6 +14,8 @@
  * limitations under the License.
  * <p>
  * logger using Log4J 2 feature.
+ * <p>
+ * logger using Log4J 2 feature.
  */
 /**
  * logger using Log4J 2 feature.

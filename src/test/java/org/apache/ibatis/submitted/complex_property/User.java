@@ -16,19 +16,16 @@
 package org.apache.ibatis.submitted.complex_property;
 
 public class User {
+    boolean administrator;
     private Long id;
-
     /*
      * user specified user ID
      */
     private String username;
-
     /*
      * encrypted password
      */
     private EncryptedString password;
-
-    boolean administrator;
 
     public User() {
         setUsername(new String());

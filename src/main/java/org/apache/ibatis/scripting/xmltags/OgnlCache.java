@@ -15,19 +15,17 @@
  */
 package org.apache.ibatis.scripting.xmltags;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ognl.Ognl;
 import ognl.OgnlException;
-
 import org.apache.ibatis.builder.BuilderException;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Caches OGNL parsed expressions.
  *
  * @author Eduardo Macarron
- *
  * @see <a href='http://code.google.com/p/mybatis/issues/detail?id=342'>Issue 342</a>
  */
 public final class OgnlCache {

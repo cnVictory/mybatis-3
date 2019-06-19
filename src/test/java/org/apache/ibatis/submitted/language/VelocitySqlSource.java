@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.submitted.language;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.SqlSource;
@@ -31,6 +26,11 @@ import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.RuntimeSingleton;
 import org.apache.velocity.runtime.parser.node.SimpleNode;
 
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Just a test case. Not a real Velocity implementation.
  */
@@ -39,13 +39,13 @@ public class VelocitySqlSource implements SqlSource {
     public static final String PARAMETER_OBJECT_KEY = "_parameter";
     public static final String DATABASE_ID_KEY = "_databaseId";
 
-    private final Configuration configuration;
-    private final Template script;
-
     static {
         Velocity.setProperty("runtime.log", "target/velocity.log");
         Velocity.init();
     }
+
+    private final Configuration configuration;
+    private final Template script;
 
     public VelocitySqlSource(Configuration configuration, String scriptText) {
         this.configuration = configuration;
@@ -62,6 +62,14 @@ public class VelocitySqlSource implements SqlSource {
         } catch (Exception ex) {
             throw new BuilderException("Error parsing velocity script", ex);
         }
+    }
+
+    public static Map<String, Object> createBindings(Object parameterObject, Configuration configuration) {
+        Map<String, Object> bindings = new HashMap<>();
+        bindings.put(PARAMETER_OBJECT_KEY, parameterObject);
+        bindings.put(DATABASE_ID_KEY, configuration.getDatabaseId());
+        bindings.put("it", new IteratorParameter(bindings));
+        return bindings;
     }
 
     @Override
@@ -81,19 +89,11 @@ public class VelocitySqlSource implements SqlSource {
 
     }
 
-    public static Map<String, Object> createBindings(Object parameterObject, Configuration configuration) {
-        Map<String, Object> bindings = new HashMap<>();
-        bindings.put(PARAMETER_OBJECT_KEY, parameterObject);
-        bindings.put(DATABASE_ID_KEY, configuration.getDatabaseId());
-        bindings.put("it", new IteratorParameter(bindings));
-        return bindings;
-    }
-
     public static class IteratorParameter {
 
         private static final String PREFIX = "__frch_";
-        private int count = 0;
         private final Map<String, Object> bindings;
+        private int count = 0;
 
         public IteratorParameter(Map<String, Object> bindings) {
             this.bindings = bindings;

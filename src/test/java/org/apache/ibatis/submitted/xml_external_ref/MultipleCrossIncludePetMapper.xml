@@ -34,7 +34,8 @@
 		person_id
 	</sql>
     <sql id="petColumnList">
-        <include refid="org.apache.ibatis.submitted.xml_external_ref.MultipleCrossIncludePersonMapper.petIdColumnList"/>
+        <include
+                refid="org.apache.ibatis.submitted.xml_external_ref.MultipleCrossIncludePersonMapper.petIdColumnList"/>
         ,
         owner_id, pet_name
     </sql>

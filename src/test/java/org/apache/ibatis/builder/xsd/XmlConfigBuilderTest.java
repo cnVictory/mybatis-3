@@ -15,12 +15,7 @@
  */
 package org.apache.ibatis.builder.xsd;
 
-import org.apache.ibatis.builder.CustomLongTypeHandler;
-import org.apache.ibatis.builder.CustomObjectWrapperFactory;
-import org.apache.ibatis.builder.CustomReflectorFactory;
-import org.apache.ibatis.builder.CustomStringTypeHandler;
-import org.apache.ibatis.builder.ExampleObjectFactory;
-import org.apache.ibatis.builder.ExamplePlugin;
+import org.apache.ibatis.builder.*;
 import org.apache.ibatis.builder.mapper.CustomMapper;
 import org.apache.ibatis.builder.typehandler.CustomIntegerTypeHandler;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
@@ -77,7 +72,8 @@ class XmlConfigBuilderTest {
             assertFalse(config.isSafeRowBoundsEnabled());
             assertEquals(LocalCacheScope.SESSION, config.getLocalCacheScope());
             assertEquals(JdbcType.OTHER, config.getJdbcTypeForNull());
-            assertEquals(new HashSet<>(Arrays.asList("equals", "clone", "hashCode", "toString")), config.getLazyLoadTriggerMethods());
+            assertEquals(new HashSet<>(Arrays.asList("equals", "clone", "hashCode", "toString")),
+                    config.getLazyLoadTriggerMethods());
             assertTrue(config.isSafeResultHandlerEnabled());
             assertTrue(config.getDefaultScriptingLanguageInstance() instanceof XMLLanguageDriver);
             assertFalse(config.isCallSettersOnNulls());
@@ -98,7 +94,8 @@ class XmlConfigBuilderTest {
             Configuration config = builder.parse();
 
             assertEquals(AutoMappingBehavior.NONE, config.getAutoMappingBehavior());
-            assertEquals(AutoMappingUnknownColumnBehavior.WARNING, config.getAutoMappingUnknownColumnBehavior());
+            assertEquals(AutoMappingUnknownColumnBehavior.WARNING,
+                    config.getAutoMappingUnknownColumnBehavior());
             assertFalse(config.isCacheEnabled());
             assertTrue(config.getProxyFactory() instanceof CglibProxyFactory);
             assertTrue(config.isLazyLoadingEnabled());
@@ -113,7 +110,8 @@ class XmlConfigBuilderTest {
             assertTrue(config.isSafeRowBoundsEnabled());
             assertEquals(LocalCacheScope.STATEMENT, config.getLocalCacheScope());
             assertEquals(JdbcType.NULL, config.getJdbcTypeForNull());
-            assertEquals(new HashSet<>(Arrays.asList("equals", "clone", "hashCode", "toString", "xxx")), config.getLazyLoadTriggerMethods());
+            assertEquals(new HashSet<>(Arrays.asList("equals", "clone", "hashCode", "toString", "xxx")),
+                    config.getLazyLoadTriggerMethods());
             assertFalse(config.isSafeResultHandlerEnabled());
             assertTrue(config.getDefaultScriptingLanguageInstance() instanceof RawLanguageDriver);
             assertTrue(config.isCallSettersOnNulls());

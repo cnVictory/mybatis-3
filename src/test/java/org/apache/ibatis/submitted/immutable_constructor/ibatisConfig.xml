@@ -22,7 +22,8 @@
 
 <configuration>
     <typeAliases>
-        <typeAlias alias="ImmutablePOJO" type="org.apache.ibatis.submitted.immutable_constructor.ImmutablePOJO"/>
+        <typeAlias alias="ImmutablePOJO"
+                   type="org.apache.ibatis.submitted.immutable_constructor.ImmutablePOJO"/>
     </typeAliases>
 
     <environments default="test">

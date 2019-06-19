@@ -16,6 +16,11 @@
 package org.apache.ibatis.submitted.foreach_map;
 
 public class NestedBeanMapEntry {
+    private Integer keya;
+    private Boolean keyb;
+    private Integer valuea;
+    private Boolean valueb;
+
     public NestedBeanMapEntry() {
     }
 
@@ -90,11 +95,7 @@ public class NestedBeanMapEntry {
 
     @Override
     public String toString() {
-        return "NestedBeanMapEntry{" + "keya=" + keya + ", valuea=" + valuea + ", keyb=" + keyb + ", valueb=" + valueb + '}';
+        return "NestedBeanMapEntry{" + "keya=" + keya + ", valuea=" + valuea + ", keyb=" + keyb + ", valueb" +
+                "=" + valueb + '}';
     }
-
-    private Integer keya;
-    private Boolean keyb;
-    private Integer valuea;
-    private Boolean valueb;
 }

@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.scripting.xmltags;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.mapping.SqlSource;
@@ -29,15 +24,20 @@ import org.apache.ibatis.session.Configuration;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Clinton Begin
  */
 public class XMLScriptBuilder extends BaseBuilder {
 
     private final XNode context;
-    private boolean isDynamic;
     private final Class<?> parameterType;
     private final Map<String, NodeHandler> nodeHandlerMap = new HashMap<>();
+    private boolean isDynamic;
 
     public XMLScriptBuilder(Configuration configuration, XNode context) {
         this(configuration, context, null);
@@ -131,7 +131,8 @@ public class XMLScriptBuilder extends BaseBuilder {
             String prefixOverrides = nodeToHandle.getStringAttribute("prefixOverrides");
             String suffix = nodeToHandle.getStringAttribute("suffix");
             String suffixOverrides = nodeToHandle.getStringAttribute("suffixOverrides");
-            TrimSqlNode trim = new TrimSqlNode(configuration, mixedSqlNode, prefix, prefixOverrides, suffix, suffixOverrides);
+            TrimSqlNode trim = new TrimSqlNode(configuration, mixedSqlNode, prefix, prefixOverrides, suffix
+                    , suffixOverrides);
             targetContents.add(trim);
         }
     }
@@ -176,7 +177,8 @@ public class XMLScriptBuilder extends BaseBuilder {
             String open = nodeToHandle.getStringAttribute("open");
             String close = nodeToHandle.getStringAttribute("close");
             String separator = nodeToHandle.getStringAttribute("separator");
-            ForEachSqlNode forEachSqlNode = new ForEachSqlNode(configuration, mixedSqlNode, collection, index, item, open, close, separator);
+            ForEachSqlNode forEachSqlNode = new ForEachSqlNode(configuration, mixedSqlNode, collection,
+                    index, item, open, close, separator);
             targetContents.add(forEachSqlNode);
         }
     }
@@ -222,7 +224,8 @@ public class XMLScriptBuilder extends BaseBuilder {
             targetContents.add(chooseSqlNode);
         }
 
-        private void handleWhenOtherwiseNodes(XNode chooseSqlNode, List<SqlNode> ifSqlNodes, List<SqlNode> defaultSqlNodes) {
+        private void handleWhenOtherwiseNodes(XNode chooseSqlNode, List<SqlNode> ifSqlNodes,
+                                              List<SqlNode> defaultSqlNodes) {
             List<XNode> children = chooseSqlNode.getChildren();
             for (XNode child : children) {
                 String nodeName = child.getNode().getNodeName();

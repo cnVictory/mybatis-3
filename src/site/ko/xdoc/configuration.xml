@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -85,7 +85,8 @@
   <property name="username" value="${username}"/>
   <property name="password" value="${password}"/>
 </dataSource>]]></source>
-                <p>이 예제에서 username과 password는 properties엘리먼트의 설정된 값으로 대체될 수 있다. driver와 url속성은 config.properties파일에 포함된
+                <p>이 예제에서 username과 password는 properties엘리먼트의 설정된 값으로 대체될 수 있다. driver와 url속성은
+                    config.properties파일에 포함된
                     값으로 대체될 수도 있다. 이것은 설정에 대한 다양한 옵션을 제공하는 셈이다.
                 </p>
                 <p>속성은 SqlSessionFactoryBuilder.build() 메소드에 전달될 수 있다. 예를들면:</p>
@@ -101,7 +102,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                     <li>properties 엘리먼트의 클래스패스 자원이나 url 속성으로 부터 로드된 속성을 두번째로 읽는다. 그래서 이미 읽은 값이 있다면 덮어쓴다.</li>
                     <li>마지막으로 메소드 파라미터로 전달된 속성을 읽는다. 앞서 로드된 값을 덮어쓴다.</li>
                 </ul>
-                <p>그래서 가장 우선순위가 높은 속성은 메소드의 파라미터로 전달된 값이고 그 다음은 자원및 url 속성이고 마지막은 properties 엘리먼트에 명시된 값이다.</p>
+                <p>그래서 가장 우선순위가 높은 속성은 메소드의 파라미터로 전달된 값이고 그 다음은 자원및 url 속성이고 마지막은 properties 엘리먼트에 명시된 값이다.
+                </p>
 
                 <p>
                     Mybatis 3.4.2 부터, placeholder 에 기본값을 아래처럼 지정할 수 있다.
@@ -126,7 +128,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                 <p>
                     <span class="label important">NOTE</span>
                     또한 이미 property key (예 : <code>db : username</code>)로 <code>":"</code>를 사용하거나
-                    SQL 정의에서 OGNL 표현식의 삼항 연산자 (예 : <code>${tableName != null ? tableName : 'global_constants'}</code>)를
+                    SQL 정의에서 OGNL 표현식의 삼항 연산자 (예 : <code>
+                    ${tableName != null ? tableName : 'global_constants'}</code>)를
                     사용하는 경우
                     다음과 같이 특별한 속성을 추가하여 키와 기본값을 구분하는 문자를 변경해야한다.
                 </p>
@@ -188,7 +191,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 aggressiveLazyLoading
                             </td>
                             <td>
-                                활성화되면 모든 메서드 호출은 객체의 모든 lazy properties 을 로드한다. 그렇지 않으면 각 property 가 필요에 따라 로드된다. (<code>
+                                활성화되면 모든 메서드 호출은 객체의 모든 lazy properties 을 로드한다. 그렇지 않으면 각 property 가 필요에 따라
+                                로드된다. (<code>
                                 lazyLoadTriggerMethods
                             </code> 참조).
                             </td>
@@ -269,7 +273,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                         'org.apache.ibatis.session.AutoMappingUnknownColumnBehavior'</code>의
                                         로그레벨은 <code>WARN</code>이어야 한다.)
                                     </li>
-                                    <li><code>FAILING</code>: 매핑이 실패한다. (<code>SqlSessionException</code>예외를 던진다.)
+                                    <li><code>FAILING</code>: 매핑이 실패한다. (<code>SqlSessionException</code>예외를
+                                        던진다.)
                                     </li>
                                 </ul>
                             </td>
@@ -389,7 +394,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             <td>
                                 마이바티스는 순환참조를 막거나 반복된 쿼리의 속도를 높히기 위해 로컬캐시를 사용한다.
                                 디폴트 설정인 SESSION을 사용해서 동일 세션의 모든 쿼리를 캐시한다.
-                                localCacheScope=STATEMENT 로 설정하면 로컬 세션은 구문 실행할때만 사용하고 같은 SqlSession에서 두개의 다른 호출사이에는 데이터를
+                                localCacheScope=STATEMENT 로 설정하면 로컬 세션은 구문 실행할때만 사용하고 같은 SqlSession에서 두개의 다른
+                                호출사이에는 데이터를
                                 공유하지 않는다.
                             </td>
                             <td>
@@ -405,7 +411,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             </td>
                             <td>
                                 JDBC타입을 파라미터에 제공하지 않을때 null값을 처리한 JDBC타입을 명시한다.
-                                일부 드라이버는 칼럼의 JDBC타입을 정의하도록 요구하지만 대부분은 NULL, VARCHAR 나 OTHER 처럼 일반적인 값을 사용해서 동작한다.
+                                일부 드라이버는 칼럼의 JDBC타입을 정의하도록 요구하지만 대부분은 NULL, VARCHAR 나 OTHER 처럼 일반적인 값을 사용해서
+                                동작한다.
                             </td>
                             <td>
                                 JdbcType 이늄. 대부분은 NULL, VARCHAR 나 OTHER 를 공통적으로 사용한다.
@@ -511,7 +518,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 이 설정을 사용하지 않으면 마이바티스가 사용할 로깅 구현체를 자동으로 찾는다.
                             </td>
                             <td>
-                                SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING
+                                SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING |
+                                NO_LOGGING
                             </td>
                             <td>
                                 설정하지 않음
@@ -548,7 +556,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             </td>
                             <td>
                                 메소드 시그니처에 명시된 실제 이름으로 구문파라미터를 참조하는 것을 허용
-                                이 기능을 사용하려면 프로젝트를 자바 8의 <code>-parameters</code>옵션을 사용해서 컴파일해야만 한다.(마이바티스 3.4.1이상의 버전)
+                                이 기능을 사용하려면 프로젝트를 자바 8의 <code>-parameters</code>옵션을 사용해서 컴파일해야만 한다.(마이바티스
+                                3.4.1이상의 버전)
                             </td>
                             <td>
                                 true | false
@@ -565,7 +574,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 <code>Configuration</code>
                                 인스턴스를 제공하는 클래스를 지정한다.
                                 반환된 Configuration 인스턴스는 역직렬화 된 객체의 지연로딩 속성들을 불러오는데 사용된다.
-                                이 클래스는 <code>static Configuration getConfiguration()</code> 메서드를 가져야 한다. (3.2.3 부터)
+                                이 클래스는 <code>static Configuration getConfiguration()</code> 메서드를 가져야 한다.
+                                (3.2.3 부터)
                             </td>
                             <td>
                                 타입별칭이나 패키지 경로를 포함한 클래스명
@@ -865,7 +875,8 @@ public class Author {
                 </table>
             </subsection>
             <subsection name="typeHandlers">
-                <p>마이바티스가 PreparedStatement에 파라미터를 설정하고 ResultSet에서 값을 가져올때마다 TypeHandler는 적절한 자바 타입의 값을 가져오기 위해 사용된다.
+                <p>마이바티스가 PreparedStatement에 파라미터를 설정하고 ResultSet에서 값을 가져올때마다 TypeHandler는 적절한 자바 타입의 값을 가져오기
+                    위해 사용된다.
                     다음의 표는 디폴트 TypeHandlers를 설명한다.
                 </p>
                 <p>
@@ -1358,7 +1369,8 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
                     애노테이션의 사용은 타입핸들러의 범위를 <i>제한</i>하고 명시적으로 설정하지 않는한 <code>결과매핑</code>을 사용하지 못하도록 만든다.
                     <code>결과매핑</code>에서 타입핸들러를 사용할수 있도록 하려면 <code>@MappedJdbcTypes</code>애노테이션에 <code>
                     includeNullJdbcType=true</code>를 설정하자.
-                    자바타입을 다루기 위해 <b>한개의</b> 타입핸들러만 등록한다면 <code>결과매핑</code>에서 자바타입을 다루기 위해 이 타입핸들러를 기본적으로 사용할 것이다.
+                    자바타입을 다루기 위해 <b>한개의</b> 타입핸들러만 등록한다면 <code>결과매핑</code>에서 자바타입을 다루기 위해 이 타입핸들러를 기본적으로 사용할
+                    것이다.
                     한개의 타입핸들러만 등록할 경우 <code>includeNullJdbcType=true</code>를 설정하지 않아도 동일하게 동작한다.
                 </p>
 
@@ -1397,7 +1409,8 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
 
             <subsection name="Handling Enums">
                 <p>
-                    <code>Enum</code>을 매핑하고자 한다면 <code>EnumTypeHandler</code> 나 <code>EnumOrdinalTypeHandler</code> 를
+                    <code>Enum</code>을 매핑하고자 한다면 <code>EnumTypeHandler</code> 나 <code>EnumOrdinalTypeHandler
+                </code> 를
                     사용할 필요가 있을것이다.
                 </p>
 
@@ -1578,7 +1591,8 @@ public class ExamplePlugin implements Interceptor {
                     그외에도 많은 경우가 있을 수 있다.
                 </p>
                 <p>
-                    <strong>중요하게 기억해야 할 것은 다중 환경을 설정할 수는 있지만 SqlSessionFactory 인스턴스마다 한개만 사용할 수 있다는 것이다.</strong>
+                    <strong>중요하게 기억해야 할 것은 다중 환경을 설정할 수는 있지만 SqlSessionFactory 인스턴스마다 한개만 사용할 수 있다는 것이다.
+                    </strong>
                 </p>
                 <p>두개의 데이터베이스에 연결하고 싶다면 SqlSessionFactory 인스턴스를 두개 만들 필요가 있다.
                     세개의 데이터베이스를 사용한다면 역시 세개의 인스턴스를 필요로 한다.
@@ -1636,7 +1650,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                         결코 커밋이나 롤백을 하지 않는다.
                         대신 컨테이너가 트랜잭션의 모든 생명주기를 관리한다.
                         디플트로 커넥션을 닫긴 한다.
-                        하지만 몇몇 컨테이너는 커넥션을 닫는 것 또한 기대하지 않기 때문에 커넥션 닫는 것으로 멈추고자 한다면 “closeConnection”프로퍼티를 false로 설정하라.
+                        하지만 몇몇 컨테이너는 커넥션을 닫는 것 또한 기대하지 않기 때문에 커넥션 닫는 것으로 멈추고자 한다면 “closeConnection”프로퍼티를
+                        false로 설정하라.
                         예를들면:
                         <source><![CDATA[<transactionManager type="MANAGED">
   <property name="closeConnection" value="false"/>
@@ -1776,7 +1791,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
                 <ul>
                     <li>
                         <code>initial_context</code>
-                        - 이 프로퍼티는 InitialContext 에서 컨텍스트를 찾기(예를 들어 initialContext.lookup(initial_context))위해 사용된다.
+                        - 이 프로퍼티는 InitialContext 에서 컨텍스트를 찾기(예를 들어 initialContext.lookup(initial_context))위해
+                        사용된다.
                         이 프로퍼티는 선택적인 값이다.
                         이 설정을 생략하면 data_source프로퍼티가 InitialContext에서 직접 찾을 것이다.
                     </li>
@@ -1806,7 +1822,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader,properti
 }]]></source>
 
                 <p>
-                    <code>org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory</code>는 새로운 데이터소스를 만들기 위한 상위
+                    <code>org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory</code>는 새로운 데이터소스를
+                    만들기 위한 상위
                     클래스처럼 사용할 수 있다.
                     예를들면 다음의 코드를 사용해서 C3P0를 사용할 수 있다.
                 </p>
@@ -1839,14 +1856,16 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
                 <p>마이바티스는 데이터베이스 제품마다 다른 구문을 실행할 수 있다.
                     여러개의 데이터베이스 제품을 가진 업체 제품은 <code>databaseId</code> 속성을 사용한 매핑된 구문을 기반으로 지원한다.
                     마이바티스는 <code>databaseId</code>속성이 없거나 <code>databaseId</code>속성을 가진 모든 구문을 로드한다.
-                    같은 구문인데 하나는 <code>databaseId</code>속성이 있고 하나는 <code>databaseId</code>속성이 없을때 뒤에 나온 것이 무시된다.
+                    같은 구문인데 하나는 <code>databaseId</code>속성이 있고 하나는 <code>databaseId</code>속성이 없을때 뒤에 나온 것이
+                    무시된다.
                     다중 지원을 사용하기 위해서는 mybatis-config.xml파일에 다음처럼 <code>databaseIdProvider</code>를 추가하라:
                 </p>
 
                 <source><![CDATA[<databaseIdProvider type="DB_VENDOR" />
 ]]></source>
 
-                <p>DB_VENDOR구현체 databaseIdProvider는 <code>DatabaseMetaData#getDatabaseProductName()</code>에 의해 리턴된 문자열로
+                <p>DB_VENDOR구현체 databaseIdProvider는 <code>DatabaseMetaData#getDatabaseProductName()</code>에 의해
+                    리턴된 문자열로
                     databaseId를 설정한다.
                     이때 리턴되는 문자열이 너무 길거나 같은 제품의 서로다른 버전으로 다른 값을 리턴하는 경우 다음처럼 프로퍼티를 추가해서 짧게 처리할 수도 있다:
                 </p>
@@ -1857,9 +1876,11 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
   <property name="Oracle" value="oracle" />
 </databaseIdProvider>]]></source>
 
-                <p>프로퍼터가 제공되면 DB_VENDOR databaseIdProvider는 리턴된 데이터베이스 제품명에서 찾은 첫번째 프로퍼티값이나 일치하는 프로퍼티가 없다면 "null" 을 찾을
+                <p>프로퍼터가 제공되면 DB_VENDOR databaseIdProvider는 리턴된 데이터베이스 제품명에서 찾은 첫번째 프로퍼티값이나 일치하는 프로퍼티가 없다면
+                    "null" 을 찾을
                     것이다.
-                    이 경우 <code>getDatabaseProductName()</code>가 "Oracle (DataDirect)"를 리턴한다면 databaseId는 "oracle"로 설정될
+                    이 경우 <code>getDatabaseProductName()</code>가 "Oracle (DataDirect)"를 리턴한다면 databaseId는
+                    "oracle"로 설정될
                     것이다.
                 </p>
 

@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.not_null_column;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.Reader;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -27,13 +23,18 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 class NotNullColumnTest {
 
     private static SqlSessionFactory sqlSessionFactory;
 
     @BeforeAll
     static void initDatabase() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/not_null_column/ibatisConfig.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/not_null_column" +
+                "/ibatisConfig.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

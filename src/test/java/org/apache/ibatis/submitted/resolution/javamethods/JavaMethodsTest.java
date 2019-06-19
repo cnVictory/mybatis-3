@@ -15,8 +15,6 @@
  */
 package org.apache.ibatis.submitted.resolution.javamethods;
 
-import java.io.Reader;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +25,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+
 class JavaMethodsTest {
 
     private static SqlSessionFactory sqlSessionFactory;
@@ -35,7 +35,8 @@ class JavaMethodsTest {
     static void setUp() throws Exception {
         // create an SqlSessionFactory
         try (Reader reader = Resources
-                .getResourceAsReader("org/apache/ibatis/submitted/resolution/javamethods/mybatis-config.xml")) {
+                .getResourceAsReader("org/apache/ibatis/submitted/resolution/javamethods/mybatis-config" +
+                        ".xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

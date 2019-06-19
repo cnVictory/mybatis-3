@@ -15,13 +15,13 @@
  */
 package org.apache.ibatis.submitted.keygen;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface CountryMapper {
 
@@ -30,11 +30,13 @@ public interface CountryMapper {
     int insertBean(Country country);
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country.countrycode})"})
+    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country" +
+            ".countrycode})"})
     int insertNamedBean(@Param("country") Country country);
 
     @Options(useGeneratedKeys = true, keyProperty = "country.id")
-    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country.countrycode})"})
+    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country" +
+            ".countrycode})"})
     int insertNamedBean_keyPropertyWithParamName(@Param("country") Country country);
 
     int insertList(List<Country> countries);
@@ -50,15 +52,19 @@ public interface CountryMapper {
     int insertNamedArray(@Param("countries") Country[] countries);
 
     @Options(useGeneratedKeys = true, keyProperty = "country.id")
-    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country.countrycode})"})
+    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country" +
+            ".countrycode})"})
     int insertMultiParams(@Param("country") Country country, @Param("someId") Integer someId);
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country.countrycode})"})
-    int insertMultiParams_keyPropertyWithoutParamName(@Param("country") Country country, @Param("someId") Integer someId);
+    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country" +
+            ".countrycode})"})
+    int insertMultiParams_keyPropertyWithoutParamName(@Param("country") Country country,
+                                                      @Param("someId") Integer someId);
 
     @Options(useGeneratedKeys = true, keyProperty = "bogus.id")
-    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country.countrycode})"})
+    @Insert({"insert into country (countryname,countrycode) values (#{country.countryname},#{country" +
+            ".countrycode})"})
     int insertMultiParams_keyPropertyWithWrongParamName(@Param("country") Country country,
                                                         @Param("someId") Integer someId);
 

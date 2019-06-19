@@ -15,12 +15,12 @@
  */
 package org.apache.ibatis.reflection.wrapper;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.ReflectionException;
 import org.apache.ibatis.reflection.property.PropertyTokenizer;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Clinton Begin
@@ -68,7 +68,8 @@ public abstract class BaseWrapper implements ObjectWrapper {
             } else if (collection instanceof short[]) {
                 return ((short[]) collection)[i];
             } else {
-                throw new ReflectionException("The '" + prop.getName() + "' property of " + collection + " is not a List or Array.");
+                throw new ReflectionException("The '" + prop.getName() + "' property of " + collection + " " +
+                        "is not a List or Array.");
             }
         }
     }
@@ -99,7 +100,8 @@ public abstract class BaseWrapper implements ObjectWrapper {
             } else if (collection instanceof short[]) {
                 ((short[]) collection)[i] = (Short) value;
             } else {
-                throw new ReflectionException("The '" + prop.getName() + "' property of " + collection + " is not a List or Array.");
+                throw new ReflectionException("The '" + prop.getName() + "' property of " + collection + " " +
+                        "is not a List or Array.");
             }
         }
     }

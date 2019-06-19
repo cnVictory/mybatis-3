@@ -14,6 +14,8 @@
  * limitations under the License.
  * <p>
  * Contains all the annotation that are used in mapper interfaces
+ * <p>
+ * Contains all the annotation that are used in mapper interfaces
  */
 /**
  * Contains all the annotation that are used in mapper interfaces

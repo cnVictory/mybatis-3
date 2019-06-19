@@ -15,9 +15,9 @@
  */
 package org.apache.ibatis.submitted.use_actual_param_name;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface Mapper {
 

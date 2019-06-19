@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ParamNameUtil {
+    private ParamNameUtil() {
+        super();
+    }
+
     public static List<String> getParamNames(Method method) {
         return getParameterNames(method);
     }
@@ -34,9 +38,5 @@ public class ParamNameUtil {
 
     private static List<String> getParameterNames(Executable executable) {
         return Arrays.stream(executable.getParameters()).map(Parameter::getName).collect(Collectors.toList());
-    }
-
-    private ParamNameUtil() {
-        super();
     }
 }

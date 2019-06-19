@@ -38,7 +38,8 @@
         <id column="blog_id" property="id"/>
         <collection property="posts" ofType="org.apache.ibatis.domain.blog.PostLite">
             <constructor>
-                <arg javaType="org.apache.ibatis.domain.blog.PostLiteId" column="{id=id}" select="selectPostLiteId"/>
+                <arg javaType="org.apache.ibatis.domain.blog.PostLiteId" column="{id=id}"
+                     select="selectPostLiteId"/>
                 <arg javaType="_int" column="blog_id"/>
             </constructor>
         </collection>
@@ -97,7 +98,8 @@
                 <otherwise>
                     <if test="ids != null">
                         AND id IN
-                        <foreach item="item_id" index="index" open="(" close=")" separator="," collection="ids">
+                        <foreach item="item_id" index="index" open="(" close=")" separator=","
+                                 collection="ids">
                             #{ids[${index}]}
                         </foreach>
                     </if>

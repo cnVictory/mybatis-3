@@ -15,18 +15,21 @@
  */
 package org.apache.ibatis.type;
 
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.Instant;
 
 /**
- * @since 3.4.5
  * @author Tomas Rohovsky
+ * @since 3.4.5
  */
 public class InstantTypeHandler extends BaseTypeHandler<Instant> {
+
+    private static Instant getInstant(Timestamp timestamp) {
+        if (timestamp != null) {
+            return timestamp.toInstant();
+        }
+        return null;
+    }
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Instant parameter, JdbcType jdbcType) throws SQLException {
@@ -49,12 +52,5 @@ public class InstantTypeHandler extends BaseTypeHandler<Instant> {
     public Instant getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         Timestamp timestamp = cs.getTimestamp(columnIndex);
         return getInstant(timestamp);
-    }
-
-    private static Instant getInstant(Timestamp timestamp) {
-        if (timestamp != null) {
-            return timestamp.toInstant();
-        }
-        return null;
     }
 }

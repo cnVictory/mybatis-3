@@ -16,6 +16,9 @@
 package org.apache.ibatis.submitted.foreach_map;
 
 public class IntBoolMapEntry {
+    private Integer key;
+    private Boolean value;
+
     public IntBoolMapEntry() {
     }
 
@@ -68,7 +71,4 @@ public class IntBoolMapEntry {
     public String toString() {
         return '{' + key.toString() + '=' + value + '}';
     }
-
-    private Integer key;
-    private Boolean value;
 }

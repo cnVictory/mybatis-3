@@ -15,21 +15,12 @@
  */
 package org.apache.ibatis.submitted.custom_collection_handling;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import org.apache.ibatis.reflection.ReflectionException;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.util.*;
 
 public class CustomObjectFactory implements ObjectFactory {
 
@@ -51,7 +42,8 @@ public class CustomObjectFactory implements ObjectFactory {
         // no props for default
     }
 
-    private <T> T instantiateClass(Class<T> type, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
+    private <T> T instantiateClass(Class<T> type, List<Class<?>> constructorArgTypes,
+                                   List<Object> constructorArgs) {
         try {
             Constructor<T> constructor;
             if (constructorArgTypes == null || constructorArgs == null) {
@@ -61,7 +53,8 @@ public class CustomObjectFactory implements ObjectFactory {
                 }
                 return constructor.newInstance();
             }
-            constructor = type.getDeclaredConstructor(constructorArgTypes.toArray(new Class[constructorArgTypes.size()]));
+            constructor =
+                    type.getDeclaredConstructor(constructorArgTypes.toArray(new Class[constructorArgTypes.size()]));
             if (!constructor.isAccessible()) {
                 constructor.setAccessible(true);
             }

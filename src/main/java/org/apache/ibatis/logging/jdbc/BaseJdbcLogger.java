@@ -15,22 +15,15 @@
  */
 package org.apache.ibatis.logging.jdbc;
 
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.reflection.ArrayUtil;
+
 import java.lang.reflect.Method;
 import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.reflection.ArrayUtil;
 
 /**
  * Base class for proxies to do logging.
@@ -43,26 +36,6 @@ public abstract class BaseJdbcLogger {
     protected static final Set<String> SET_METHODS;
     protected static final Set<String> EXECUTE_METHODS = new HashSet<>();
 
-    private final Map<Object, Object> columnMap = new HashMap<>();
-
-    private final List<Object> columnNames = new ArrayList<>();
-    private final List<Object> columnValues = new ArrayList<>();
-
-    protected final Log statementLog;
-    protected final int queryStack;
-
-    /*
-     * Default constructor
-     */
-    public BaseJdbcLogger(Log log, int queryStack) {
-        this.statementLog = log;
-        if (queryStack == 0) {
-            this.queryStack = 1;
-        } else {
-            this.queryStack = queryStack;
-        }
-    }
-
     static {
         SET_METHODS = Arrays.stream(PreparedStatement.class.getDeclaredMethods())
                 .filter(method -> method.getName().startsWith("set"))
@@ -74,6 +47,24 @@ public abstract class BaseJdbcLogger {
         EXECUTE_METHODS.add("executeUpdate");
         EXECUTE_METHODS.add("executeQuery");
         EXECUTE_METHODS.add("addBatch");
+    }
+
+    protected final Log statementLog;
+    protected final int queryStack;
+    private final Map<Object, Object> columnMap = new HashMap<>();
+    private final List<Object> columnNames = new ArrayList<>();
+    private final List<Object> columnValues = new ArrayList<>();
+
+    /*
+     * Default constructor
+     */
+    public BaseJdbcLogger(Log log, int queryStack) {
+        this.statementLog = log;
+        if (queryStack == 0) {
+            this.queryStack = 1;
+        } else {
+            this.queryStack = queryStack;
+        }
     }
 
     protected void setColumn(Object key, Object value) {

@@ -15,10 +15,10 @@
  */
 package org.apache.ibatis.mapping;
 
+import org.apache.ibatis.session.Configuration;
+
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.ibatis.session.Configuration;
 
 /**
  * @author Clinton Begin
@@ -32,10 +32,23 @@ public class ParameterMap {
     private ParameterMap() {
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public Class<?> getType() {
+        return type;
+    }
+
+    public List<ParameterMapping> getParameterMappings() {
+        return parameterMappings;
+    }
+
     public static class Builder {
         private ParameterMap parameterMap = new ParameterMap();
 
-        public Builder(Configuration configuration, String id, Class<?> type, List<ParameterMapping> parameterMappings) {
+        public Builder(Configuration configuration, String id, Class<?> type,
+                       List<ParameterMapping> parameterMappings) {
             parameterMap.id = id;
             parameterMap.type = type;
             parameterMap.parameterMappings = parameterMappings;
@@ -50,18 +63,6 @@ public class ParameterMap {
             parameterMap.parameterMappings = Collections.unmodifiableList(parameterMap.parameterMappings);
             return parameterMap;
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Class<?> getType() {
-        return type;
-    }
-
-    public List<ParameterMapping> getParameterMappings() {
-        return parameterMappings;
     }
 
 }

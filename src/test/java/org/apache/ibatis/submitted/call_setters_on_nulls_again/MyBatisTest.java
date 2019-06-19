@@ -15,8 +15,6 @@
  */
 package org.apache.ibatis.submitted.call_setters_on_nulls_again;
 
-import java.io.Reader;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -25,6 +23,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+
 class MyBatisTest {
 
     private static SqlSessionFactory sqlSessionFactory;
@@ -32,7 +32,8 @@ class MyBatisTest {
     @BeforeAll
     static void setUp() throws Exception {
         // create an SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/call_setters_on_nulls_again/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/call_setters_on_nulls_again/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
     }

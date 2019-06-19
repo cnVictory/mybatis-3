@@ -15,8 +15,6 @@
  */
 package org.apache.ibatis.submitted.substitution_in_annots;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
@@ -28,6 +26,8 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class SubstitutionInAnnotsTest {
 
     protected static SqlSessionFactory sqlSessionFactory;
@@ -35,7 +35,8 @@ class SubstitutionInAnnotsTest {
     @BeforeAll
     static void setUp() throws Exception {
         Configuration configuration = new Configuration();
-        Environment environment = new Environment("test", new JdbcTransactionFactory(), new UnpooledDataSource("org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:annots", null));
+        Environment environment = new Environment("test", new JdbcTransactionFactory(),
+                new UnpooledDataSource("org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:annots", null));
         configuration.setEnvironment(environment);
         configuration.addMapper(SubstitutionInAnnotsMapper.class);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);

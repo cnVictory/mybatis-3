@@ -69,7 +69,8 @@
         <id column="id" property="id"/>
         <result column="body" property="body"/>
         <association property="blog" resultMap="BlogResultMapColumnPrefix"></association>
-        <collection property="comments" resultMap="CommentResultMapColumnPrefix" columnPrefix="comment_"></collection>
+        <collection property="comments" resultMap="CommentResultMapColumnPrefix"
+                    columnPrefix="comment_"></collection>
     </resultMap>
 
     <resultMap id="CommentResultMapColumnPrefix" type="Comment">

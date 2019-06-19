@@ -15,19 +15,23 @@
  */
 package org.apache.ibatis.cache;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Date;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class CacheKeyTest {
+
+    private static <T> T serialize(T object) throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        new ObjectOutputStream(baos).writeObject(object);
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        return (T) new ObjectInputStream(bais).readObject();
+    }
 
     @Test
     void shouldTestCacheKeysEqual() {
@@ -101,14 +105,6 @@ class CacheKeyTest {
         CacheKey cacheKey = new CacheKey();
         cacheKey.update("serializable");
         Assertions.assertEquals(cacheKey, serialize(cacheKey));
-    }
-
-    private static <T> T serialize(T object) throws Exception {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new ObjectOutputStream(baos).writeObject(object);
-
-        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        return (T) new ObjectInputStream(bais).readObject();
     }
 
 }

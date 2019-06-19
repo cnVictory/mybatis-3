@@ -15,17 +15,16 @@
  */
 package org.apache.ibatis.submitted.generictypes;
 
-import java.io.Reader;
-
 import org.apache.ibatis.BaseDataTest;
-import org.junit.jupiter.api.Assertions;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.Reader;
 
 class GenericTypesTest {
 
@@ -33,7 +32,8 @@ class GenericTypesTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/generictypes/Config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/generictypes/Config" +
+                ".xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

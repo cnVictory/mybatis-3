@@ -76,7 +76,9 @@
     <sql id="includeWithCData">
   	<![CDATA[
 
-              FROM names
+
+                      FROM names
+
 
         ]]>
   </sql>

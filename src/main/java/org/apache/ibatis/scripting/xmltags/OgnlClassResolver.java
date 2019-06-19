@@ -24,7 +24,6 @@ import org.apache.ibatis.io.Resources;
  * utility class to find the target class instead of {@code Class#forName(String)}.
  *
  * @author Daniel Guggi
- *
  * @see <a href='https://github.com/mybatis/mybatis-3/issues/161'>Issue 161</a>
  */
 public class OgnlClassResolver extends DefaultClassResolver {

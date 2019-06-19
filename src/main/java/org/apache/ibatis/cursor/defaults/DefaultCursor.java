@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.cursor.defaults;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.executor.resultset.DefaultResultSetHandler;
 import org.apache.ibatis.executor.resultset.ResultSetWrapper;
@@ -27,6 +22,11 @@ import org.apache.ibatis.mapping.ResultMap;
 import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * This is the default implementation of a MyBatis Cursor.
@@ -41,7 +41,8 @@ public class DefaultCursor<T> implements Cursor<T> {
     private final ResultMap resultMap;
     private final ResultSetWrapper rsw;
     private final RowBounds rowBounds;
-    private final ObjectWrapperResultHandler<T> objectWrapperResultHandler = new ObjectWrapperResultHandler<>();
+    private final ObjectWrapperResultHandler<T> objectWrapperResultHandler =
+            new ObjectWrapperResultHandler<>();
 
     private final CursorIterator cursorIterator = new CursorIterator();
     private boolean iteratorRetrieved;
@@ -49,27 +50,8 @@ public class DefaultCursor<T> implements Cursor<T> {
     private CursorStatus status = CursorStatus.CREATED;
     private int indexWithRowBound = -1;
 
-    private enum CursorStatus {
-
-        /**
-         * A freshly created cursor, database ResultSet consuming has not started.
-         */
-        CREATED,
-        /**
-         * A cursor currently in use, database ResultSet consuming has started.
-         */
-        OPEN,
-        /**
-         * A closed cursor, not fully consumed.
-         */
-        CLOSED,
-        /**
-         * A fully consumed cursor, a consumed cursor is always closed.
-         */
-        CONSUMED
-    }
-
-    public DefaultCursor(DefaultResultSetHandler resultSetHandler, ResultMap resultMap, ResultSetWrapper rsw, RowBounds rowBounds) {
+    public DefaultCursor(DefaultResultSetHandler resultSetHandler, ResultMap resultMap,
+                         ResultSetWrapper rsw, RowBounds rowBounds) {
         this.resultSetHandler = resultSetHandler;
         this.resultMap = resultMap;
         this.rsw = rsw;
@@ -137,7 +119,8 @@ public class DefaultCursor<T> implements Cursor<T> {
         try {
             status = CursorStatus.OPEN;
             if (!rsw.getResultSet().isClosed()) {
-                resultSetHandler.handleRowValues(rsw, resultMap, objectWrapperResultHandler, RowBounds.DEFAULT, null);
+                resultSetHandler.handleRowValues(rsw, resultMap, objectWrapperResultHandler,
+                        RowBounds.DEFAULT, null);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -163,6 +146,26 @@ public class DefaultCursor<T> implements Cursor<T> {
 
     private int getReadItemsCount() {
         return indexWithRowBound + 1;
+    }
+
+    private enum CursorStatus {
+
+        /**
+         * A freshly created cursor, database ResultSet consuming has not started.
+         */
+        CREATED,
+        /**
+         * A cursor currently in use, database ResultSet consuming has started.
+         */
+        OPEN,
+        /**
+         * A closed cursor, not fully consumed.
+         */
+        CLOSED,
+        /**
+         * A fully consumed cursor, a consumed cursor is always closed.
+         */
+        CONSUMED
     }
 
     private static class ObjectWrapperResultHandler<T> implements ResultHandler<T> {

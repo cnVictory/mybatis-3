@@ -16,6 +16,9 @@
 package org.apache.ibatis.submitted.foreach_map;
 
 public class NestedBean {
+    private Integer a;
+    private Boolean b;
+
     public NestedBean(Integer a, Boolean b) {
         this.a = a;
         this.b = b;
@@ -28,7 +31,4 @@ public class NestedBean {
     public Boolean getB() {
         return b;
     }
-
-    private Integer a;
-    private Boolean b;
 }

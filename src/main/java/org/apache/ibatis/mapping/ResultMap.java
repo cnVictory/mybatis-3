@@ -15,21 +15,16 @@
  */
 package org.apache.ibatis.mapping;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.reflection.ParamNameUtil;
 import org.apache.ibatis.session.Configuration;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.util.*;
 
 /**
  * @author Clinton Begin
@@ -53,16 +48,70 @@ public class ResultMap {
     private ResultMap() {
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public boolean hasNestedResultMaps() {
+        return hasNestedResultMaps;
+    }
+
+    public boolean hasNestedQueries() {
+        return hasNestedQueries;
+    }
+
+    public Class<?> getType() {
+        return type;
+    }
+
+    public List<ResultMapping> getResultMappings() {
+        return resultMappings;
+    }
+
+    public List<ResultMapping> getConstructorResultMappings() {
+        return constructorResultMappings;
+    }
+
+    public List<ResultMapping> getPropertyResultMappings() {
+        return propertyResultMappings;
+    }
+
+    public List<ResultMapping> getIdResultMappings() {
+        return idResultMappings;
+    }
+
+    public Set<String> getMappedColumns() {
+        return mappedColumns;
+    }
+
+    public Set<String> getMappedProperties() {
+        return mappedProperties;
+    }
+
+    public Discriminator getDiscriminator() {
+        return discriminator;
+    }
+
+    public void forceNestedResultMaps() {
+        hasNestedResultMaps = true;
+    }
+
+    public Boolean getAutoMapping() {
+        return autoMapping;
+    }
+
     public static class Builder {
         private static final Log log = LogFactory.getLog(Builder.class);
 
         private ResultMap resultMap = new ResultMap();
 
-        public Builder(Configuration configuration, String id, Class<?> type, List<ResultMapping> resultMappings) {
+        public Builder(Configuration configuration, String id, Class<?> type,
+                       List<ResultMapping> resultMappings) {
             this(configuration, id, type, resultMappings, null);
         }
 
-        public Builder(Configuration configuration, String id, Class<?> type, List<ResultMapping> resultMappings, Boolean autoMapping) {
+        public Builder(Configuration configuration, String id, Class<?> type,
+                       List<ResultMapping> resultMappings, Boolean autoMapping) {
             resultMap.configuration = configuration;
             resultMap.id = id;
             resultMap.type = type;
@@ -90,8 +139,10 @@ public class ResultMap {
             resultMap.propertyResultMappings = new ArrayList<>();
             final List<String> constructorArgNames = new ArrayList<>();
             for (ResultMapping resultMapping : resultMap.resultMappings) {
-                resultMap.hasNestedQueries = resultMap.hasNestedQueries || resultMapping.getNestedQueryId() != null;
-                resultMap.hasNestedResultMaps = resultMap.hasNestedResultMaps || (resultMapping.getNestedResultMapId() != null && resultMapping.getResultSet() == null);
+                resultMap.hasNestedQueries =
+                        resultMap.hasNestedQueries || resultMapping.getNestedQueryId() != null;
+                resultMap.hasNestedResultMaps =
+                        resultMap.hasNestedResultMaps || (resultMapping.getNestedResultMapId() != null && resultMapping.getResultSet() == null);
                 final String column = resultMapping.getColumn();
                 if (column != null) {
                     resultMap.mappedColumns.add(column.toUpperCase(Locale.ENGLISH));
@@ -139,7 +190,8 @@ public class ResultMap {
             // lock down collections
             resultMap.resultMappings = Collections.unmodifiableList(resultMap.resultMappings);
             resultMap.idResultMappings = Collections.unmodifiableList(resultMap.idResultMappings);
-            resultMap.constructorResultMappings = Collections.unmodifiableList(resultMap.constructorResultMappings);
+            resultMap.constructorResultMappings =
+                    Collections.unmodifiableList(resultMap.constructorResultMappings);
             resultMap.propertyResultMappings = Collections.unmodifiableList(resultMap.propertyResultMappings);
             resultMap.mappedColumns = Collections.unmodifiableSet(resultMap.mappedColumns);
             return resultMap;
@@ -204,58 +256,6 @@ public class ResultMap {
             }
             return paramNames;
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public boolean hasNestedResultMaps() {
-        return hasNestedResultMaps;
-    }
-
-    public boolean hasNestedQueries() {
-        return hasNestedQueries;
-    }
-
-    public Class<?> getType() {
-        return type;
-    }
-
-    public List<ResultMapping> getResultMappings() {
-        return resultMappings;
-    }
-
-    public List<ResultMapping> getConstructorResultMappings() {
-        return constructorResultMappings;
-    }
-
-    public List<ResultMapping> getPropertyResultMappings() {
-        return propertyResultMappings;
-    }
-
-    public List<ResultMapping> getIdResultMappings() {
-        return idResultMappings;
-    }
-
-    public Set<String> getMappedColumns() {
-        return mappedColumns;
-    }
-
-    public Set<String> getMappedProperties() {
-        return mappedProperties;
-    }
-
-    public Discriminator getDiscriminator() {
-        return discriminator;
-    }
-
-    public void forceNestedResultMaps() {
-        hasNestedResultMaps = true;
-    }
-
-    public Boolean getAutoMapping() {
-        return autoMapping;
     }
 
 }

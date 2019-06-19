@@ -15,19 +15,6 @@
  */
 package org.apache.ibatis.submitted.keygen;
 
-import static com.googlecode.catchexception.apis.BDDCatchException.*;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.io.Resources;
@@ -37,6 +24,15 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.Reader;
+import java.util.*;
+
+import static com.googlecode.catchexception.apis.BDDCatchException.caughtException;
+import static com.googlecode.catchexception.apis.BDDCatchException.when;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author liuzh
@@ -48,7 +44,8 @@ class Jdbc3KeyGeneratorTest {
     @BeforeAll
     static void setUp() throws Exception {
         // create an SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/keygen/MapperConfig.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/keygen/MapperConfig" +
+                ".xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 
@@ -289,7 +286,8 @@ class Jdbc3KeyGeneratorTest {
                 when(mapper).insertMultiParams_keyPropertyWithoutParamName(country, 1);
                 then(caughtException()).isInstanceOf(PersistenceException.class).hasMessageContaining(
                         "Could not determine which parameter to assign generated keys to. "
-                                + "Note that when there are multiple parameters, 'keyProperty' must include the parameter name (e.g. 'param.id'). "
+                                + "Note that when there are multiple parameters, 'keyProperty' must include" +
+                                " the parameter name (e.g. 'param.id'). "
                                 + "Specified key properties are [id] and available parameters are [");
             } finally {
                 sqlSession.rollback();
@@ -306,7 +304,8 @@ class Jdbc3KeyGeneratorTest {
                 when(mapper).insertMultiParams_keyPropertyWithWrongParamName(country, 1);
                 then(caughtException()).isInstanceOf(PersistenceException.class).hasMessageContaining(
                         "Could not find parameter 'bogus'. "
-                                + "Note that when there are multiple parameters, 'keyProperty' must include the parameter name (e.g. 'param.id'). "
+                                + "Note that when there are multiple parameters, 'keyProperty' must include" +
+                                " the parameter name (e.g. 'param.id'). "
                                 + "Specified key properties are [bogus.id] and available parameters are [");
             } finally {
                 sqlSession.rollback();
@@ -507,7 +506,10 @@ class Jdbc3KeyGeneratorTest {
 
                 when(mapper).insertUndefineKeyProperty(new Country("China", "CN"));
                 then(caughtException()).isInstanceOf(PersistenceException.class).hasMessageContaining(
-                        "### Error updating database.  Cause: org.apache.ibatis.executor.ExecutorException: Error getting generated key or setting result to parameter object. Cause: org.apache.ibatis.executor.ExecutorException: No setter found for the keyProperty 'country_id' in 'org.apache.ibatis.submitted.keygen.Country'.");
+                        "### Error updating database.  Cause: org.apache.ibatis.executor.ExecutorException:" +
+                                " Error getting generated key or setting result to parameter object. Cause:" +
+                                " org.apache.ibatis.executor.ExecutorException: No setter found for the " +
+                                "keyProperty 'country_id' in 'org.apache.ibatis.submitted.keygen.Country'.");
             } finally {
                 sqlSession.rollback();
             }

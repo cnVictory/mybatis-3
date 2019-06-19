@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -312,7 +312,8 @@ public interface BlogMapper {
                     <strong>Object lifecycle and Dependency Injection Frameworks</strong>
                 </p>
                 <p>
-                    Dependency Injection frameworks can create thread safe, transactional SqlSessions and mappers
+                    Dependency Injection frameworks can create thread safe, transactional SqlSessions and
+                    mappers
                     and inject them directly into your beans so you can just forget about their lifecycle.
                     You may want to have a look at MyBatis-Spring or
                     MyBatis-Guice sub-projects to know more about using MyBatis with DI frameworks.

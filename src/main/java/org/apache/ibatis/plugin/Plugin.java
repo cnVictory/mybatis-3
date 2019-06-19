@@ -15,6 +15,8 @@
  */
 package org.apache.ibatis.plugin;
 
+import org.apache.ibatis.reflection.ExceptionUtil;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -22,8 +24,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.ibatis.reflection.ExceptionUtil;
 
 /**
  * @author Clinton Begin
@@ -51,19 +51,6 @@ public class Plugin implements InvocationHandler {
                     new Plugin(target, interceptor, signatureMap));
         }
         return target;
-    }
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        try {
-            Set<Method> methods = signatureMap.get(method.getDeclaringClass());
-            if (methods != null && methods.contains(method)) {
-                return interceptor.intercept(new Invocation(target, method, args));
-            }
-            return method.invoke(target, args);
-        } catch (Exception e) {
-            throw ExceptionUtil.unwrapThrowable(e);
-        }
     }
 
     private static Map<Class<?>, Set<Method>> getSignatureMap(Interceptor interceptor) {
@@ -97,6 +84,19 @@ public class Plugin implements InvocationHandler {
             type = type.getSuperclass();
         }
         return interfaces.toArray(new Class<?>[interfaces.size()]);
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        try {
+            Set<Method> methods = signatureMap.get(method.getDeclaringClass());
+            if (methods != null && methods.contains(method)) {
+                return interceptor.intercept(new Invocation(target, method, args));
+            }
+            return method.invoke(target, args);
+        } catch (Exception e) {
+            throw ExceptionUtil.unwrapThrowable(e);
+        }
     }
 
 }

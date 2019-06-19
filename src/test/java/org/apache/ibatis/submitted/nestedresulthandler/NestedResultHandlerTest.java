@@ -15,9 +15,6 @@
  */
 package org.apache.ibatis.submitted.nestedresulthandler;
 
-import java.io.Reader;
-import java.util.List;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.io.Resources;
@@ -28,13 +25,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+import java.util.List;
+
 class NestedResultHandlerTest {
     private static SqlSessionFactory sqlSessionFactory;
 
     @BeforeAll
     static void setUp() throws Exception {
         // create a SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/nestedresulthandler/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/nestedresulthandler" +
+                "/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 
@@ -85,7 +86,8 @@ class NestedResultHandlerTest {
     @Test
     void testUnorderedGetPersonWithHandler() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            Assertions.assertThrows(PersistenceException.class, () -> sqlSession.select("getPersonsWithItemsOrdered", context -> {
+            Assertions.assertThrows(PersistenceException.class, () -> sqlSession.select(
+                    "getPersonsWithItemsOrdered", context -> {
                 Person person = (Person) context.getResultObject();
                 if ("grandma".equals(person.getName())) {
                     person.getItems().size();

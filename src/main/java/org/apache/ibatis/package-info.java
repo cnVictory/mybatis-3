@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * <p>
- * The MyBatis data mapper framework makes it easier to use a relational database with object-oriented applications.
+ * The MyBatis data mapper framework makes it easier to use a relational database with object-oriented
+ * applications.
+ * <p>
+ * The MyBatis data mapper framework makes it easier to use a relational database with object-oriented
+ * applications.
  */
 /**
- * The MyBatis data mapper framework makes it easier to use a relational database with object-oriented applications.
+ * The MyBatis data mapper framework makes it easier to use a relational database with object-oriented
+ * applications.
  */
 package org.apache.ibatis;

@@ -15,28 +15,15 @@
  */
 package org.apache.ibatis.reflection;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.ReflectPermission;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.ibatis.reflection.invoker.GetFieldInvoker;
 import org.apache.ibatis.reflection.invoker.Invoker;
 import org.apache.ibatis.reflection.invoker.MethodInvoker;
 import org.apache.ibatis.reflection.invoker.SetFieldInvoker;
 import org.apache.ibatis.reflection.property.PropertyNamer;
+
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * This class represents a cached set of class definition information that
@@ -71,6 +58,24 @@ public class Reflector {
         for (String propName : writablePropertyNames) {
             caseInsensitivePropertyMap.put(propName.toUpperCase(Locale.ENGLISH), propName);
         }
+    }
+
+    /**
+     * Checks whether can control member accessible.
+     *
+     * @return If can control member accessible, it return {@literal true}
+     * @since 3.5.0
+     */
+    public static boolean canControlMemberAccessible() {
+        try {
+            SecurityManager securityManager = System.getSecurityManager();
+            if (null != securityManager) {
+                securityManager.checkPermission(new ReflectPermission("suppressAccessChecks"));
+            }
+        } catch (SecurityException e) {
+            return false;
+        }
+        return true;
     }
 
     private void addDefaultConstructor(Class<?> clazz) {
@@ -115,7 +120,8 @@ public class Reflector {
                         throw new ReflectionException(
                                 "Illegal overloaded getter method with ambiguous type for property "
                                         + propName + " in class " + winner.getDeclaringClass()
-                                        + ". This breaks the JavaBeans specification and can cause unpredictable results.");
+                                        + ". This breaks the JavaBeans specification and can cause " +
+                                        "unpredictable results.");
                     } else if (candidate.getName().startsWith("is")) {
                         winner = candidate;
                     }
@@ -127,7 +133,8 @@ public class Reflector {
                     throw new ReflectionException(
                             "Illegal overloaded getter method with ambiguous type for property "
                                     + propName + " in class " + winner.getDeclaringClass()
-                                    + ". This breaks the JavaBeans specification and can cause unpredictable results.");
+                                    + ". This breaks the JavaBeans specification and can cause " +
+                                    "unpredictable results.");
                 }
             }
             addGetMethod(propName, winner);
@@ -343,24 +350,6 @@ public class Reflector {
     }
 
     /**
-     * Checks whether can control member accessible.
-     *
-     * @return If can control member accessible, it return {@literal true}
-     * @since 3.5.0
-     */
-    public static boolean canControlMemberAccessible() {
-        try {
-            SecurityManager securityManager = System.getSecurityManager();
-            if (null != securityManager) {
-                securityManager.checkPermission(new ReflectPermission("suppressAccessChecks"));
-            }
-        } catch (SecurityException e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Gets the name of the class the instance provides information for.
      *
      * @return The class name
@@ -384,7 +373,8 @@ public class Reflector {
     public Invoker getSetInvoker(String propertyName) {
         Invoker method = setMethods.get(propertyName);
         if (method == null) {
-            throw new ReflectionException("There is no setter for property named '" + propertyName + "' in '" + type + "'");
+            throw new ReflectionException("There is no setter for property named '" + propertyName + "' in " +
+                    "'" + type + "'");
         }
         return method;
     }
@@ -392,7 +382,8 @@ public class Reflector {
     public Invoker getGetInvoker(String propertyName) {
         Invoker method = getMethods.get(propertyName);
         if (method == null) {
-            throw new ReflectionException("There is no getter for property named '" + propertyName + "' in '" + type + "'");
+            throw new ReflectionException("There is no getter for property named '" + propertyName + "' in " +
+                    "'" + type + "'");
         }
         return method;
     }
@@ -406,7 +397,8 @@ public class Reflector {
     public Class<?> getSetterType(String propertyName) {
         Class<?> clazz = setTypes.get(propertyName);
         if (clazz == null) {
-            throw new ReflectionException("There is no setter for property named '" + propertyName + "' in '" + type + "'");
+            throw new ReflectionException("There is no setter for property named '" + propertyName + "' in " +
+                    "'" + type + "'");
         }
         return clazz;
     }
@@ -420,7 +412,8 @@ public class Reflector {
     public Class<?> getGetterType(String propertyName) {
         Class<?> clazz = getTypes.get(propertyName);
         if (clazz == null) {
-            throw new ReflectionException("There is no getter for property named '" + propertyName + "' in '" + type + "'");
+            throw new ReflectionException("There is no getter for property named '" + propertyName + "' in " +
+                    "'" + type + "'");
         }
         return clazz;
     }

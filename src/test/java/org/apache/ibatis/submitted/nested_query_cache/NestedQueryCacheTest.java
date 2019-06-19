@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import java.io.Reader;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class NestedQueryCacheTest extends BaseDataTest {
 
@@ -36,7 +36,8 @@ class NestedQueryCacheTest extends BaseDataTest {
     @BeforeAll
     static void setUp() throws Exception {
         // create a SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/nested_query_cache/MapperConfig.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/nested_query_cache" +
+                "/MapperConfig.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

@@ -15,21 +15,20 @@
  */
 package org.apache.ibatis.logging.jdbc;
 
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.reflection.ExceptionUtil;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.reflection.ExceptionUtil;
-
 /**
  * Statement proxy to add logging.
  *
  * @author Clinton Begin
  * @author Eduardo Macarron
- *
  */
 public final class StatementLogger extends BaseJdbcLogger implements InvocationHandler {
 
@@ -38,6 +37,18 @@ public final class StatementLogger extends BaseJdbcLogger implements InvocationH
     private StatementLogger(Statement stmt, Log statementLog, int queryStack) {
         super(statementLog, queryStack);
         this.statement = stmt;
+    }
+
+    /**
+     * Creates a logging version of a Statement.
+     *
+     * @param stmt - the statement
+     * @return - the proxy
+     */
+    public static Statement newInstance(Statement stmt, Log statementLog, int queryStack) {
+        InvocationHandler handler = new StatementLogger(stmt, statementLog, queryStack);
+        ClassLoader cl = Statement.class.getClassLoader();
+        return (Statement) Proxy.newProxyInstance(cl, new Class[]{Statement.class}, handler);
     }
 
     @Override
@@ -65,18 +76,6 @@ public final class StatementLogger extends BaseJdbcLogger implements InvocationH
         } catch (Throwable t) {
             throw ExceptionUtil.unwrapThrowable(t);
         }
-    }
-
-    /**
-     * Creates a logging version of a Statement.
-     *
-     * @param stmt - the statement
-     * @return - the proxy
-     */
-    public static Statement newInstance(Statement stmt, Log statementLog, int queryStack) {
-        InvocationHandler handler = new StatementLogger(stmt, statementLog, queryStack);
-        ClassLoader cl = Statement.class.getClassLoader();
-        return (Statement) Proxy.newProxyInstance(cl, new Class[]{Statement.class}, handler);
     }
 
     /**

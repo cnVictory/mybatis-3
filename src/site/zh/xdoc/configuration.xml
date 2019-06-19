@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -285,7 +285,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                     </li>
                                     <li><code>WARNING</code>:
                                         输出提醒日志 (
-                                        <code>'org.apache.ibatis.session.AutoMappingUnknownColumnBehavior'</code>
+                                        <code>'org.apache.ibatis.session.AutoMappingUnknownColumnBehavior'
+                                        </code>
                                         的日志等级必须设置为 <code>WARN</code>)
                                     </li>
                                     <li><code>FAILING</code>: 映射失败 (抛出 <code>SqlSessionException</code>)
@@ -514,7 +515,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                                 指定 MyBatis 所用日志的具体实现，未指定时将自动查找。
                             </td>
                             <td>
-                                SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING
+                                SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING |
+                                NO_LOGGING
                             </td>
                             <td>
                                 未设置
@@ -570,7 +572,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
                             <td>
                                 指定一个提供 <code>Configuration</code> 实例的类。
                                 这个被返回的 Configuration 实例用来加载被反序列化对象的延迟加载属性值。
-                                这个类必须包含一个签名为<code>static Configuration getConfiguration()</code> 的方法。（新增于 3.2.3）
+                                这个类必须包含一个签名为<code>static Configuration getConfiguration()</code> 的方法。（新增于
+                                3.2.3）
                             </td>
                             <td>
                                 类型别名或者全类名.
@@ -1743,7 +1746,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, propert
                 </ul>
                 <p>有三种内建的数据源类型（也就是 type=”[UNPOOLED|POOLED|JNDI]”）：</p>
                 <p>
-                    <strong>UNPOOLED</strong>– 这个数据源的实现只是每次被请求时打开和关闭连接。虽然有点慢，但对于在数据库连接可用性方面没有太高要求的简单应用程序来说，是一个很好的选择。
+                    <strong>UNPOOLED</strong>–
+                    这个数据源的实现只是每次被请求时打开和关闭连接。虽然有点慢，但对于在数据库连接可用性方面没有太高要求的简单应用程序来说，是一个很好的选择。
                     不同的数据库在性能方面的表现也是不一样的，对于某些数据库来说，使用连接池并不重要，这个配置就很适合这种情形。UNPOOLED 类型的数据源仅仅需要配置以下 5 种属性：
                 </p>
                 <ul>
@@ -1800,7 +1804,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, propert
                     </li>
                     <li>
                         <code>poolTimeToWait</code>
-                        – 这是一个底层设置，如果获取连接花费了相当长的时间，连接池会打印状态日志并重新尝试获取一个连接（避免在误配置的情况下一直安静的失败），默认值：20000 毫秒（即 20 秒）。
+                        – 这是一个底层设置，如果获取连接花费了相当长的时间，连接池会打印状态日志并重新尝试获取一个连接（避免在误配置的情况下一直安静的失败），默认值：20000 毫秒（即 20
+                        秒）。
                     </li>
                     <li>
                         <code>poolMaximumLocalBadConnectionTolerance</code>
@@ -1816,11 +1821,13 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, propert
                     </li>
                     <li>
                         <code>poolPingEnabled</code>
-                        – 是否启用侦测查询。若开启，需要设置 <code>poolPingQuery</code> 属性为一个可执行的 SQL 语句（最好是一个速度非常快的 SQL 语句），默认值：false。
+                        – 是否启用侦测查询。若开启，需要设置 <code>poolPingQuery</code> 属性为一个可执行的 SQL 语句（最好是一个速度非常快的 SQL
+                        语句），默认值：false。
                     </li>
                     <li>
                         <code>poolPingConnectionsNotUsedFor</code>
-                        – 配置 poolPingQuery 的频率。可以被设置为和数据库连接超时时间一样，来避免不必要的侦测，默认值：0（即所有连接每一时刻都被侦测 — 当然仅当 poolPingEnabled 为
+                        – 配置 poolPingQuery 的频率。可以被设置为和数据库连接超时时间一样，来避免不必要的侦测，默认值：0（即所有连接每一时刻都被侦测 — 当然仅当
+                        poolPingEnabled 为
                         true 时适用）。
                     </li>
                 </ul>
@@ -1831,12 +1838,14 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, propert
                 <ul>
                     <li>
                         <code>initial_context</code>
-                        – 这个属性用来在 InitialContext 中寻找上下文（即，initialContext.lookup(initial_context)）。这是个可选属性，如果忽略，那么将会直接从
+                        – 这个属性用来在 InitialContext
+                        中寻找上下文（即，initialContext.lookup(initial_context)）。这是个可选属性，如果忽略，那么将会直接从
                         InitialContext 中寻找 data_source 属性。
                     </li>
                     <li>
                         <code>data_source</code>
-                        – 这是引用数据源实例位置的上下文的路径。提供了 initial_context 配置时会在其返回的上下文中进行查找，没有提供时则直接在 InitialContext 中查找。
+                        – 这是引用数据源实例位置的上下文的路径。提供了 initial_context 配置时会在其返回的上下文中进行查找，没有提供时则直接在 InitialContext
+                        中查找。
                     </li>
                 </ul>
                 <p>和其他数据源配置类似，可以通过添加前缀“env.”直接把属性传递给初始上下文。比如：

@@ -15,22 +15,12 @@
  */
 package org.apache.ibatis.jdbc;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
+
+import java.sql.*;
+import java.util.*;
 
 /**
  * @author Clinton Begin
@@ -63,7 +53,8 @@ public class SqlRunner {
     public Map<String, Object> selectOne(String sql, Object... args) throws SQLException {
         List<Map<String, Object>> results = selectAll(sql, args);
         if (results.size() != 1) {
-            throw new SQLException("Statement returned " + results.size() + " results where exactly one (1) was expected.");
+            throw new SQLException("Statement returned " + results.size() + " results where exactly one (1)" +
+                    " was expected.");
         }
         return results.get(0);
     }
@@ -202,9 +193,11 @@ public class SqlRunner {
     private void setParameters(PreparedStatement ps, Object... args) throws SQLException {
         for (int i = 0, n = args.length; i < n; i++) {
             if (args[i] == null) {
-                throw new SQLException("SqlRunner requires an instance of Null to represent typed null values for JDBC compatibility");
+                throw new SQLException("SqlRunner requires an instance of Null to represent typed null " +
+                        "values for JDBC compatibility");
             } else if (args[i] instanceof Null) {
-                ((Null) args[i]).getTypeHandler().setParameter(ps, i + 1, null, ((Null) args[i]).getJdbcType());
+                ((Null) args[i]).getTypeHandler().setParameter(ps, i + 1, null,
+                        ((Null) args[i]).getJdbcType());
             } else {
                 TypeHandler typeHandler = typeHandlerRegistry.getTypeHandler(args[i].getClass());
                 if (typeHandler == null) {

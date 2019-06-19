@@ -15,15 +15,16 @@
  */
 package org.apache.ibatis.mapping;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.apache.ibatis.session.Configuration;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.Configuration;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BoundSqlTest {
 
@@ -48,14 +49,17 @@ class BoundSqlTest {
 
         assertTrue(boundSql.hasAdditionalParameter("map"));
         assertTrue(boundSql.hasAdditionalParameter("map.key1"));
-        assertTrue(boundSql.hasAdditionalParameter("map.key2"), "should return true even if the child property does not exists.");
+        assertTrue(boundSql.hasAdditionalParameter("map.key2"), "should return true even if the child " +
+                "property does not exists.");
 
         assertTrue(boundSql.hasAdditionalParameter("person"));
         assertTrue(boundSql.hasAdditionalParameter("person.id"));
-        assertTrue(boundSql.hasAdditionalParameter("person.name"), "should return true even if the child property does not exists.");
+        assertTrue(boundSql.hasAdditionalParameter("person.name"), "should return true even if the child " +
+                "property does not exists.");
 
         assertTrue(boundSql.hasAdditionalParameter("array[0]"));
-        assertTrue(boundSql.hasAdditionalParameter("array[99]"), "should return true even if the element does not exists.");
+        assertTrue(boundSql.hasAdditionalParameter("array[99]"), "should return true even if the element " +
+                "does not exists.");
     }
 
     public static class Person {

@@ -24,7 +24,8 @@ public class AnnotatedSubject {
     private final int height;
     private final int weight;
 
-    public AnnotatedSubject(final int id, final String name, final int age, final int height, final int weight) {
+    public AnnotatedSubject(final int id, final String name, final int age, final int height,
+                            final int weight) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -33,7 +34,8 @@ public class AnnotatedSubject {
     }
 
     @AutomapConstructor
-    public AnnotatedSubject(final int id, final String name, final int age, final Integer height, final Integer weight) {
+    public AnnotatedSubject(final int id, final String name, final int age, final Integer height,
+                            final Integer weight) {
         this.id = id;
         this.name = name;
         this.age = age;

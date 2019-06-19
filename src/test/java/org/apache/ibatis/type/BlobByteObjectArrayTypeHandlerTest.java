@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
 import java.sql.Blob;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,9 +37,11 @@ class BlobByteObjectArrayTypeHandlerTest extends BaseTypeHandlerTest {
     @Test
     public void shouldSetParameter() throws Exception {
         final ArgumentCaptor<Integer> positionCaptor = ArgumentCaptor.forClass(Integer.class);
-        final ArgumentCaptor<ByteArrayInputStream> byteArrayCaptor = ArgumentCaptor.forClass(ByteArrayInputStream.class);
+        final ArgumentCaptor<ByteArrayInputStream> byteArrayCaptor =
+                ArgumentCaptor.forClass(ByteArrayInputStream.class);
         final ArgumentCaptor<Integer> lengthCaptor = ArgumentCaptor.forClass(Integer.class);
-        doNothing().when(ps).setBinaryStream(positionCaptor.capture(), byteArrayCaptor.capture(), lengthCaptor.capture());
+        doNothing().when(ps).setBinaryStream(positionCaptor.capture(), byteArrayCaptor.capture(),
+                lengthCaptor.capture());
         TYPE_HANDLER.setParameter(ps, 1, new Byte[]{1, 2}, null);
         ByteArrayInputStream actualIn = byteArrayCaptor.getValue();
         assertThat(positionCaptor.getValue()).isEqualTo(1);

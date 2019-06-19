@@ -21,10 +21,10 @@ import java.util.Iterator;
  * @author Clinton Begin
  */
 public class PropertyTokenizer implements Iterator<PropertyTokenizer> {
-    private String name;
     private final String indexedName;
-    private String index;
     private final String children;
+    private String name;
+    private String index;
 
     public PropertyTokenizer(String fullname) {
         int delim = fullname.indexOf('.');
@@ -71,6 +71,7 @@ public class PropertyTokenizer implements Iterator<PropertyTokenizer> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Remove is not supported, as it has no meaning in the context of properties.");
+        throw new UnsupportedOperationException("Remove is not supported, as it has no meaning in the " +
+                "context of properties.");
     }
 }

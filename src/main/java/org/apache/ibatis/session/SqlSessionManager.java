@@ -15,6 +15,10 @@
  */
 package org.apache.ibatis.session;
 
+import org.apache.ibatis.cursor.Cursor;
+import org.apache.ibatis.executor.BatchResult;
+import org.apache.ibatis.reflection.ExceptionUtil;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.lang.reflect.InvocationHandler;
@@ -24,10 +28,6 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.apache.ibatis.cursor.Cursor;
-import org.apache.ibatis.executor.BatchResult;
-import org.apache.ibatis.reflection.ExceptionUtil;
 
 /**
  * @author Larry Meadors
@@ -177,7 +177,8 @@ public class SqlSessionManager implements SqlSessionFactory, SqlSession {
     }
 
     @Override
-    public <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey, RowBounds rowBounds) {
+    public <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey,
+                                      RowBounds rowBounds) {
         return sqlSessionProxy.selectMap(statement, parameter, mapKey, rowBounds);
     }
 

@@ -15,13 +15,13 @@
  */
 package org.apache.ibatis.type;
 
+import org.apache.ibatis.executor.result.ResultMapException;
+import org.apache.ibatis.session.Configuration;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.apache.ibatis.executor.result.ResultMapException;
-import org.apache.ibatis.session.Configuration;
 
 /**
  * The base {@link TypeHandler} for references a generic type.
@@ -38,13 +38,15 @@ import org.apache.ibatis.session.Configuration;
 public abstract class BaseTypeHandler<T> extends TypeReference<T> implements TypeHandler<T> {
 
     /**
-     * @deprecated Since 3.5.0 - See https://github.com/mybatis/mybatis-3/issues/1203. This field will remove future.
+     * @deprecated Since 3.5.0 - See https://github.com/mybatis/mybatis-3/issues/1203. This field will
+     * remove future.
      */
     @Deprecated
     protected Configuration configuration;
 
     /**
-     * @deprecated Since 3.5.0 - See https://github.com/mybatis/mybatis-3/issues/1203. This property will remove future.
+     * @deprecated Since 3.5.0 - See https://github.com/mybatis/mybatis-3/issues/1203. This property will
+     * remove future.
      */
     @Deprecated
     public void setConfiguration(Configuration c) {
@@ -55,13 +57,15 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     public void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
         if (parameter == null) {
             if (jdbcType == null) {
-                throw new TypeException("JDBC requires that the JdbcType must be specified for all nullable parameters.");
+                throw new TypeException("JDBC requires that the JdbcType must be specified for all nullable" +
+                        " parameters.");
             }
             try {
                 ps.setNull(i, jdbcType.TYPE_CODE);
             } catch (SQLException e) {
                 throw new TypeException("Error setting null for parameter #" + i + " with JdbcType " + jdbcType + " . "
-                        + "Try setting a different JdbcType for this parameter or a different jdbcTypeForNull configuration property. "
+                        + "Try setting a different JdbcType for this parameter or a different " +
+                        "jdbcTypeForNull configuration property. "
                         + "Cause: " + e, e);
             }
         } else {
@@ -69,7 +73,8 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
                 setNonNullParameter(ps, i, parameter, jdbcType);
             } catch (Exception e) {
                 throw new TypeException("Error setting non null for parameter #" + i + " with JdbcType " + jdbcType + " . "
-                        + "Try setting a different JdbcType for this parameter or a different configuration property. "
+                        + "Try setting a different JdbcType for this parameter or a different configuration" +
+                        " property. "
                         + "Cause: " + e, e);
             }
         }
@@ -80,7 +85,8 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
         try {
             return getNullableResult(rs, columnName);
         } catch (Exception e) {
-            throw new ResultMapException("Error attempting to get column '" + columnName + "' from result set.  Cause: " + e, e);
+            throw new ResultMapException("Error attempting to get column '" + columnName + "' from result " +
+                    "set.  Cause: " + e, e);
         }
     }
 
@@ -89,7 +95,8 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
         try {
             return getNullableResult(rs, columnIndex);
         } catch (Exception e) {
-            throw new ResultMapException("Error attempting to get column #" + columnIndex + " from result set.  Cause: " + e, e);
+            throw new ResultMapException("Error attempting to get column #" + columnIndex + " from result " +
+                    "set.  Cause: " + e, e);
         }
     }
 
@@ -98,7 +105,8 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
         try {
             return getNullableResult(cs, columnIndex);
         } catch (Exception e) {
-            throw new ResultMapException("Error attempting to get column #" + columnIndex + " from callable statement.  Cause: " + e, e);
+            throw new ResultMapException("Error attempting to get column #" + columnIndex + " from callable" +
+                    " statement.  Cause: " + e, e);
         }
     }
 

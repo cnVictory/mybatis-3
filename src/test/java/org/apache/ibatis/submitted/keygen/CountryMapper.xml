@@ -128,7 +128,8 @@
             (#{planet.name})
         </foreach>
     </insert>
-    <insert id="insertPlanetAndCountry" useGeneratedKeys="true" keyProperty="planet.id,planet.code,country.id">
+    <insert id="insertPlanetAndCountry" useGeneratedKeys="true"
+            keyProperty="planet.id,planet.code,country.id">
     insert into planet (name) values (#{planet.name});
     insert into country (countryname,countrycode) values (#{country.countryname},#{country.countrycode});
   </insert>

@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -58,7 +58,9 @@
   </if>
 </select>]]></source>
                        
-                <p>这条语句提供了一种可选的查找文本功能。如果没有传入“title”，那么所有处于“ACTIVE”状态的BLOG都会返回；反之若传入了“title”，那么就会对“title”一列进行模糊查找并返回 BLOG
+                <p>
+                    这条语句提供了一种可选的查找文本功能。如果没有传入“title”，那么所有处于“ACTIVE”状态的BLOG都会返回；反之若传入了“title”，那么就会对“title”一列进行模糊查找并返回
+                    BLOG
                     结果（细心的读者可能会发现，“title”参数值是可以包含一些掩码或通配符的）。
                 </p>
                        
@@ -156,7 +158,9 @@ AND title like ‘someTitle’]]></source>
                        
                 <p>
                     <em>prefixOverrides</em>
-                    属性会忽略通过管道分隔的文本序列（注意此例中的空格也是必要的）。它的作用是移除所有指定在 <em>prefixOverrides</em> 属性中的内容，并且插入 <em>prefix</em> 属性中指定的内容。
+                    属性会忽略通过管道分隔的文本序列（注意此例中的空格也是必要的）。它的作用是移除所有指定在 <em>prefixOverrides</em> 属性中的内容，并且插入 <em>
+                    prefix
+                </em> 属性中指定的内容。
                 </p>
                        
                 <p>类似的用于动态更新语句的解决方案叫做 <em>set</em>。<em>set</em> 元素可以用于动态包含需要更新的列，而舍去其它的。比如：
@@ -204,7 +208,8 @@ AND title like ‘someTitle’]]></source>
                        
                 <p>
                     <span class="label important">注意</span>
-                    你可以将任何可迭代对象（如 List、Set 等）、Map 对象或者数组对象传递给 <em>foreach</em> 作为集合参数。当使用可迭代对象或者数组时，index 是当前迭代的次数，item
+                    你可以将任何可迭代对象（如 List、Set 等）、Map 对象或者数组对象传递给 <em>foreach</em> 作为集合参数。当使用可迭代对象或者数组时，index
+                    是当前迭代的次数，item
                     的值是本次迭代获取的元素。当使用 Map 对象（或者 Map.Entry 对象的集合）时，index 是键，item 是值。
                 </p>
                        

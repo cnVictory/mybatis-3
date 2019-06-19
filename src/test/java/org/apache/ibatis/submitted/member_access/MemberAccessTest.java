@@ -15,15 +15,7 @@
  */
 package org.apache.ibatis.submitted.member_access;
 
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.ibatis.annotations.Arg;
-import org.apache.ibatis.annotations.ConstructorArgs;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -31,7 +23,11 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for member access of Java Object.
@@ -313,10 +309,10 @@ class MemberAccessTest {
     }
 
     static class Params {
-        private String privateField = "privateField";
-        String packagePrivateField = "packagePrivateField";
-        protected String protectedField = "protectedField";
         public String publicField = "publicField";
+        protected String protectedField = "protectedField";
+        String packagePrivateField = "packagePrivateField";
+        private String privateField = "privateField";
 
         private String getPrivateProperty() {
             return "privateProperty";
@@ -337,10 +333,10 @@ class MemberAccessTest {
 
     @SuppressWarnings("unused")
     static class Bean {
-        private String privateField;
-        String packagePrivateField;
-        protected String protectedField;
         public String publicField;
+        protected String protectedField;
+        String packagePrivateField;
+        private String privateField;
         private Map<String, String> properties = new HashMap<>();
 
         private void setPrivateProperty(String value) {

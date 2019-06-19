@@ -15,18 +15,21 @@
  */
 package org.apache.ibatis.type;
 
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.time.LocalTime;
 
 /**
- * @since 3.4.5
  * @author Tomas Rohovsky
+ * @since 3.4.5
  */
 public class LocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
+
+    private static LocalTime getLocalTime(Time time) {
+        if (time != null) {
+            return time.toLocalTime();
+        }
+        return null;
+    }
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, LocalTime parameter, JdbcType jdbcType)
@@ -50,12 +53,5 @@ public class LocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
     public LocalTime getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         Time time = cs.getTime(columnIndex);
         return getLocalTime(time);
-    }
-
-    private static LocalTime getLocalTime(Time time) {
-        if (time != null) {
-            return time.toLocalTime();
-        }
-        return null;
     }
 }

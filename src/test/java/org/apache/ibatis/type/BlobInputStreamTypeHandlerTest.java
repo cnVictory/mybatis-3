@@ -40,8 +40,8 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for {@link BlobInputStreamTypeHandler}.
  *
- * @since 3.4.0
  * @author Kazuki Shimizu
+ * @since 3.4.0
  */
 class BlobInputStreamTypeHandlerTest extends BaseTypeHandlerTest {
 
@@ -54,7 +54,8 @@ class BlobInputStreamTypeHandlerTest extends BaseTypeHandlerTest {
 
     @BeforeAll
     static void setupSqlSessionFactory() throws Exception {
-        DataSource dataSource = BaseDataTest.createUnpooledDataSource("org/apache/ibatis/type/jdbc.properties");
+        DataSource dataSource = BaseDataTest.createUnpooledDataSource("org/apache/ibatis/type/jdbc" +
+                ".properties");
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
         Environment environment = new Environment("Production", transactionFactory, dataSource);
         Configuration configuration = new Configuration(environment);

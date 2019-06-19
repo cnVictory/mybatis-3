@@ -15,34 +15,22 @@
  */
 package org.apache.ibatis.builder.xml.dynamic;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.scripting.xmltags.ChooseSqlNode;
-import org.apache.ibatis.scripting.xmltags.DynamicSqlSource;
-import org.apache.ibatis.scripting.xmltags.ForEachSqlNode;
-import org.apache.ibatis.scripting.xmltags.IfSqlNode;
-import org.apache.ibatis.scripting.xmltags.MixedSqlNode;
-import org.apache.ibatis.scripting.xmltags.SetSqlNode;
-import org.apache.ibatis.scripting.xmltags.SqlNode;
-import org.apache.ibatis.scripting.xmltags.TextSqlNode;
-import org.apache.ibatis.scripting.xmltags.WhereSqlNode;
+import org.apache.ibatis.scripting.xmltags.*;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.SQLException;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DynamicSqlSourceTest extends BaseDataTest {
 
@@ -320,7 +308,8 @@ class DynamicSqlSourceTest extends BaseDataTest {
         final String expected = "SELECT * FROM BLOG WHERE ID in (  one = ? AND two = ? AND three = ? )";
         DynamicSqlSource source = createDynamicSqlSource(
                 new TextSqlNode("SELECT * FROM BLOG WHERE ID in"),
-                new ForEachSqlNode(new Configuration(), mixedContents(new TextSqlNode("${item} = #{item}")), "array", "index", "item", "(", ")", "AND"));
+                new ForEachSqlNode(new Configuration(), mixedContents(new TextSqlNode("${item} = #{item}"))
+                        , "array", "index", "item", "(", ")", "AND"));
         BoundSql boundSql = source.getBoundSql(parameterObject);
         assertEquals(expected, boundSql.getSql());
         assertEquals(3, boundSql.getParameterMappings().size());
@@ -335,7 +324,8 @@ class DynamicSqlSourceTest extends BaseDataTest {
             put("name", "Steve");
         }};
         final String expected = "Expression test: 3 / yes.";
-        DynamicSqlSource source = createDynamicSqlSource(new TextSqlNode("Expression test: ${name.indexOf('v')} / ${name in {'Bob', 'Steve'\\} ? 'yes' : 'no'}."));
+        DynamicSqlSource source = createDynamicSqlSource(new TextSqlNode("Expression test: ${name.indexOf" +
+                "('v')} / ${name in {'Bob', 'Steve'\\} ? 'yes' : 'no'}."));
         BoundSql boundSql = source.getBoundSql(parameterObject);
         assertEquals(expected, boundSql.getSql());
     }
@@ -366,8 +356,10 @@ class DynamicSqlSourceTest extends BaseDataTest {
         DynamicSqlSource source = createDynamicSqlSource(
                 new TextSqlNode("INSERT INTO BLOG (ID, NAME, NOTE, COMMENT) VALUES"),
                 new ForEachSqlNode(new Configuration(), mixedContents(
-                        new TextSqlNode("#{uuu.u}, #{u.id}, #{ u,typeHandler=org.apache.ibatis.type.StringTypeHandler},"
-                                + " #{u:VARCHAR,typeHandler=org.apache.ibatis.type.StringTypeHandler}")), "uuuu", "uu", "u", "(", ")", ","));
+                        new TextSqlNode("#{uuu.u}, #{u.id}, #{ u,typeHandler=org.apache.ibatis.type" +
+                                ".StringTypeHandler},"
+                                + " #{u:VARCHAR,typeHandler=org.apache.ibatis.type.StringTypeHandler}")),
+                        "uuuu", "uu", "u", "(", ")", ","));
         BoundSql boundSql = source.getBoundSql(param);
         assertEquals(4, boundSql.getParameterMappings().size());
         assertEquals("uuu.u", boundSql.getParameterMappings().get(0).getProperty());

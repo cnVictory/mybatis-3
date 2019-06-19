@@ -16,9 +16,9 @@
        limitations under the License.
 
 -->
-<mapper namespace="org.apache.ibatis.builder.xsd.AuthorMapper"
+<mapper xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        namespace="org.apache.ibatis.builder.xsd.AuthorMapper"
         xmlns="http://mybatis.org/schema/mybatis-mapper"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://mybatis.org/schema/mybatis-mapper http://mybatis.org/schema/mybatis-mapper.xsd">
 
     <parameterMap id="selectAuthor" type="org.apache.ibatis.domain.blog.Author">
@@ -144,7 +144,8 @@
     </update>
 
     <select id="selectWithOptions" resultType="org.apache.ibatis.domain.blog.Author"
-            fetchSize="200" timeout="10" statementType="PREPARED" resultSetType="SCROLL_SENSITIVE" flushCache="false"
+            fetchSize="200" timeout="10" statementType="PREPARED" resultSetType="SCROLL_SENSITIVE"
+            flushCache="false"
             useCache="false">
         select * from author
     </select>

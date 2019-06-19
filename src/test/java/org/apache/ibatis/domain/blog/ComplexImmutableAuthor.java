@@ -18,11 +18,12 @@ package org.apache.ibatis.domain.blog;
 import java.io.Serializable;
 
 public class ComplexImmutableAuthor implements Serializable {
-    private final ComplexImmutableAuthorId theComplexImmutableAuthorId;
     protected final String bio;
     protected final Section favouriteSection;
+    private final ComplexImmutableAuthorId theComplexImmutableAuthorId;
 
-    public ComplexImmutableAuthor(ComplexImmutableAuthorId aComplexImmutableAuthorId, String bio, Section section) {
+    public ComplexImmutableAuthor(ComplexImmutableAuthorId aComplexImmutableAuthorId, String bio,
+                                  Section section) {
         theComplexImmutableAuthorId = aComplexImmutableAuthorId;
         this.bio = bio;
         this.favouriteSection = section;
@@ -57,7 +58,9 @@ public class ComplexImmutableAuthor implements Serializable {
         if (favouriteSection != that.favouriteSection) {
             return false;
         }
-        if (theComplexImmutableAuthorId != null ? !theComplexImmutableAuthorId.equals(that.theComplexImmutableAuthorId) : that.theComplexImmutableAuthorId != null) {
+        if (theComplexImmutableAuthorId != null ?
+                !theComplexImmutableAuthorId.equals(that.theComplexImmutableAuthorId) :
+                that.theComplexImmutableAuthorId != null) {
             return false;
         }
 

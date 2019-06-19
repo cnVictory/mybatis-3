@@ -15,16 +15,12 @@
  */
 package org.apache.ibatis.reflection.wrapper;
 
-import java.util.List;
-
-import org.apache.ibatis.reflection.ExceptionUtil;
-import org.apache.ibatis.reflection.MetaClass;
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.reflection.ReflectionException;
-import org.apache.ibatis.reflection.SystemMetaObject;
+import org.apache.ibatis.reflection.*;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.invoker.Invoker;
 import org.apache.ibatis.reflection.property.PropertyTokenizer;
+
+import java.util.List;
 
 /**
  * @author Clinton Begin
@@ -144,15 +140,18 @@ public class BeanWrapper extends BaseWrapper {
     }
 
     @Override
-    public MetaObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory) {
+    public MetaObject instantiatePropertyValue(String name, PropertyTokenizer prop,
+                                               ObjectFactory objectFactory) {
         MetaObject metaValue;
         Class<?> type = getSetterType(prop.getName());
         try {
             Object newObject = objectFactory.create(type);
-            metaValue = MetaObject.forObject(newObject, metaObject.getObjectFactory(), metaObject.getObjectWrapperFactory(), metaObject.getReflectorFactory());
+            metaValue = MetaObject.forObject(newObject, metaObject.getObjectFactory(),
+                    metaObject.getObjectWrapperFactory(), metaObject.getReflectorFactory());
             set(prop, newObject);
         } catch (Exception e) {
-            throw new ReflectionException("Cannot set value of property '" + name + "' because '" + name + "' is null and cannot be instantiated on instance of " + type.getName() + ". Cause:" + e.toString(), e);
+            throw new ReflectionException("Cannot set value of property '" + name + "' because '" + name +
+                    "' is null and cannot be instantiated on instance of " + type.getName() + ". Cause:" + e.toString(), e);
         }
         return metaValue;
     }

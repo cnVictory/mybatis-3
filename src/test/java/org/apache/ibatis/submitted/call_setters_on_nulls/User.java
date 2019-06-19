@@ -17,9 +17,9 @@ package org.apache.ibatis.submitted.call_setters_on_nulls;
 
 public class User {
 
+    public boolean nullReceived;
     private Integer id;
     private String name;
-    public boolean nullReceived;
 
     public Integer getId() {
         return id;

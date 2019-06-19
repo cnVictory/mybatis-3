@@ -15,13 +15,11 @@
  */
 package org.apache.ibatis.type;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TypeAliasRegistryTest {
 
@@ -31,7 +29,8 @@ class TypeAliasRegistryTest {
 
         typeAliasRegistry.registerAlias("rich", "org.apache.ibatis.domain.misc.RichType");
 
-        assertEquals("org.apache.ibatis.domain.misc.RichType", typeAliasRegistry.resolveAlias("rich").getName());
+        assertEquals("org.apache.ibatis.domain.misc.RichType",
+                typeAliasRegistry.resolveAlias("rich").getName());
     }
 
     @Test

@@ -46,7 +46,8 @@
         <setting name="jdbcTypeForNull" value="${jdbcTypeForNull}"/>
         <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString,xxx"/>
         <setting name="safeResultHandlerEnabled" value="false"/>
-        <setting name="defaultScriptingLanguage" value="org.apache.ibatis.scripting.defaults.RawLanguageDriver"/>
+        <setting name="defaultScriptingLanguage"
+                 value="org.apache.ibatis.scripting.defaults.RawLanguageDriver"/>
         <setting name="callSettersOnNulls" value="true"/>
         <setting name="logPrefix" value="mybatis_"/>
         <setting name="logImpl" value="SLF4J"/>
@@ -64,7 +65,8 @@
 
     <typeHandlers>
         <typeHandler javaType="String" handler="org.apache.ibatis.builder.CustomStringTypeHandler"/>
-        <typeHandler javaType="String" jdbcType="VARCHAR" handler="org.apache.ibatis.builder.CustomStringTypeHandler"/>
+        <typeHandler javaType="String" jdbcType="VARCHAR"
+                     handler="org.apache.ibatis.builder.CustomStringTypeHandler"/>
         <typeHandler handler="org.apache.ibatis.builder.CustomLongTypeHandler"/>
         <package name="org.apache.ibatis.builder.typehandler"/>
     </typeHandlers>

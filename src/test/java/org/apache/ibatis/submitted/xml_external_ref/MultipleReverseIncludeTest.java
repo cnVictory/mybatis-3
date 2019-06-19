@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.submitted.xml_external_ref;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.sql.SQLException;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.io.Resources;
@@ -32,7 +26,18 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class MultipleReverseIncludeTest {
+
+    private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
+        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
+                "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
+    }
 
     @Test
     void testMultipleReverseIncludeXmlConfig() throws Exception {
@@ -46,7 +51,8 @@ class MultipleReverseIncludeTest {
 
     private void testMultipleReverseIncludes(SqlSessionFactory sqlSessionFactory) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            MultipleReverseIncludePersonMapper personMapper = sqlSession.getMapper(MultipleReverseIncludePersonMapper.class);
+            MultipleReverseIncludePersonMapper personMapper =
+                    sqlSession.getMapper(MultipleReverseIncludePersonMapper.class);
             Person person = personMapper.select(1);
             assertEquals((Integer) 1, person.getId());
             assertEquals("John", person.getName());
@@ -55,7 +61,8 @@ class MultipleReverseIncludeTest {
 
     private SqlSessionFactory getSqlSessionFactoryXmlConfig() throws Exception {
         try (Reader configReader = Resources
-                .getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref/MultipleReverseIncludeMapperConfig.xml")) {
+                .getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref" +
+                        "/MultipleReverseIncludeMapperConfig.xml")) {
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configReader);
 
             initDb(sqlSessionFactory);
@@ -66,7 +73,8 @@ class MultipleReverseIncludeTest {
 
     private SqlSessionFactory getSqlSessionFactoryJavaConfig() throws Exception {
         Configuration configuration = new Configuration();
-        Environment environment = new Environment("development", new JdbcTransactionFactory(), new UnpooledDataSource(
+        Environment environment = new Environment("development", new JdbcTransactionFactory(),
+                new UnpooledDataSource(
                 "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:xmlextref", null));
         configuration.setEnvironment(environment);
         configuration.addMapper(MultipleReverseIncludePersonMapper.class);
@@ -76,11 +84,6 @@ class MultipleReverseIncludeTest {
         initDb(sqlSessionFactory);
 
         return sqlSessionFactory;
-    }
-
-    private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
-        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-                "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
     }
 
 }

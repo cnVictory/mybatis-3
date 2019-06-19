@@ -15,13 +15,10 @@
  */
 package org.apache.ibatis.io;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
+
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -31,9 +28,6 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
-
 /**
  * A default implementation of {@link VFS} that works for most application servers.
  *
@@ -42,7 +36,9 @@ import org.apache.ibatis.logging.LogFactory;
 public class DefaultVFS extends VFS {
     private static final Log log = LogFactory.getLog(DefaultVFS.class);
 
-    /** The magic header that indicates a JAR (ZIP) file. */
+    /**
+     * The magic header that indicates a JAR (ZIP) file.
+     */
     private static final byte[] JAR_MAGIC = {'P', 'K', 3, 4};
 
     @Override
@@ -167,7 +163,7 @@ public class DefaultVFS extends VFS {
      * List the names of the entries in the given {@link JarInputStream} that begin with the
      * specified {@code path}. Entries will match with or without a leading slash.
      *
-     * @param jar The JAR input stream
+     * @param jar  The JAR input stream
      * @param path The leading path to match
      * @return The names of all the matching entries
      * @throws IOException If I/O errors occur
@@ -310,10 +306,10 @@ public class DefaultVFS extends VFS {
     /**
      * Returns true if the resource located at the given URL is a JAR file.
      *
-     * @param url The URL of the resource to test.
+     * @param url    The URL of the resource to test.
      * @param buffer A buffer into which the first few bytes of the resource are read. The buffer
-     *            must be at least the size of {@link #JAR_MAGIC}. (The same buffer may be reused
-     *            for multiple calls as an optimization.)
+     *               must be at least the size of {@link #JAR_MAGIC}. (The same buffer may be reused
+     *               for multiple calls as an optimization.)
      */
     protected boolean isJar(URL url, byte[] buffer) {
         InputStream is = null;

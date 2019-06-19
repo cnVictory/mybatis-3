@@ -15,19 +15,6 @@
  */
 package org.apache.ibatis.submitted.sqlprovider;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.io.Reader;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -41,6 +28,15 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.Reader;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class SqlProviderTest {
 
@@ -245,7 +241,9 @@ class SqlProviderTest {
                     mapperMethod.getAnnotation(SelectProvider.class), mapperType, mapperMethod);
             fail();
         } catch (BuilderException e) {
-            assertTrue(e.getMessage().contains("Error creating SqlSource for SqlProvider. Method 'methodNotFound' not found in SqlProvider 'org.apache.ibatis.submitted.sqlprovider.SqlProviderTest$ErrorSqlBuilder'."));
+            assertTrue(e.getMessage().contains("Error creating SqlSource for SqlProvider. Method " +
+                    "'methodNotFound' not found in SqlProvider 'org.apache.ibatis.submitted.sqlprovider" +
+                    ".SqlProviderTest$ErrorSqlBuilder'."));
         }
     }
 
@@ -258,7 +256,9 @@ class SqlProviderTest {
                     mapperMethod.getAnnotation(SelectProvider.class), mapperType, mapperMethod);
             fail();
         } catch (BuilderException e) {
-            assertTrue(e.getMessage().contains("Error creating SqlSource for SqlProvider. Method 'overload' is found multiple in SqlProvider 'org.apache.ibatis.submitted.sqlprovider.SqlProviderTest$ErrorSqlBuilder'. Sql provider method can not overload."));
+            assertTrue(e.getMessage().contains("Error creating SqlSource for SqlProvider. Method 'overload'" +
+                    " is found multiple in SqlProvider 'org.apache.ibatis.submitted.sqlprovider" +
+                    ".SqlProviderTest$ErrorSqlBuilder'. Sql provider method can not overload."));
         }
     }
 
@@ -268,7 +268,8 @@ class SqlProviderTest {
             new ProviderSqlSource(new Configuration(), new Object(), null, null);
             fail();
         } catch (BuilderException e) {
-            assertTrue(e.getMessage().contains("Error creating SqlSource for SqlProvider.  Cause: java.lang.NoSuchMethodException: java.lang.Object.type()"));
+            assertTrue(e.getMessage().contains("Error creating SqlSource for SqlProvider.  Cause: java.lang" +
+                    ".NoSuchMethodException: java.lang.Object.type()"));
         }
     }
 
@@ -281,7 +282,10 @@ class SqlProviderTest {
                     mapperMethod.getAnnotation(SelectProvider.class), mapperType, mapperMethod);
             fail();
         } catch (BuilderException e) {
-            assertTrue(e.getMessage().contains("Error creating SqlSource for SqlProvider. ProviderContext found multiple in SqlProvider method (org.apache.ibatis.submitted.sqlprovider.SqlProviderTest$ErrorSqlBuilder.multipleProviderContext). ProviderContext can not define multiple in SqlProvider method argument."));
+            assertTrue(e.getMessage().contains("Error creating SqlSource for SqlProvider. ProviderContext " +
+                    "found multiple in SqlProvider method (org.apache.ibatis.submitted.sqlprovider" +
+                    ".SqlProviderTest$ErrorSqlBuilder.multipleProviderContext). ProviderContext can not " +
+                    "define multiple in SqlProvider method argument."));
         }
     }
 
@@ -295,7 +299,10 @@ class SqlProviderTest {
                     .getBoundSql(new Object());
             fail();
         } catch (BuilderException e) {
-            assertTrue(e.getMessage().contains("Error invoking SqlProvider method (org.apache.ibatis.submitted.sqlprovider.OurSqlBuilder.buildGetUsersByNameQuery). Cannot invoke a method that holds multiple arguments using a specifying parameterObject. In this case, please specify a 'java.util.Map' object."));
+            assertTrue(e.getMessage().contains("Error invoking SqlProvider method (org.apache.ibatis" +
+                    ".submitted.sqlprovider.OurSqlBuilder.buildGetUsersByNameQuery). Cannot invoke a method" +
+                    " that holds multiple arguments using a specifying parameterObject. In this case, " +
+                    "please specify a 'java.util.Map' object."));
         }
     }
 
@@ -309,7 +316,10 @@ class SqlProviderTest {
                     .getBoundSql(new Object());
             fail();
         } catch (BuilderException e) {
-            assertTrue(e.getMessage().contains("Error invoking SqlProvider method (org.apache.ibatis.submitted.sqlprovider.OurSqlBuilder.buildGetUsersByNameWithParamNameQuery). Cannot invoke a method that holds named argument(@Param) using a specifying parameterObject. In this case, please specify a 'java.util.Map' object."));
+            assertTrue(e.getMessage().contains("Error invoking SqlProvider method (org.apache.ibatis" +
+                    ".submitted.sqlprovider.OurSqlBuilder.buildGetUsersByNameWithParamNameQuery). Cannot " +
+                    "invoke a method that holds named argument(@Param) using a specifying parameterObject. " +
+                    "In this case, please specify a 'java.util.Map' object."));
         }
     }
 
@@ -323,7 +333,9 @@ class SqlProviderTest {
                     .getBoundSql(new Object());
             fail();
         } catch (BuilderException e) {
-            assertTrue(e.getMessage().contains("Error invoking SqlProvider method (org.apache.ibatis.submitted.sqlprovider.SqlProviderTest$ErrorSqlBuilder.invokeError).  Cause: java.lang.reflect.InvocationTargetException"));
+            assertTrue(e.getMessage().contains("Error invoking SqlProvider method (org.apache.ibatis" +
+                    ".submitted.sqlprovider.SqlProviderTest$ErrorSqlBuilder.invokeError).  Cause: java.lang" +
+                    ".reflect.InvocationTargetException"));
         }
     }
 
@@ -470,28 +482,6 @@ class SqlProviderTest {
         void multipleProviderContext();
     }
 
-    public static class ErrorSqlBuilder {
-        public void methodNotFound() {
-            throw new UnsupportedOperationException("methodNotFound");
-        }
-
-        public String overload() {
-            throw new UnsupportedOperationException("overload");
-        }
-
-        public String overload(String value) {
-            throw new UnsupportedOperationException("overload");
-        }
-
-        public String invokeError() {
-            throw new UnsupportedOperationException("invokeError");
-        }
-
-        public String multipleProviderContext(ProviderContext providerContext1, ProviderContext providerContext2) {
-            throw new UnsupportedOperationException("multipleProviderContext");
-        }
-    }
-
     public interface StaticMethodSqlProviderMapper {
         @SelectProvider(type = SqlProvider.class, method = "noArgument")
         int noArgument();
@@ -536,6 +526,29 @@ class SqlProviderTest {
 
         }
 
+    }
+
+    public static class ErrorSqlBuilder {
+        public void methodNotFound() {
+            throw new UnsupportedOperationException("methodNotFound");
+        }
+
+        public String overload() {
+            throw new UnsupportedOperationException("overload");
+        }
+
+        public String overload(String value) {
+            throw new UnsupportedOperationException("overload");
+        }
+
+        public String invokeError() {
+            throw new UnsupportedOperationException("invokeError");
+        }
+
+        public String multipleProviderContext(ProviderContext providerContext1,
+                                              ProviderContext providerContext2) {
+            throw new UnsupportedOperationException("multipleProviderContext");
+        }
     }
 
 }

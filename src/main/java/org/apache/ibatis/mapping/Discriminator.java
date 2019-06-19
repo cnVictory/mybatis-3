@@ -15,10 +15,10 @@
  */
 package org.apache.ibatis.mapping;
 
+import org.apache.ibatis.session.Configuration;
+
 import java.util.Collections;
 import java.util.Map;
-
-import org.apache.ibatis.session.Configuration;
 
 /**
  * @author Clinton Begin
@@ -31,10 +31,23 @@ public class Discriminator {
     Discriminator() {
     }
 
+    public ResultMapping getResultMapping() {
+        return resultMapping;
+    }
+
+    public Map<String, String> getDiscriminatorMap() {
+        return discriminatorMap;
+    }
+
+    public String getMapIdFor(String s) {
+        return discriminatorMap.get(s);
+    }
+
     public static class Builder {
         private Discriminator discriminator = new Discriminator();
 
-        public Builder(Configuration configuration, ResultMapping resultMapping, Map<String, String> discriminatorMap) {
+        public Builder(Configuration configuration, ResultMapping resultMapping,
+                       Map<String, String> discriminatorMap) {
             discriminator.resultMapping = resultMapping;
             discriminator.discriminatorMap = discriminatorMap;
         }
@@ -47,18 +60,6 @@ public class Discriminator {
             discriminator.discriminatorMap = Collections.unmodifiableMap(discriminator.discriminatorMap);
             return discriminator;
         }
-    }
-
-    public ResultMapping getResultMapping() {
-        return resultMapping;
-    }
-
-    public Map<String, String> getDiscriminatorMap() {
-        return discriminatorMap;
-    }
-
-    public String getMapIdFor(String s) {
-        return discriminatorMap.get(s);
     }
 
 }

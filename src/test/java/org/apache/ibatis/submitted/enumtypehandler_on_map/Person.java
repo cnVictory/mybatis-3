@@ -17,11 +17,6 @@ package org.apache.ibatis.submitted.enumtypehandler_on_map;
 
 public class Person {
 
-    public enum Type {
-        PERSON,
-        EMPLOYEE
-    }
-
     private Long id;
     private String firstName;
     private String lastName;
@@ -48,5 +43,10 @@ public class Person {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public enum Type {
+        PERSON,
+        EMPLOYEE
     }
 }

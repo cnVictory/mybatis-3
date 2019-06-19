@@ -22,6 +22,44 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SQLTest {
 
+    private static SQL example1() {
+        return new SQL() {{
+            SELECT("P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME");
+            SELECT("P.LAST_NAME, P.CREATED_ON, P.UPDATED_ON");
+            FROM("PERSON P");
+            FROM("ACCOUNT A");
+            INNER_JOIN("DEPARTMENT D on D.ID = P.DEPARTMENT_ID");
+            INNER_JOIN("COMPANY C on D.COMPANY_ID = C.ID");
+            WHERE("P.ID = A.ID");
+            WHERE("P.FIRST_NAME like ?");
+            OR();
+            WHERE("P.LAST_NAME like ?");
+            GROUP_BY("P.ID");
+            HAVING("P.LAST_NAME like ?");
+            OR();
+            HAVING("P.FIRST_NAME like ?");
+            ORDER_BY("P.ID");
+            ORDER_BY("P.FULL_NAME");
+        }};
+    }
+
+    private static String example2(final String id, final String firstName, final String lastName) {
+        return new SQL() {{
+            SELECT("P.ID, P.USERNAME, P.PASSWORD, P.FIRST_NAME, P.LAST_NAME");
+            FROM("PERSON P");
+            if (id != null) {
+                WHERE("P.ID like #id#");
+            }
+            if (firstName != null) {
+                WHERE("P.FIRST_NAME like #firstName#");
+            }
+            if (lastName != null) {
+                WHERE("P.LAST_NAME like #lastName#");
+            }
+            ORDER_BY("P.LAST_NAME");
+        }}.toString();
+    }
+
     @Test
     void shouldDemonstrateProvidedStringBuilder() {
         //You can pass in your own StringBuilder
@@ -29,7 +67,8 @@ class SQLTest {
         //From the tutorial
         final String sql = example1().usingAppender(sb).toString();
 
-        assertEquals("SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, P.LAST_NAME, P.CREATED_ON, P.UPDATED_ON\n" +
+        assertEquals("SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, P.LAST_NAME, P.CREATED_ON, P" +
+                ".UPDATED_ON\n" +
                 "FROM PERSON P, ACCOUNT A\n" +
                 "INNER JOIN DEPARTMENT D on D.ID = P.DEPARTMENT_ID\n" +
                 "INNER JOIN COMPANY C on D.COMPANY_ID = C.ID\n" +
@@ -75,7 +114,8 @@ class SQLTest {
         final String expected =
                 "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FIRST_NAME, P.LAST_NAME\n" +
                         "FROM PERSON P\n" +
-                        "WHERE (P.ID like #id# AND P.FIRST_NAME like #firstName# AND P.LAST_NAME like #lastName#)\n" +
+                        "WHERE (P.ID like #id# AND P.FIRST_NAME like #firstName# AND P.LAST_NAME like " +
+                        "#lastName#)\n" +
                         "ORDER BY P.LAST_NAME";
         assertEquals(expected, example2("a", "b", "c"));
     }
@@ -112,7 +152,8 @@ class SQLTest {
     @Test
     void shouldProduceExpectedComplexSelectStatement() {
         final String expected =
-                "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, P.LAST_NAME, P.CREATED_ON, P.UPDATED_ON\n" +
+                "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, P.LAST_NAME, P.CREATED_ON, P" +
+                        ".UPDATED_ON\n" +
                         "FROM PERSON P, ACCOUNT A\n" +
                         "INNER JOIN DEPARTMENT D on D.ID = P.DEPARTMENT_ID\n" +
                         "INNER JOIN COMPANY C on D.COMPANY_ID = C.ID\n" +
@@ -124,45 +165,6 @@ class SQLTest {
                         "ORDER BY P.ID, P.FULL_NAME";
         assertEquals(expected, example1().toString());
     }
-
-    private static SQL example1() {
-        return new SQL() {{
-            SELECT("P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME");
-            SELECT("P.LAST_NAME, P.CREATED_ON, P.UPDATED_ON");
-            FROM("PERSON P");
-            FROM("ACCOUNT A");
-            INNER_JOIN("DEPARTMENT D on D.ID = P.DEPARTMENT_ID");
-            INNER_JOIN("COMPANY C on D.COMPANY_ID = C.ID");
-            WHERE("P.ID = A.ID");
-            WHERE("P.FIRST_NAME like ?");
-            OR();
-            WHERE("P.LAST_NAME like ?");
-            GROUP_BY("P.ID");
-            HAVING("P.LAST_NAME like ?");
-            OR();
-            HAVING("P.FIRST_NAME like ?");
-            ORDER_BY("P.ID");
-            ORDER_BY("P.FULL_NAME");
-        }};
-    }
-
-    private static String example2(final String id, final String firstName, final String lastName) {
-        return new SQL() {{
-            SELECT("P.ID, P.USERNAME, P.PASSWORD, P.FIRST_NAME, P.LAST_NAME");
-            FROM("PERSON P");
-            if (id != null) {
-                WHERE("P.ID like #id#");
-            }
-            if (firstName != null) {
-                WHERE("P.FIRST_NAME like #firstName#");
-            }
-            if (lastName != null) {
-                WHERE("P.LAST_NAME like #lastName#");
-            }
-            ORDER_BY("P.LAST_NAME");
-        }}.toString();
-    }
-
 
     @Test
     void variableLengthArgumentOnSelect() {
@@ -300,7 +302,9 @@ class SQLTest {
 
     @Test
     void fixFor903UpdateJoins() {
-        final SQL sql = new SQL().UPDATE("table1 a").INNER_JOIN("table2 b USING (ID)").SET("a.value = b.value");
-        assertThat(sql.toString()).isEqualTo("UPDATE table1 a\nINNER JOIN table2 b USING (ID)\nSET a.value = b.value");
+        final SQL sql = new SQL().UPDATE("table1 a").INNER_JOIN("table2 b USING (ID)").SET("a.value = b" +
+                ".value");
+        assertThat(sql.toString()).isEqualTo("UPDATE table1 a\nINNER JOIN table2 b USING (ID)\nSET a.value " +
+                "= b.value");
     }
 }

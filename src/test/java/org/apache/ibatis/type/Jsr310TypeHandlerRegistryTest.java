@@ -15,22 +15,13 @@
  */
 package org.apache.ibatis.type;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
-import java.time.Year;
-import java.time.YearMonth;
-import java.time.ZonedDateTime;
-import java.time.chrono.JapaneseDate;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.*;
+import java.time.chrono.JapaneseDate;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Kazuki Shimizu

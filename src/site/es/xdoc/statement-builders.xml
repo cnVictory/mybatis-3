@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -28,14 +28,22 @@
     <body>
         <section name="The SQL Builder Class">
             <subsection name="El Problema">
-                <p>Una de las cosas más tediosas que un programador Java puede llegar a tener que hacer es incluir
-                    código SQL en código Java. Normalmente esto se hace cuando es necesario generar dinámicamente el SQL
-                    – de otra forma podrías externalizar el código en un fichero o un procedimiento almacenado. Como ya
-                    has visto, MyBatis tiene una respuesta potente a la generación dinámica de SQL mediante las
-                    capacidades del mapeo XML. Sin embargo, en ocasiones se hace necesario construir una sentencia SQL
-                    dentro del código Java. En este caso, MyBatis tiene una funcionalidad más para ayudarte en ello,
-                    antes de que comiences con el típico lío de signos de suma, comillas, líneas nuevas, problemas de
-                    formato y condicionales anidados para tratar con las comas extra y las conjunciones AND… Realmente,
+                <p>Una de las cosas más tediosas que un programador Java puede llegar a tener que hacer es
+                    incluir
+                    código SQL en código Java. Normalmente esto se hace cuando es necesario generar
+                    dinámicamente el SQL
+                    – de otra forma podrías externalizar el código en un fichero o un procedimiento
+                    almacenado. Como ya
+                    has visto, MyBatis tiene una respuesta potente a la generación dinámica de SQL mediante
+                    las
+                    capacidades del mapeo XML. Sin embargo, en ocasiones se hace necesario construir una
+                    sentencia SQL
+                    dentro del código Java. En este caso, MyBatis tiene una funcionalidad más para ayudarte en
+                    ello,
+                    antes de que comiences con el típico lío de signos de suma, comillas, líneas nuevas,
+                    problemas de
+                    formato y condicionales anidados para tratar con las comas extra y las conjunciones AND…
+                    Realmente,
                     generar código dinámico en java, puede ser una verdadera pesadilla. Por ejemplo:
                 </p>
                 <source><![CDATA[
@@ -82,9 +90,11 @@ private String selectPersonSql() {
 }
 ]]></source>
                 <p>¿Qué hay de especial en este ejemplo?
-                    Bien, si lo miras detenidamente, verás que no hay que preocuparse de duplicar “AND”s, o elegir entre
+                    Bien, si lo miras detenidamente, verás que no hay que preocuparse de duplicar “AND”s, o
+                    elegir entre
                     “WHERE” o “AND”, o ninguno de ambos!
-                    La clase SQL se ocupa de colocar el "WHERE" donde debe de ir, si debe usarse "AND" o no y de
+                    La clase SQL se ocupa de colocar el "WHERE" donde debe de ir, si debe usarse "AND" o no y
+                    de
                     realizar todas las concatenaciones de Strings.
                 </p>
             </subsection>
@@ -173,8 +183,10 @@ public String updatePersonSql() {
                                 </ul>
                             </td>
                             <td>Comienza o añade a una sentencia SELECT. Se puede invocar más de una vez y los
-                                parámetros se irán añadiendo a la sentencia SELECT. Los parámetros son normalmente una
-                                lista de columnas o alias separados por comas, pero puede ser cualquier cosa que acepte
+                                parámetros se irán añadiendo a la sentencia SELECT. Los parámetros son
+                                normalmente una
+                                lista de columnas o alias separados por comas, pero puede ser cualquier cosa
+                                que acepte
                                 el driver de base de datos.
                             </td>
                         </tr>
@@ -189,10 +201,14 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>Comienza o añade a una sentencia SELECT, también añade la palabra clave “DISTINCT” a la
-                                sentencia generada. Se puede invocar más de una vez y los parámetros se irán añadiendo a
-                                la sentencia SELECT. Los parámetros son normalmente una lista de columnas o alias
-                                separados por comas, pero puede ser cualquier cosa que acepte el driver de base de
+                            <td>Comienza o añade a una sentencia SELECT, también añade la palabra clave
+                                “DISTINCT” a la
+                                sentencia generada. Se puede invocar más de una vez y los parámetros se irán
+                                añadiendo a
+                                la sentencia SELECT. Los parámetros son normalmente una lista de columnas o
+                                alias
+                                separados por comas, pero puede ser cualquier cosa que acepte el driver de
+                                base de
                                 datos.
                             </td>
                         </tr>
@@ -207,8 +223,10 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>Comienza o añade a una cláusula FROM. Se puede invocar más de una vez y los parámetros
-                                se irán añadiendo a la clausula FROM. Los parámetros son normalmente un nombre de tabla
+                            <td>Comienza o añade a una cláusula FROM. Se puede invocar más de una vez y los
+                                parámetros
+                                se irán añadiendo a la clausula FROM. Los parámetros son normalmente un nombre
+                                de tabla
                                 o alias o cualquier cosa que acepte el driver de base de datos.
                             </td>
                         </tr>
@@ -241,8 +259,10 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>Añade una nueva clausula JOIN del tipo apropiado, dependiendo al método que se haya
-                                llamado. El parámetro puede incluir un join estándar que consiste en las columnas y las
+                            <td>Añade una nueva clausula JOIN del tipo apropiado, dependiendo al método que se
+                                haya
+                                llamado. El parámetro puede incluir un join estándar que consiste en las
+                                columnas y las
                                 condiciones sobre las que hacer la join.
                             </td>
                         </tr>
@@ -257,8 +277,10 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>Añade una nueva condición a la clausula WHERE concatenada con un AND. Puede llamarse más
-                                de una vez, lo cual hará que se añadan más condiciones todas ellas concatenadas con un
+                            <td>Añade una nueva condición a la clausula WHERE concatenada con un AND. Puede
+                                llamarse más
+                                de una vez, lo cual hará que se añadan más condiciones todas ellas
+                                concatenadas con un
                                 AND. O usa OR() para partirlas con un OR().
                             </td>
                         </tr>
@@ -266,17 +288,22 @@ public String updatePersonSql() {
                             <td>
                                 <code>OR()</code>
                             </td>
-                            <td>Parte las condiciones actuales de la WHERE con un OR. Puede llamarse más de una vez,
-                                pero llamarlas más de una vez en la misma línea puede producir sentencias incorrectas.
+                            <td>Parte las condiciones actuales de la WHERE con un OR. Puede llamarse más de
+                                una vez,
+                                pero llamarlas más de una vez en la misma línea puede producir sentencias
+                                incorrectas.
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <code>AND()</code>
                             </td>
-                            <td>Parte las condiciones actuales de la WHERE con un AND. Puede llamarse más de una vez,
-                                pero llamarlas más de una vez en la misma línea puede producir sentencias incorrectas.
-                                Dado que WHERE y HAVING concatenan automáticamente el AND, es muy infrecuente que sea
+                            <td>Parte las condiciones actuales de la WHERE con un AND. Puede llamarse más de
+                                una vez,
+                                pero llamarlas más de una vez en la misma línea puede producir sentencias
+                                incorrectas.
+                                Dado que WHERE y HAVING concatenan automáticamente el AND, es muy infrecuente
+                                que sea
                                 necesario invocar a este método y se incluye realmente por completitud.
                             </td>
                         </tr>
@@ -291,8 +318,10 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>Añade una nueva clausula GROUP BY grupo, concatenada con una coma. Se le puede llamar
-                                más de una vez, lo cual hará que se concatenen nuevas condiciones separadas también por
+                            <td>Añade una nueva clausula GROUP BY grupo, concatenada con una coma. Se le puede
+                                llamar
+                                más de una vez, lo cual hará que se concatenen nuevas condiciones separadas
+                                también por
                                 coma.
                             </td>
                         </tr>
@@ -307,8 +336,10 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>Añade una nueva clausula HAVING, concatenada con un AND. Se le puede llamar más de una
-                                vez, lo cual hará que se concatenen nuevas condiciones separadas también por AND. Usa
+                            <td>Añade una nueva clausula HAVING, concatenada con un AND. Se le puede llamar
+                                más de una
+                                vez, lo cual hará que se concatenen nuevas condiciones separadas también por
+                                AND. Usa
                                 OR() para dividirlas por OR.
                             </td>
                         </tr>
@@ -323,8 +354,10 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>Añade un Nuevo elemento a la clausula ORDER BY concatenado por coma. Se le puede llamar
-                                más de una vez, lo cual hará que se concatenen nuevas condiciones separadas también por
+                            <td>Añade un Nuevo elemento a la clausula ORDER BY concatenado por coma. Se le
+                                puede llamar
+                                más de una vez, lo cual hará que se concatenen nuevas condiciones separadas
+                                también por
                                 coma.
                             </td>
                         </tr>
@@ -332,7 +365,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>DELETE_FROM(String)</code>
                             </td>
-                            <td>Comienza una sentencia delete y especifica la tabla donde borrar. Generalmente suele ir
+                            <td>Comienza una sentencia delete y especifica la tabla donde borrar. Generalmente
+                                suele ir
                                 seguida de una clausula WHERE!
                             </td>
                         </tr>
@@ -340,7 +374,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>INSERT_INTO(String)</code>
                             </td>
-                            <td>Comienza una sentencia insert y especifica al tabla en la que insertar. Suele ir seguida
+                            <td>Comienza una sentencia insert y especifica al tabla en la que insertar. Suele
+                                ir seguida
                                 de una o más llamadas a VALUES() o INTO_COLUMNS() y INTO_VALUES().
                             </td>
                         </tr>
@@ -361,7 +396,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>UPDATE(String)</code>
                             </td>
-                            <td>Comienza una sentencia update y especifica la tabla que modificar Suele ir seguida de
+                            <td>Comienza una sentencia update y especifica la tabla que modificar Suele ir
+                                seguida de
                                 una o más llamadas a SET() y normalmente de una llamada a WHERE().
                             </td>
                         </tr>
@@ -369,7 +405,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>VALUES(String, String)</code>
                             </td>
-                            <td>Añade a una sentencia insert. El primer parámetro es el nombre de columna y el Segundo
+                            <td>Añade a una sentencia insert. El primer parámetro es el nombre de columna y el
+                                Segundo
                                 el valor(es).
                             </td>
                         </tr>
@@ -428,13 +465,17 @@ public String updatePersonSql() {
 
             <subsection name="SqlBuilder y SelectBuilder (DEPRECADAS)">
                 <p>
-                    En versiones anteriores a la 3.2 optamos por una solución distinta, usando una variable ThreadLocal
+                    En versiones anteriores a la 3.2 optamos por una solución distinta, usando una variable
+                    ThreadLocal
                     para
-                    resolver algunas limitaciones de las que hacen los DSLs Java algo incomodos. Sin embargo, esta
+                    resolver algunas limitaciones de las que hacen los DSLs Java algo incomodos. Sin embargo,
+                    esta
                     solución está ahora
-                    desprecada porque los frameworks actuales están mas orientados a usar patrones builder-type y clases
+                    desprecada porque los frameworks actuales están mas orientados a usar patrones
+                    builder-type y clases
                     anónimas
-                    interas para este tipo de cosas. Por lo tanto las clases SelectBuilder y SqlBuilder están ahora
+                    interas para este tipo de cosas. Por lo tanto las clases SelectBuilder y SqlBuilder están
+                    ahora
                     deprecadas.
                 </p>
                 <p>
@@ -454,10 +495,14 @@ public String updatePersonSql() {
                                 /
                                 <code>RESET()</code>
                             </td>
-                            <td>Estos métodos limpian estado guardad en el ThreadLocal de la clase SelectBuilder, y la
-                                preparan para construir una nueva sentencia. BEGIN() se lee mejor cuando se está creando
-                                una sentencia. RESET() se lee mejor cuando se está borrando lo hecho anteriormente en
-                                medio de una ejecución (quizá porque la lógica necesita una sentencia completamente
+                            <td>Estos métodos limpian estado guardad en el ThreadLocal de la clase
+                                SelectBuilder, y la
+                                preparan para construir una nueva sentencia. BEGIN() se lee mejor cuando se
+                                está creando
+                                una sentencia. RESET() se lee mejor cuando se está borrando lo hecho
+                                anteriormente en
+                                medio de una ejecución (quizá porque la lógica necesita una sentencia
+                                completamente
                                 distinta según las condiciones).
                             </td>
                         </tr>
@@ -465,8 +510,10 @@ public String updatePersonSql() {
                             <td>
                                 <code>SQL()</code>
                             </td>
-                            <td>Devuelve la SQL generada y restablece el estado del SelectBuilder (como si se hubiera
-                                llamado a un BEGIN() o a un RESET()). Por tanto este método solo se puede llamar una
+                            <td>Devuelve la SQL generada y restablece el estado del SelectBuilder (como si se
+                                hubiera
+                                llamado a un BEGIN() o a un RESET()). Por tanto este método solo se puede
+                                llamar una
                                 vez!
                             </td>
                         </tr>
@@ -474,9 +521,11 @@ public String updatePersonSql() {
                 </table>
 
                 <p>La clase SelectBuilder no es mágica, pero es importante que conozcas cómo funcionan.
-                    SelectBuilder y SqlBuilder usan una combinación de imports estáticos y una variable ThreadLocal para
+                    SelectBuilder y SqlBuilder usan una combinación de imports estáticos y una variable
+                    ThreadLocal para
                     permitir una sintaxis más limpia más fácilmente usabe con condicionales.
-                    Para usarlas debes importar estáticamente métodos de las siguientes clases (uno u otro, no ambos):
+                    Para usarlas debes importar estáticamente métodos de las siguientes clases (uno u otro, no
+                    ambos):
                 </p>
 
                 <source>import static org.apache.ibatis.jdbc.SelectBuilder.*;</source>

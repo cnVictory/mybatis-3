@@ -15,29 +15,10 @@
  */
 package org.apache.ibatis.executor.resultset;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ResultMap;
-import org.apache.ibatis.mapping.ResultMapping;
-import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
@@ -48,15 +29,24 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class DefaultResultSetHandlerTest2 {
 
+    @Mock
+    protected ResultSetMetaData rsmd;
     @Spy
     private ImpatientResultSet rs;
     @Mock
     private Statement stmt;
-    @Mock
-    protected ResultSetMetaData rsmd;
     @Mock
     private Connection conn;
     @Mock
@@ -71,9 +61,11 @@ class DefaultResultSetHandlerTest2 {
                 new StaticSqlSource(config, "some select statement"), SqlCommandType.SELECT).resultMaps(
                 new ArrayList<ResultMap>() {
                     {
-                        add(new ResultMap.Builder(config, "testMap", HashMap.class, new ArrayList<ResultMapping>() {
+                        add(new ResultMap.Builder(config, "testMap", HashMap.class,
+                                new ArrayList<ResultMapping>() {
                             {
-                                add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(Integer.class)).build());
+                                add(new ResultMapping.Builder(config, "id", "id",
+                                        registry.getTypeHandler(Integer.class)).build());
                             }
                         }).build());
                     }
@@ -84,7 +76,8 @@ class DefaultResultSetHandlerTest2 {
         final ResultHandler<?> resultHandler = null;
         final BoundSql boundSql = null;
         final RowBounds rowBounds = new RowBounds(5, 1);
-        final DefaultResultSetHandler resultSetHandler = new DefaultResultSetHandler(executor, ms, parameterHandler,
+        final DefaultResultSetHandler resultSetHandler = new DefaultResultSetHandler(executor, ms,
+                parameterHandler,
                 resultHandler, boundSql, rowBounds);
 
         when(stmt.getResultSet()).thenReturn(rs);
@@ -108,7 +101,8 @@ class DefaultResultSetHandlerTest2 {
         final ResultMap nestedResultMap = new ResultMap.Builder(config, "roleMap", HashMap.class,
                 new ArrayList<ResultMapping>() {
                     {
-                        add(new ResultMapping.Builder(config, "role", "role", registry.getTypeHandler(String.class))
+                        add(new ResultMapping.Builder(config, "role", "role",
+                                registry.getTypeHandler(String.class))
                                 .build());
                     }
                 }).build();
@@ -118,9 +112,11 @@ class DefaultResultSetHandlerTest2 {
                 SqlCommandType.SELECT).resultMaps(
                 new ArrayList<ResultMap>() {
                     {
-                        add(new ResultMap.Builder(config, "personMap", HashMap.class, new ArrayList<ResultMapping>() {
+                        add(new ResultMap.Builder(config, "personMap", HashMap.class,
+                                new ArrayList<ResultMapping>() {
                             {
-                                add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(Integer.class))
+                                add(new ResultMapping.Builder(config, "id", "id",
+                                        registry.getTypeHandler(Integer.class))
                                         .build());
                                 add(new ResultMapping.Builder(config, "roles").nestedResultMapId("roleMap").build());
                             }
@@ -135,7 +131,8 @@ class DefaultResultSetHandlerTest2 {
         final ResultHandler<?> resultHandler = null;
         final BoundSql boundSql = null;
         final RowBounds rowBounds = new RowBounds(5, 1);
-        final DefaultResultSetHandler resultSetHandler = new DefaultResultSetHandler(executor, ms, parameterHandler,
+        final DefaultResultSetHandler resultSetHandler = new DefaultResultSetHandler(executor, ms,
+                parameterHandler,
                 resultHandler, boundSql, rowBounds);
 
         when(stmt.getResultSet()).thenReturn(rs);

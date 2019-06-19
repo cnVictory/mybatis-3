@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.executor;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.cache.decorators.LoggingCache;
@@ -28,30 +22,17 @@ import org.apache.ibatis.cache.decorators.ScheduledCache;
 import org.apache.ibatis.cache.decorators.SerializedCache;
 import org.apache.ibatis.cache.decorators.SynchronizedCache;
 import org.apache.ibatis.cache.impl.PerpetualCache;
-import org.apache.ibatis.domain.blog.Author;
-import org.apache.ibatis.domain.blog.Blog;
-import org.apache.ibatis.domain.blog.Comment;
-import org.apache.ibatis.domain.blog.Post;
-import org.apache.ibatis.domain.blog.Section;
-import org.apache.ibatis.domain.blog.Tag;
+import org.apache.ibatis.domain.blog.*;
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.executor.keygen.SelectKeyGenerator;
-import org.apache.ibatis.mapping.Discriminator;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ParameterMap;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.ParameterMode;
-import org.apache.ibatis.mapping.ResultFlag;
-import org.apache.ibatis.mapping.ResultMap;
-import org.apache.ibatis.mapping.ResultMapping;
-import org.apache.ibatis.mapping.SqlCommandType;
-import org.apache.ibatis.mapping.SqlSource;
-import org.apache.ibatis.mapping.StatementType;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.scripting.xmltags.DynamicSqlSource;
 import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandlerRegistry;
+
+import java.util.*;
 
 class ExecutorTestHelper {
 
@@ -69,18 +50,26 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareInsertAuthorMappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "insertAuthor", new StaticSqlSource(config, "INSERT INTO author (id,username,password,email,bio,favourite_section) values(?,?,?,?,?,?)"), SqlCommandType.INSERT)
+        return new MappedStatement.Builder(config, "insertAuthor", new StaticSqlSource(config, "INSERT INTO" +
+                " author (id,username,password,email,bio,favourite_section) values(?,?,?,?,?,?)"),
+                SqlCommandType.INSERT)
                 .parameterMap(
                         new ParameterMap.Builder(
                                 config, "defaultParameterMap", Author.class,
                                 new ArrayList<ParameterMapping>() {
                                     {
-                                        add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
-                                        add(new ParameterMapping.Builder(config, "username", registry.getTypeHandler(String.class)).build());
-                                        add(new ParameterMapping.Builder(config, "password", registry.getTypeHandler(String.class)).build());
-                                        add(new ParameterMapping.Builder(config, "email", registry.getTypeHandler(String.class)).build());
-                                        add(new ParameterMapping.Builder(config, "bio", registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).build());
-                                        add(new ParameterMapping.Builder(config, "favouriteSection", registry.getTypeHandler(Section.class)).jdbcType(JdbcType.VARCHAR).build());
+                                        add(new ParameterMapping.Builder(config, "id",
+                                                registry.getTypeHandler(int.class)).build());
+                                        add(new ParameterMapping.Builder(config, "username",
+                                                registry.getTypeHandler(String.class)).build());
+                                        add(new ParameterMapping.Builder(config, "password",
+                                                registry.getTypeHandler(String.class)).build());
+                                        add(new ParameterMapping.Builder(config, "email",
+                                                registry.getTypeHandler(String.class)).build());
+                                        add(new ParameterMapping.Builder(config, "bio",
+                                                registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).build());
+                                        add(new ParameterMapping.Builder(config, "favouriteSection",
+                                                registry.getTypeHandler(Section.class)).jdbcType(JdbcType.VARCHAR).build());
                                     }
                                 }).build())
                 .cache(authorCache).build();
@@ -88,15 +77,23 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareInsertAuthorMappedStatementWithAutoKey(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "insertAuthor", new StaticSqlSource(config, "INSERT INTO author (username,password,email,bio,favourite_section) values(?,?,?,?,?)"), SqlCommandType.INSERT)
+        return new MappedStatement.Builder(config, "insertAuthor", new StaticSqlSource(config, "INSERT INTO" +
+                " author (username,password,email,bio,favourite_section) values(?,?,?,?,?)"),
+                SqlCommandType.INSERT)
                 .parameterMap(
-                        new ParameterMap.Builder(config, "defaultParameterMap", Author.class, new ArrayList<ParameterMapping>() {
+                        new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
+                                new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "username", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "password", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "email", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "bio", registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).build());
-                                add(new ParameterMapping.Builder(config, "favouriteSection", registry.getTypeHandler(Section.class)).jdbcType(JdbcType.VARCHAR).build());
+                                add(new ParameterMapping.Builder(config, "username",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "password",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "email",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "bio",
+                                        registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).build());
+                                add(new ParameterMapping.Builder(config, "favouriteSection",
+                                        registry.getTypeHandler(Section.class)).jdbcType(JdbcType.VARCHAR).build());
                             }
                         }).build())
                 .cache(authorCache)
@@ -107,14 +104,19 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareInsertAuthorProc(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "insertAuthorProc", new StaticSqlSource(config, "{call insertAuthor(?,?,?,?)}"), SqlCommandType.INSERT)
+        return new MappedStatement.Builder(config, "insertAuthorProc", new StaticSqlSource(config, "{call " +
+                "insertAuthor(?,?,?,?)}"), SqlCommandType.INSERT)
                 .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
                         new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
-                                add(new ParameterMapping.Builder(config, "username", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "password", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "email", registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "id",
+                                        registry.getTypeHandler(int.class)).build());
+                                add(new ParameterMapping.Builder(config, "username",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "password",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "email",
+                                        registry.getTypeHandler(String.class)).build());
                             }
                         }).build())
                 .cache(authorCache).build();
@@ -122,15 +124,22 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareUpdateAuthorMappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "updateAuthor", new StaticSqlSource(config, "UPDATE author SET username = ?, password = ?, email = ?, bio = ? WHERE id = ?"), SqlCommandType.UPDATE)
+        return new MappedStatement.Builder(config, "updateAuthor", new StaticSqlSource(config, "UPDATE " +
+                "author SET username = ?, password = ?, email = ?, bio = ? WHERE id = ?"),
+                SqlCommandType.UPDATE)
                 .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
                         new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "username", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "password", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "email", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "bio", registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).build());
-                                add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
+                                add(new ParameterMapping.Builder(config, "username",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "password",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "email",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "bio",
+                                        registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).build());
+                                add(new ParameterMapping.Builder(config, "id",
+                                        registry.getTypeHandler(int.class)).build());
                             }
                         }).build())
                 .cache(authorCache).build();
@@ -138,11 +147,13 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareDeleteAuthorMappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "deleteAuthor", new StaticSqlSource(config, "DELETE FROM author WHERE id = ?"), SqlCommandType.DELETE)
+        return new MappedStatement.Builder(config, "deleteAuthor", new StaticSqlSource(config, "DELETE FROM" +
+                " author WHERE id = ?"), SqlCommandType.DELETE)
                 .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
                         new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
+                                add(new ParameterMapping.Builder(config, "id",
+                                        registry.getTypeHandler(int.class)).build());
                             }
                         }).build())
                 .cache(authorCache)
@@ -155,20 +166,28 @@ class ExecutorTestHelper {
         final ResultMap rm = new ResultMap.Builder(config, "defaultResultMap", Author.class, new
                 ArrayList<ResultMapping>() {
                     {
-                        add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class)).build());
-                        add(new ResultMapping.Builder(config, "username", "username", registry.getTypeHandler(String.class)).build());
-                        add(new ResultMapping.Builder(config, "password", "password", registry.getTypeHandler(String.class)).build());
-                        add(new ResultMapping.Builder(config, "email", "email", registry.getTypeHandler(String.class)).build());
-                        add(new ResultMapping.Builder(config, "bio", "bio", registry.getTypeHandler(String.class)).build());
-                        add(new ResultMapping.Builder(config, "favouriteSection", "favourite_section", registry.getTypeHandler(Section.class)).build());
+                        add(new ResultMapping.Builder(config, "id", "id",
+                                registry.getTypeHandler(int.class)).build());
+                        add(new ResultMapping.Builder(config, "username", "username",
+                                registry.getTypeHandler(String.class)).build());
+                        add(new ResultMapping.Builder(config, "password", "password",
+                                registry.getTypeHandler(String.class)).build());
+                        add(new ResultMapping.Builder(config, "email", "email",
+                                registry.getTypeHandler(String.class)).build());
+                        add(new ResultMapping.Builder(config, "bio", "bio",
+                                registry.getTypeHandler(String.class)).build());
+                        add(new ResultMapping.Builder(config, "favouriteSection", "favourite_section",
+                                registry.getTypeHandler(Section.class)).build());
                     }
                 }).build();
 
-        return new MappedStatement.Builder(config, "selectAuthor", new StaticSqlSource(config, "SELECT * FROM author WHERE id = ?"), SqlCommandType.SELECT)
+        return new MappedStatement.Builder(config, "selectAuthor", new StaticSqlSource(config, "SELECT * " +
+                "FROM author WHERE id = ?"), SqlCommandType.SELECT)
                 .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
                         new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
+                                add(new ParameterMapping.Builder(config, "id",
+                                        registry.getTypeHandler(int.class)).build());
                             }
                         }).build())
                 .resultMaps(new ArrayList<ResultMap>() {
@@ -181,12 +200,15 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectAllAuthorsAutoMappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "selectAuthorAutoMap", new StaticSqlSource(config, "SELECT * FROM author ORDER BY id"), SqlCommandType.SELECT)
+        return new MappedStatement.Builder(config, "selectAuthorAutoMap", new StaticSqlSource(config,
+                "SELECT * FROM author ORDER BY id"), SqlCommandType.SELECT)
                 .resultMaps(new ArrayList<ResultMap>() {
                     {
-                        add(new ResultMap.Builder(config, "defaultResultMap", Author.class, new ArrayList<ResultMapping>() {
+                        add(new ResultMap.Builder(config, "defaultResultMap", Author.class,
+                                new ArrayList<ResultMapping>() {
                             {
-                                add(new ResultMapping.Builder(config, "favouriteSection", "favourite_section", registry.getTypeHandler(Section.class)).build());
+                                add(new ResultMapping.Builder(config, "favouriteSection",
+                                        "favourite_section", registry.getTypeHandler(Section.class)).build());
                                 add(new ResultMapping.Builder(config, null, "not_exists", Object.class).build());
                             }
                         }).build());
@@ -196,27 +218,36 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectOneAuthorMappedStatementWithConstructorResults(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "selectAuthor", new StaticSqlSource(config, "SELECT * FROM author WHERE id = ?"), SqlCommandType.SELECT)
+        return new MappedStatement.Builder(config, "selectAuthor", new StaticSqlSource(config, "SELECT * " +
+                "FROM author WHERE id = ?"), SqlCommandType.SELECT)
                 .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
                         new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
+                                add(new ParameterMapping.Builder(config, "id",
+                                        registry.getTypeHandler(int.class)).build());
                             }
                         }).build())
                 .resultMaps(new ArrayList<ResultMap>() {
                     {
-                        add(new ResultMap.Builder(config, "defaultResultMap", Author.class, new ArrayList<ResultMapping>() {
+                        add(new ResultMap.Builder(config, "defaultResultMap", Author.class,
+                                new ArrayList<ResultMapping>() {
                             {
-                                add(new ResultMapping.Builder(config, null, "id", registry.getTypeHandler(Integer.class)).javaType(int.class).flags(new ArrayList<ResultFlag>() {
+                                add(new ResultMapping.Builder(config, null, "id",
+                                        registry.getTypeHandler(Integer.class)).javaType(int.class).flags(new ArrayList<ResultFlag>() {
                                     {
                                         add(ResultFlag.CONSTRUCTOR);
                                     }
                                 }).build());
-                                add(new ResultMapping.Builder(config, "username", "username", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "password", "password", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "email", "email", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "bio", "bio", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "favouriteSection", "favourite_section", registry.getTypeHandler(Section.class)).build());
+                                add(new ResultMapping.Builder(config, "username", "username",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "password", "password",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "email", "email",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "bio", "bio",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "favouriteSection",
+                                        "favourite_section", registry.getTypeHandler(Section.class)).build());
                             }
                         }).build());
                     }
@@ -227,25 +258,34 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectTwoSetsOfAuthorsProc(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "selectTwoSetsOfAuthors", new StaticSqlSource(config, "{call selectTwoSetsOfAuthors(?,?)}"), SqlCommandType.SELECT)
+        return new MappedStatement.Builder(config, "selectTwoSetsOfAuthors", new StaticSqlSource(config,
+                "{call selectTwoSetsOfAuthors(?,?)}"), SqlCommandType.SELECT)
                 .statementType(StatementType.CALLABLE)
                 .parameterMap(new ParameterMap.Builder(
                         config, "defaultParameterMap", Author.class,
                         new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "id1", registry.getTypeHandler(int.class)).build());
-                                add(new ParameterMapping.Builder(config, "id2", registry.getTypeHandler(int.class)).build());
+                                add(new ParameterMapping.Builder(config, "id1",
+                                        registry.getTypeHandler(int.class)).build());
+                                add(new ParameterMapping.Builder(config, "id2",
+                                        registry.getTypeHandler(int.class)).build());
                             }
                         }).build())
                 .resultMaps(new ArrayList<ResultMap>() {
                     {
-                        ResultMap map = new ResultMap.Builder(config, "defaultResultMap", Author.class, new ArrayList<ResultMapping>() {
+                        ResultMap map = new ResultMap.Builder(config, "defaultResultMap", Author.class,
+                                new ArrayList<ResultMapping>() {
                             {
-                                add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class)).build());
-                                add(new ResultMapping.Builder(config, "username", "username", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "password", "password", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "email", "email", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "bio", "bio", registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "id", "id",
+                                        registry.getTypeHandler(int.class)).build());
+                                add(new ResultMapping.Builder(config, "username", "username",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "password", "password",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "email", "email",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "bio", "bio",
+                                        registry.getTypeHandler(String.class)).build());
                             }
                         }).build();
                         add(map);
@@ -256,16 +296,22 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectAuthorViaOutParams(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "selectAuthorViaOutParams", new StaticSqlSource(config, "{call selectAuthorViaOutParams(?,?,?,?,?)}"), SqlCommandType.SELECT)
+        return new MappedStatement.Builder(config, "selectAuthorViaOutParams", new StaticSqlSource(config,
+                "{call selectAuthorViaOutParams(?,?,?,?,?)}"), SqlCommandType.SELECT)
                 .statementType(StatementType.CALLABLE)
                 .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
                         new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
-                                add(new ParameterMapping.Builder(config, "username", registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).mode(ParameterMode.OUT).build());
-                                add(new ParameterMapping.Builder(config, "password", registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).mode(ParameterMode.OUT).build());
-                                add(new ParameterMapping.Builder(config, "email", registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).mode(ParameterMode.OUT).build());
-                                add(new ParameterMapping.Builder(config, "bio", registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).mode(ParameterMode.OUT).build());
+                                add(new ParameterMapping.Builder(config, "id",
+                                        registry.getTypeHandler(int.class)).build());
+                                add(new ParameterMapping.Builder(config, "username",
+                                        registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).mode(ParameterMode.OUT).build());
+                                add(new ParameterMapping.Builder(config, "password",
+                                        registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).mode(ParameterMode.OUT).build());
+                                add(new ParameterMapping.Builder(config, "email",
+                                        registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).mode(ParameterMode.OUT).build());
+                                add(new ParameterMapping.Builder(config, "bio",
+                                        registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).mode(ParameterMode.OUT).build());
                             }
                         }).build())
                 .resultMaps(new ArrayList<>())
@@ -274,24 +320,32 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectDiscriminatedPost(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        final ResultMap discriminatorResultMap = new ResultMap.Builder(config, "postResultMap", HashMap.class, new ArrayList<ResultMapping>() {
+        final ResultMap discriminatorResultMap = new ResultMap.Builder(config, "postResultMap",
+                HashMap.class, new ArrayList<ResultMapping>() {
             {
-                add(new ResultMapping.Builder(config, "subject", "subject", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "body", "body", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "subject", "subject",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "body", "body",
+                        registry.getTypeHandler(String.class)).build());
             }
         }).build();
         config.addResultMap(discriminatorResultMap);
-        return new MappedStatement.Builder(config, "selectPosts", new StaticSqlSource(config, "SELECT * FROM post"), SqlCommandType.SELECT)
+        return new MappedStatement.Builder(config, "selectPosts", new StaticSqlSource(config, "SELECT * " +
+                "FROM post"), SqlCommandType.SELECT)
                 .resultMaps(new ArrayList<ResultMap>() {
                     {
-                        add(new ResultMap.Builder(config, "defaultResultMap", HashMap.class, new ArrayList<ResultMapping>() {
+                        add(new ResultMap.Builder(config, "defaultResultMap", HashMap.class,
+                                new ArrayList<ResultMapping>() {
                             {
-                                add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class)).build());
-                                add(new ResultMapping.Builder(config, "blog_id", "blog_id", registry.getTypeHandler(int.class)).build());
+                                add(new ResultMapping.Builder(config, "id", "id",
+                                        registry.getTypeHandler(int.class)).build());
+                                add(new ResultMapping.Builder(config, "blog_id", "blog_id",
+                                        registry.getTypeHandler(int.class)).build());
                             }
                         })
                                 .discriminator(new Discriminator.Builder(
-                                        config, new ResultMapping.Builder(config, "section", "section", registry.getTypeHandler(String.class)).build(),
+                                        config, new ResultMapping.Builder(config, "section", "section",
+                                        registry.getTypeHandler(String.class)).build(),
                                         new HashMap<String, String>() {
                                             {
                                                 put("NEWS", discriminatorResultMap.getId());
@@ -306,7 +360,9 @@ class ExecutorTestHelper {
     }
 
     static MappedStatement createInsertAuthorWithIDof99MappedStatement(final Configuration config) {
-        return new MappedStatement.Builder(config, "insertAuthor", new StaticSqlSource(config, "INSERT INTO author (id,username,password,email,bio) values(99,'someone','******','someone@apache.org',null)"), SqlCommandType.INSERT)
+        return new MappedStatement.Builder(config, "insertAuthor", new StaticSqlSource(config, "INSERT INTO" +
+                " author (id,username,password,email,bio) values(99,'someone','******','someone@apache" +
+                ".org',null)"), SqlCommandType.INSERT)
                 .statementType(StatementType.STATEMENT)
                 .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
                         new ArrayList<>()).build())
@@ -316,18 +372,26 @@ class ExecutorTestHelper {
 
     static MappedStatement createSelectAuthorWithIDof99MappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        return new MappedStatement.Builder(config, "selectAuthor", new StaticSqlSource(config, "SELECT * FROM author WHERE id = 99"), SqlCommandType.SELECT)
+        return new MappedStatement.Builder(config, "selectAuthor", new StaticSqlSource(config, "SELECT * " +
+                "FROM author WHERE id = 99"), SqlCommandType.SELECT)
                 .statementType(StatementType.STATEMENT)
-                .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class, new ArrayList<>()).build())
+                .parameterMap(new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
+                        new ArrayList<>()).build())
                 .resultMaps(new ArrayList<ResultMap>() {
                     {
-                        add(new ResultMap.Builder(config, "defaultResultMap", Author.class, new ArrayList<ResultMapping>() {
+                        add(new ResultMap.Builder(config, "defaultResultMap", Author.class,
+                                new ArrayList<ResultMapping>() {
                             {
-                                add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class)).build());
-                                add(new ResultMapping.Builder(config, "username", "username", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "password", "password", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "email", "email", registry.getTypeHandler(String.class)).build());
-                                add(new ResultMapping.Builder(config, "bio", "bio", registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "id", "id",
+                                        registry.getTypeHandler(int.class)).build());
+                                add(new ResultMapping.Builder(config, "username", "username",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "password", "password",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "email", "email",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ResultMapping.Builder(config, "bio", "bio",
+                                        registry.getTypeHandler(String.class)).build());
                             }
                         }).build());
                     }
@@ -336,7 +400,8 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareComplexSelectBlogMappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT b.id, b.author_id, b.title, a.username, a.password, a.email, a.bio" +
+        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT b.id, b.author_id, b.title, a" +
+                ".username, a.password, a.email, a.bio" +
                 " FROM blog b" +
                 " INNER JOIN author a ON b.author_id = a.id" +
                 " WHERE b.id = ?");
@@ -346,7 +411,8 @@ class ExecutorTestHelper {
                         add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
                     }
                 }).build();
-        final ResultMap resultMap = new ResultMap.Builder(config, "defaultResultMap", Blog.class, new ArrayList<ResultMapping>() {
+        final ResultMap resultMap = new ResultMap.Builder(config, "defaultResultMap", Blog.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -354,12 +420,18 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "title", "title", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "author.id", "author_id", registry.getTypeHandler(int.class)).build());
-                add(new ResultMapping.Builder(config, "author.username", "username", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "author.password", "password", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "author.email", "email", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "author.bio", "bio", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "title", "title",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "author.id", "author_id",
+                        registry.getTypeHandler(int.class)).build());
+                add(new ResultMapping.Builder(config, "author.username", "username",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "author.password", "password",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "author.email", "email",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "author.bio", "bio",
+                        registry.getTypeHandler(String.class)).build());
                 add(new ResultMapping.Builder(config, "posts", "id", registry.getTypeHandler(int.class)).javaType(List.class).nestedQueryId("selectPostsForBlog").build());
             }
         }).build();
@@ -375,18 +447,22 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectBlogByIdAndAuthor(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT b.id, b.author_id, b.title, a.username, a.password, a.email, a.bio" +
+        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT b.id, b.author_id, b.title, a" +
+                ".username, a.password, a.email, a.bio" +
                 " FROM blog b" +
                 " INNER JOIN author a ON b.author_id = a.id" +
                 " WHERE b.id = ? and a.id = ?");
         final ParameterMap parameterMap = new ParameterMap.Builder(config, "defaultParameterMap", Map.class,
                 new ArrayList<ParameterMapping>() {
                     {
-                        add(new ParameterMapping.Builder(config, "blogId", registry.getTypeHandler(int.class)).build());
-                        add(new ParameterMapping.Builder(config, "authorId", registry.getTypeHandler(int.class)).build());
+                        add(new ParameterMapping.Builder(config, "blogId",
+                                registry.getTypeHandler(int.class)).build());
+                        add(new ParameterMapping.Builder(config, "authorId",
+                                registry.getTypeHandler(int.class)).build());
                     }
                 }).build();
-        final ResultMap resultMap = new ResultMap.Builder(config, "defaultResultMap", Blog.class, new ArrayList<ResultMapping>() {
+        final ResultMap resultMap = new ResultMap.Builder(config, "defaultResultMap", Blog.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -394,17 +470,24 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "title", "title", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "author.id", "author_id", registry.getTypeHandler(int.class)).build());
-                add(new ResultMapping.Builder(config, "author.username", "username", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "author.password", "password", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "author.email", "email", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "author.bio", "bio", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "title", "title",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "author.id", "author_id",
+                        registry.getTypeHandler(int.class)).build());
+                add(new ResultMapping.Builder(config, "author.username", "username",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "author.password", "password",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "author.email", "email",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "author.bio", "bio",
+                        registry.getTypeHandler(String.class)).build());
                 add(new ResultMapping.Builder(config, "posts", "id", registry.getTypeHandler(int.class)).javaType(List.class).nestedQueryId("selectPostsForBlog").build());
             }
         }).build();
 
-        return new MappedStatement.Builder(config, "selectBlogByIdAndAuthor", sqlSource, SqlCommandType.SELECT)
+        return new MappedStatement.Builder(config, "selectBlogByIdAndAuthor", sqlSource,
+                SqlCommandType.SELECT)
                 .parameterMap(parameterMap)
                 .resultMaps(new ArrayList<ResultMap>() {
                     {
@@ -416,20 +499,23 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectPostsForBlogMappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT p.id, p.created_on, p.blog_id, p.section, p.subject, p.body, pt.tag_id," +
+        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT p.id, p.created_on, p.blog_id, p" +
+                ".section, p.subject, p.body, pt.tag_id," +
                 " t.name as tag_name, c.id as comment_id, c.name as comment_name, c.comment" +
                 " FROM post p" +
                 " INNER JOIN post_tag pt ON pt.post_id = p.id" +
                 " INNER JOIN tag t ON pt.tag_id = t.id" +
                 " LEFT OUTER JOIN comment c ON c.post_id = p.id" +
                 " WHERE p.blog_id = ?");
-        final ParameterMap parameterMap = new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
+        final ParameterMap parameterMap = new ParameterMap.Builder(config, "defaultParameterMap",
+                Author.class,
                 new ArrayList<ParameterMapping>() {
                     {
                         add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
                     }
                 }).build();
-        final ResultMap tagResultMap = new ResultMap.Builder(config, "tagResultMap", Tag.class, new ArrayList<ResultMapping>() {
+        final ResultMap tagResultMap = new ResultMap.Builder(config, "tagResultMap", Tag.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "tag_id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -437,10 +523,12 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "name", "tag_name", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "name", "tag_name",
+                        registry.getTypeHandler(String.class)).build());
             }
         }).build();
-        final ResultMap commentResultMap = new ResultMap.Builder(config, "commentResultMap", Comment.class, new ArrayList<ResultMapping>() {
+        final ResultMap commentResultMap = new ResultMap.Builder(config, "commentResultMap", Comment.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "comment_id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -448,13 +536,16 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "name", "comment_name", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "comment", "comment", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "name", "comment_name",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "comment", "comment",
+                        registry.getTypeHandler(String.class)).build());
             }
         }).build();
         config.addResultMap(tagResultMap);
         config.addResultMap(commentResultMap);
-        final ResultMap postResultMap = new ResultMap.Builder(config, "defaultResultMap", Post.class, new ArrayList<ResultMapping>() {
+        final ResultMap postResultMap = new ResultMap.Builder(config, "defaultResultMap", Post.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -462,11 +553,17 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "blog", "blog_id", registry.getTypeHandler(int.class)).javaType(Blog.class).nestedQueryId("selectBlogById").build());
-                add(new ResultMapping.Builder(config, "createdOn", "created_on", registry.getTypeHandler(Date.class)).build());
-                add(new ResultMapping.Builder(config, "section", "section", registry.getTypeHandler(Section.class)).build());
-                add(new ResultMapping.Builder(config, "subject", "subject", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "body", "body", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "blog", "blog_id",
+                        registry.getTypeHandler(int.class)).javaType(Blog.class).nestedQueryId(
+                                "selectBlogById").build());
+                add(new ResultMapping.Builder(config, "createdOn", "created_on",
+                        registry.getTypeHandler(Date.class)).build());
+                add(new ResultMapping.Builder(config, "section", "section",
+                        registry.getTypeHandler(Section.class)).build());
+                add(new ResultMapping.Builder(config, "subject", "subject",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "body", "body",
+                        registry.getTypeHandler(String.class)).build());
                 add(new ResultMapping.Builder(config, "tags").nestedResultMapId(tagResultMap.getId()).build());
                 add(new ResultMapping.Builder(config, "comments").nestedResultMapId(commentResultMap.getId()).build());
             }
@@ -482,20 +579,23 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectPostMappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT p.id, p.created_on, p.blog_id, p.section, p.subject, p.body, pt.tag_id," +
+        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT p.id, p.created_on, p.blog_id, p" +
+                ".section, p.subject, p.body, pt.tag_id," +
                 " t.name as tag_name, c.id as comment_id, c.name as comment_name, c.comment" +
                 " FROM post p" +
                 " LEFT OUTER JOIN post_tag pt ON pt.post_id = p.id" +
                 " LEFT OUTER JOIN tag t ON pt.tag_id = t.id" +
                 " LEFT OUTER JOIN comment c ON c.post_id = p.id" +
                 " WHERE p.id = ?");
-        final ParameterMap parameterMap = new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
+        final ParameterMap parameterMap = new ParameterMap.Builder(config, "defaultParameterMap",
+                Author.class,
                 new ArrayList<ParameterMapping>() {
                     {
                         add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
                     }
                 }).build();
-        final ResultMap tagResultMap = new ResultMap.Builder(config, "tagResultMap", Tag.class, new ArrayList<ResultMapping>() {
+        final ResultMap tagResultMap = new ResultMap.Builder(config, "tagResultMap", Tag.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "tag_id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -503,10 +603,12 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "name", "tag_name", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "name", "tag_name",
+                        registry.getTypeHandler(String.class)).build());
             }
         }).build();
-        final ResultMap commentResultMap = new ResultMap.Builder(config, "commentResultMap", Comment.class, new ArrayList<ResultMapping>() {
+        final ResultMap commentResultMap = new ResultMap.Builder(config, "commentResultMap", Comment.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "comment_id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -514,13 +616,16 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "name", "comment_name", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "comment", "comment", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "name", "comment_name",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "comment", "comment",
+                        registry.getTypeHandler(String.class)).build());
             }
         }).build();
         config.addResultMap(tagResultMap);
         config.addResultMap(commentResultMap);
-        final ResultMap postResultMap = new ResultMap.Builder(config, "", Post.class, new ArrayList<ResultMapping>() {
+        final ResultMap postResultMap = new ResultMap.Builder(config, "", Post.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -528,11 +633,17 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "blog", "blog_id", registry.getTypeHandler(int.class)).javaType(Blog.class).nestedQueryId("selectBlogById").build());
-                add(new ResultMapping.Builder(config, "createdOn", "created_on", registry.getTypeHandler(Date.class)).build());
-                add(new ResultMapping.Builder(config, "section", "section", registry.getTypeHandler(Section.class)).build());
-                add(new ResultMapping.Builder(config, "subject", "subject", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "body", "body", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "blog", "blog_id",
+                        registry.getTypeHandler(int.class)).javaType(Blog.class).nestedQueryId(
+                                "selectBlogById").build());
+                add(new ResultMapping.Builder(config, "createdOn", "created_on",
+                        registry.getTypeHandler(Date.class)).build());
+                add(new ResultMapping.Builder(config, "section", "section",
+                        registry.getTypeHandler(Section.class)).build());
+                add(new ResultMapping.Builder(config, "subject", "subject",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "body", "body",
+                        registry.getTypeHandler(String.class)).build());
                 add(new ResultMapping.Builder(config, "tags").nestedResultMapId(tagResultMap.getId()).build());
                 add(new ResultMapping.Builder(config, "comments").nestedResultMapId(commentResultMap.getId()).build());
             }
@@ -551,20 +662,23 @@ class ExecutorTestHelper {
 
     static MappedStatement prepareSelectPostWithBlogByAuthorMappedStatement(final Configuration config) {
         final TypeHandlerRegistry registry = config.getTypeHandlerRegistry();
-        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT p.id, p.created_on, p.blog_id, p.author_id, p.section, p.subject, p.body, pt.tag_id," +
+        final SqlSource sqlSource = new StaticSqlSource(config, "SELECT p.id, p.created_on, p.blog_id, p" +
+                ".author_id, p.section, p.subject, p.body, pt.tag_id," +
                 " t.name as tag_name, c.id as comment_id, c.name as comment_name, c.comment" +
                 " FROM post p" +
                 " LEFT OUTER JOIN post_tag pt ON pt.post_id = p.id" +
                 " LEFT OUTER JOIN tag t ON pt.tag_id = t.id" +
                 " LEFT OUTER JOIN comment c ON c.post_id = p.id" +
                 " WHERE p.id = ?");
-        final ParameterMap parameterMap = new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
+        final ParameterMap parameterMap = new ParameterMap.Builder(config, "defaultParameterMap",
+                Author.class,
                 new ArrayList<ParameterMapping>() {
                     {
                         add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(int.class)).build());
                     }
                 }).build();
-        final ResultMap tagResultMap = new ResultMap.Builder(config, "tagResultMap", Tag.class, new ArrayList<ResultMapping>() {
+        final ResultMap tagResultMap = new ResultMap.Builder(config, "tagResultMap", Tag.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "tag_id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -572,10 +686,12 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "name", "tag_name", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "name", "tag_name",
+                        registry.getTypeHandler(String.class)).build());
             }
         }).build();
-        final ResultMap commentResultMap = new ResultMap.Builder(config, "commentResultMap", Comment.class, new ArrayList<ResultMapping>() {
+        final ResultMap commentResultMap = new ResultMap.Builder(config, "commentResultMap", Comment.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "comment_id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -583,13 +699,16 @@ class ExecutorTestHelper {
                                 add(ResultFlag.ID);
                             }
                         }).build());
-                add(new ResultMapping.Builder(config, "name", "comment_name", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "comment", "comment", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "name", "comment_name",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "comment", "comment",
+                        registry.getTypeHandler(String.class)).build());
             }
         }).build();
         config.addResultMap(tagResultMap);
         config.addResultMap(commentResultMap);
-        final ResultMap postResultMap = new ResultMap.Builder(config, "postResultMap", Post.class, new ArrayList<ResultMapping>() {
+        final ResultMap postResultMap = new ResultMap.Builder(config, "postResultMap", Post.class,
+                new ArrayList<ResultMapping>() {
             {
                 add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(int.class))
                         .flags(new ArrayList<ResultFlag>() {
@@ -600,14 +719,20 @@ class ExecutorTestHelper {
 
                 add(new ResultMapping.Builder(config, "blog").nestedQueryId("selectBlogByIdAndAuthor").composites(new ArrayList<ResultMapping>() {
                     {
-                        add(new ResultMapping.Builder(config, "authorId", "author_id", registry.getTypeHandler(int.class)).build());
-                        add(new ResultMapping.Builder(config, "blogId", "blog_id", registry.getTypeHandler(int.class)).build());
+                        add(new ResultMapping.Builder(config, "authorId", "author_id",
+                                registry.getTypeHandler(int.class)).build());
+                        add(new ResultMapping.Builder(config, "blogId", "blog_id",
+                                registry.getTypeHandler(int.class)).build());
                     }
                 }).build());
-                add(new ResultMapping.Builder(config, "createdOn", "created_on", registry.getTypeHandler(Date.class)).build());
-                add(new ResultMapping.Builder(config, "section", "section", registry.getTypeHandler(Section.class)).build());
-                add(new ResultMapping.Builder(config, "subject", "subject", registry.getTypeHandler(String.class)).build());
-                add(new ResultMapping.Builder(config, "body", "body", registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "createdOn", "created_on",
+                        registry.getTypeHandler(Date.class)).build());
+                add(new ResultMapping.Builder(config, "section", "section",
+                        registry.getTypeHandler(Section.class)).build());
+                add(new ResultMapping.Builder(config, "subject", "subject",
+                        registry.getTypeHandler(String.class)).build());
+                add(new ResultMapping.Builder(config, "body", "body",
+                        registry.getTypeHandler(String.class)).build());
                 add(new ResultMapping.Builder(config, "tags").nestedResultMapId(tagResultMap.getId()).build());
                 add(new ResultMapping.Builder(config, "comments").nestedResultMapId(commentResultMap.getId()).build());
             }
@@ -629,7 +754,9 @@ class ExecutorTestHelper {
         final ResultMap rm = new ResultMap.Builder(config, "keyResultMap", Integer.class, new ArrayList<>())
                 .build();
 
-        MappedStatement kms = new MappedStatement.Builder(config, "insertAuthor!selectKey", new StaticSqlSource(config, "SELECT 123456 as id FROM SYSIBM.SYSDUMMY1"), SqlCommandType.SELECT)
+        MappedStatement kms = new MappedStatement.Builder(config, "insertAuthor!selectKey",
+                new StaticSqlSource(config, "SELECT 123456 as id FROM SYSIBM.SYSDUMMY1"),
+                SqlCommandType.SELECT)
                 .keyProperty("id")
                 .resultMaps(new ArrayList<ResultMap>() {
                     {
@@ -638,16 +765,25 @@ class ExecutorTestHelper {
                 })
                 .build();
         config.addMappedStatement(kms);
-        return new MappedStatement.Builder(config, "insertAuthor", new DynamicSqlSource(config, new TextSqlNode("INSERT INTO author (id,username,password,email,bio,favourite_section) values(#{id},#{username},#{password},#{email},#{bio:VARCHAR},#{favouriteSection})")), SqlCommandType.INSERT)
+        return new MappedStatement.Builder(config, "insertAuthor", new DynamicSqlSource(config,
+                new TextSqlNode("INSERT INTO author (id,username,password,email,bio,favourite_section) " +
+                        "values(#{id},#{username},#{password},#{email},#{bio:VARCHAR},#{favouriteSection})")), SqlCommandType.INSERT)
                 .parameterMap(
-                        new ParameterMap.Builder(config, "defaultParameterMap", Author.class, new ArrayList<ParameterMapping>() {
+                        new ParameterMap.Builder(config, "defaultParameterMap", Author.class,
+                                new ArrayList<ParameterMapping>() {
                             {
-                                add(new ParameterMapping.Builder(config, "id", registry.getTypeHandler(Integer.class)).build());
-                                add(new ParameterMapping.Builder(config, "username", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "password", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "email", registry.getTypeHandler(String.class)).build());
-                                add(new ParameterMapping.Builder(config, "bio", registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).build());
-                                add(new ParameterMapping.Builder(config, "favouriteSection", registry.getTypeHandler(Section.class)).jdbcType(JdbcType.VARCHAR).build());
+                                add(new ParameterMapping.Builder(config, "id",
+                                        registry.getTypeHandler(Integer.class)).build());
+                                add(new ParameterMapping.Builder(config, "username",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "password",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "email",
+                                        registry.getTypeHandler(String.class)).build());
+                                add(new ParameterMapping.Builder(config, "bio",
+                                        registry.getTypeHandler(String.class)).jdbcType(JdbcType.VARCHAR).build());
+                                add(new ParameterMapping.Builder(config, "favouriteSection",
+                                        registry.getTypeHandler(Section.class)).jdbcType(JdbcType.VARCHAR).build());
                             }
                         }).build())
                 .cache(authorCache)

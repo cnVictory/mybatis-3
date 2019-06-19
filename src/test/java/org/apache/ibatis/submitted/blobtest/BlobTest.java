@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.submitted.blobtest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.Reader;
-import java.util.List;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -29,17 +23,47 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class BlobTest {
     private static SqlSessionFactory sqlSessionFactory;
 
     @BeforeAll
     static void initDatabase() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/blobtest/MapperConfig.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/blobtest" +
+                "/MapperConfig.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 
         BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
                 "org/apache/ibatis/submitted/blobtest/CreateDB.sql");
+    }
+
+    static boolean blobsAreEqual(byte[] blob1, byte[] blob2) {
+        if (blob1 == null) {
+            return blob2 == null;
+        }
+
+        if (blob2 == null) {
+            return blob1 == null;
+        }
+
+        boolean rc = blob1.length == blob2.length;
+
+        if (rc) {
+            for (int i = 0; i < blob1.length; i++) {
+                if (blob1[i] != blob2[i]) {
+                    rc = false;
+                    break;
+                }
+            }
+        }
+
+        return rc;
     }
 
     @Test
@@ -88,28 +112,5 @@ class BlobTest {
             assertEquals(blobRecord.getId(), result.getId());
             assertTrue(blobsAreEqual(blobRecord.getBlob(), result.getBlob()));
         }
-    }
-
-    static boolean blobsAreEqual(byte[] blob1, byte[] blob2) {
-        if (blob1 == null) {
-            return blob2 == null;
-        }
-
-        if (blob2 == null) {
-            return blob1 == null;
-        }
-
-        boolean rc = blob1.length == blob2.length;
-
-        if (rc) {
-            for (int i = 0; i < blob1.length; i++) {
-                if (blob1[i] != blob2[i]) {
-                    rc = false;
-                    break;
-                }
-            }
-        }
-
-        return rc;
     }
 }

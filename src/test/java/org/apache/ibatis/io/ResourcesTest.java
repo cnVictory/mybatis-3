@@ -15,9 +15,9 @@
  */
 package org.apache.ibatis.io;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.apache.ibatis.BaseDataTest;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,9 +27,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
-import org.apache.ibatis.BaseDataTest;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ResourcesTest extends BaseDataTest {
 
@@ -87,13 +85,15 @@ class ResourcesTest extends BaseDataTest {
     @Test
     void shouldGetResourceAsFile() throws Exception {
         File file = Resources.getResourceAsFile(JPETSTORE_PROPERTIES);
-        assertTrue(file.getAbsolutePath().replace('\\', '/').endsWith("jpetstore/jpetstore-hsqldb.properties"));
+        assertTrue(file.getAbsolutePath().replace('\\', '/').endsWith("jpetstore/jpetstore-hsqldb" +
+                ".properties"));
     }
 
     @Test
     void shouldGetResourceAsFileWithClassloader() throws Exception {
         File file = Resources.getResourceAsFile(CLASS_LOADER, JPETSTORE_PROPERTIES);
-        assertTrue(file.getAbsolutePath().replace('\\', '/').endsWith("jpetstore/jpetstore-hsqldb.properties"));
+        assertTrue(file.getAbsolutePath().replace('\\', '/').endsWith("jpetstore/jpetstore-hsqldb" +
+                ".properties"));
     }
 
     @Test

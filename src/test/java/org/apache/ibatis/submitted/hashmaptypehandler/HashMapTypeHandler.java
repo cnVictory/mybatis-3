@@ -16,19 +16,20 @@
 
 package org.apache.ibatis.submitted.hashmaptypehandler;
 
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-
 public class HashMapTypeHandler extends BaseTypeHandler<HashMap<String, String>> {
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, HashMap<String, String> parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, HashMap<String, String> parameter,
+                                    JdbcType jdbcType)
             throws SQLException {
         ps.setString(i, parameter.get("name"));
     }

@@ -27,7 +27,8 @@
         <association property="teacher" column="teacherId"
                      select="org.apache.ibatis.submitted.extends_with_constructor.TeacherMapper.selectById"/>
     </resultMap>
-    <resultMap id="StudentMapWithTeacherMap" type="org.apache.ibatis.submitted.extends_with_constructor.Student"
+    <resultMap id="StudentMapWithTeacherMap"
+               type="org.apache.ibatis.submitted.extends_with_constructor.Student"
                extends="StudentMap">
         <association property="teacher"
                      resultMap="org.apache.ibatis.submitted.extends_with_constructor.TeacherMapper.TeacherMap"/>

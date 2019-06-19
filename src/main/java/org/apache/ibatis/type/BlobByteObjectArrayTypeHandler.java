@@ -16,11 +16,7 @@
 package org.apache.ibatis.type;
 
 import java.io.ByteArrayInputStream;
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * @author Clinton Begin
@@ -30,7 +26,8 @@ public class BlobByteObjectArrayTypeHandler extends BaseTypeHandler<Byte[]> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Byte[] parameter, JdbcType jdbcType)
             throws SQLException {
-        ByteArrayInputStream bis = new ByteArrayInputStream(ByteArrayUtils.convertToPrimitiveArray(parameter));
+        ByteArrayInputStream bis =
+                new ByteArrayInputStream(ByteArrayUtils.convertToPrimitiveArray(parameter));
         ps.setBinaryStream(i, bis, parameter.length);
     }
 

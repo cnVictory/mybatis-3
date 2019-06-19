@@ -31,7 +31,7 @@ public final class ProviderContext {
     /**
      * Constructor.
      *
-     * @param mapperType A mapper interface type that specified provider
+     * @param mapperType   A mapper interface type that specified provider
      * @param mapperMethod A mapper method that specified provider
      */
     ProviderContext(Class<?> mapperType, Method mapperMethod) {

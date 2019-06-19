@@ -16,21 +16,20 @@
 package org.apache.ibatis.io;
 
 import org.apache.ibatis.BaseDataTest;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 class ClassLoaderWrapperTest extends BaseDataTest {
 
-    private ClassLoaderWrapper wrapper;
-    private ClassLoader loader;
     private final String RESOURCE_NOT_FOUND = "some_resource_that_does_not_exist.properties";
     private final String CLASS_NOT_FOUND = "some.random.class.that.does.not.Exist";
     private final String CLASS_FOUND = "java.lang.Object";
+    private ClassLoaderWrapper wrapper;
+    private ClassLoader loader;
 
     @BeforeEach
     void beforeClassLoaderWrapperTest() {
@@ -45,7 +44,8 @@ class ClassLoaderWrapperTest extends BaseDataTest {
 
     @Test
     void classForNameNotFound() {
-        Assertions.assertThrows(ClassNotFoundException.class, () -> assertNotNull(wrapper.classForName(CLASS_NOT_FOUND)));
+        Assertions.assertThrows(ClassNotFoundException.class,
+                () -> assertNotNull(wrapper.classForName(CLASS_NOT_FOUND)));
     }
 
     @Test

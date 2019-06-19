@@ -27,20 +27,20 @@ public class PostLite {
         theId = aId;
     }
 
-    public void setId(PostLiteId aId) {
-        theId = aId;
-    }
-
-    public void setBlogId(int aBlogId) {
-        blogId = aBlogId;
-    }
-
     public PostLiteId getId() {
         return theId;
     }
 
+    public void setId(PostLiteId aId) {
+        theId = aId;
+    }
+
     public int getBlogId() {
         return blogId;
+    }
+
+    public void setBlogId(int aBlogId) {
+        blogId = aBlogId;
     }
 
     @Override

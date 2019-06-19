@@ -15,13 +15,13 @@
  */
 package org.apache.ibatis.submitted.typehandler;
 
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
 
 public class Product {
 
@@ -69,7 +69,8 @@ public class Product {
 
     public static class ProductIdTypeHandler extends BaseTypeHandler<ProductId> {
         @Override
-        public void setNonNullParameter(PreparedStatement ps, int i, ProductId parameter, JdbcType jdbcType) throws SQLException {
+        public void setNonNullParameter(PreparedStatement ps, int i, ProductId parameter,
+                                        JdbcType jdbcType) throws SQLException {
             ps.setInt(i, parameter.getValue());
         }
 
@@ -97,7 +98,8 @@ public class Product {
 
     public static class ConstantProductIdTypeHandler extends BaseTypeHandler<ProductId> {
         @Override
-        public void setNonNullParameter(PreparedStatement ps, int i, ProductId parameter, JdbcType jdbcType) throws SQLException {
+        public void setNonNullParameter(PreparedStatement ps, int i, ProductId parameter,
+                                        JdbcType jdbcType) throws SQLException {
         }
 
         @Override

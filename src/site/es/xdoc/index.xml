@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -30,8 +30,10 @@
             <subsection name="¿Qué es MyBatis?">
                 <p>
                     MyBatis es un framework de persistencia que soporta SQL, procedimientos
-                    almacenados y mapeos avanzados. MyBatis elimina casi todo el código JDBC, el establecimiento
-                    manual de los parámetros y la obtención de resultados. MyBatis puede configurarse con XML o
+                    almacenados y mapeos avanzados. MyBatis elimina casi todo el código JDBC, el
+                    establecimiento
+                    manual de los parámetros y la obtención de resultados. MyBatis puede configurarse con XML
+                    o
                     anotaciones y
                     permite mapear mapas y POJOs (Plain Old Java Objects) con registros de base de datos.
                 </p>
@@ -40,7 +42,8 @@
             <subsection name="Colabora para mejorar esta documentación...">
                 <p>
                     Si ves que hay alguna carencia en esta documentación o que falta
-                    alguna característica por documentar, te animamos a que lo investigues y la documentes tu mismo!
+                    alguna característica por documentar, te animamos a que lo investigues y la documentes tu
+                    mismo!
                 </p>
                 <p>
                     Las fuentes de este manual están disponibles en formato xdoc en el
@@ -48,7 +51,8 @@
                     Haz un fork, cambialas y envía un pull request.
                 </p>
                 <p>
-                    Eres el mejor candidato para documentar porque los lectores de esta documentación son gente como tú!
+                    Eres el mejor candidato para documentar porque los lectores de esta documentación son
+                    gente como tú!
                 </p>
             </subsection>
         </section>

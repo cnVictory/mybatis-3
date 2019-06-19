@@ -18,12 +18,12 @@ package org.apache.ibatis.submitted.lazy_properties;
 import java.util.List;
 
 public class User implements Cloneable {
+    public int setterCounter;
     private Integer id;
     private String name;
     private User lazy1;
     private User lazy2;
     private List<User> lazy3;
-    public int setterCounter;
 
     public Integer getId() {
         return id;

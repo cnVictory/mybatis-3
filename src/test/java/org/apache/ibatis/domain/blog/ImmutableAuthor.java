@@ -25,7 +25,8 @@ public class ImmutableAuthor implements Serializable {
     protected final String bio;
     protected final Section favouriteSection;
 
-    public ImmutableAuthor(int id, String username, String password, String email, String bio, Section section) {
+    public ImmutableAuthor(int id, String username, String password, String email, String bio,
+                           Section section) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -70,7 +71,8 @@ public class ImmutableAuthor implements Serializable {
         if (email != null ? !email.equals(author.email) : author.email != null) return false;
         if (password != null ? !password.equals(author.password) : author.password != null) return false;
         if (username != null ? !username.equals(author.username) : author.username != null) return false;
-        if (favouriteSection != null ? !favouriteSection.equals(author.favouriteSection) : author.favouriteSection != null)
+        if (favouriteSection != null ? !favouriteSection.equals(author.favouriteSection) :
+                author.favouriteSection != null)
             return false;
 
         return true;

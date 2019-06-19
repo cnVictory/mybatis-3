@@ -37,7 +37,8 @@ class ConfigurationTest {
         Properties props = new Properties();
         props.setProperty(PropertyParser.KEY_ENABLE_DEFAULT_VALUE, "true");
 
-        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/global_variables_defaults/mybatis-config.xml");
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/global_variables_defaults/mybatis-config.xml");
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, props);
         Configuration configuration = factory.getConfiguration();
 
@@ -60,7 +61,8 @@ class ConfigurationTest {
         props.setProperty("productName.hsql", "Hsql");
         props.setProperty("objectFactory.name", "custom");
 
-        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/global_variables_defaults/mybatis-config.xml");
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/global_variables_defaults/mybatis-config.xml");
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, props);
         Configuration configuration = factory.getConfiguration();
 

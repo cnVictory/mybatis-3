@@ -15,16 +15,13 @@
  */
 package org.apache.ibatis.submitted.cache;
 
-import java.io.Reader;
-import java.lang.reflect.Field;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.Property;
+import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.cache.CacheException;
-import org.apache.ibatis.annotations.CacheNamespaceRef;
-import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -33,7 +30,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.googlecode.catchexception.apis.BDDCatchException.*;
+import java.io.Reader;
+import java.lang.reflect.Field;
+
+import static com.googlecode.catchexception.apis.BDDCatchException.caughtException;
+import static com.googlecode.catchexception.apis.BDDCatchException.when;
 import static org.assertj.core.api.BDDAssertions.then;
 
 // issue #524
@@ -44,7 +45,8 @@ class CacheTest {
     @BeforeEach
     void setUp() throws Exception {
         // create a SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/cache/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/cache/mybatis" +
+                "-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 
@@ -252,7 +254,8 @@ class CacheTest {
 
     @Test
     void shouldApplyCustomCacheProperties() {
-        CustomCache customCache = unwrap(sqlSessionFactory.getConfiguration().getCache(CustomCacheMapper.class.getName()));
+        CustomCache customCache =
+                unwrap(sqlSessionFactory.getConfiguration().getCache(CustomCacheMapper.class.getName()));
         Assertions.assertEquals("bar", customCache.getStringValue());
         Assertions.assertEquals(1, customCache.getIntegerValue().intValue());
         Assertions.assertEquals(2, customCache.getIntValue());
@@ -290,7 +293,8 @@ class CacheTest {
         when(sqlSessionFactory.getConfiguration().getMapperRegistry())
                 .addMapper(InvalidCacheNamespaceRefEmptyMapper.class);
         then(caughtException()).isInstanceOf(BuilderException.class)
-                .hasMessage("Should be specified either value() or name() attribute in the @CacheNamespaceRef");
+                .hasMessage("Should be specified either value() or name() attribute in the " +
+                        "@CacheNamespaceRef");
     }
 
     private CustomCache unwrap(Cache cache) {

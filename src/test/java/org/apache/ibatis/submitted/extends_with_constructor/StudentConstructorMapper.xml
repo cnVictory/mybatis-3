@@ -36,7 +36,8 @@
         <association property="teacher"
                      resultMap="org.apache.ibatis.submitted.extends_with_constructor.TeacherMapper.TeacherMap"/>
     </resultMap>
-    <resultMap id="StudentNoNameMap" type="org.apache.ibatis.submitted.extends_with_constructor.StudentConstructor"
+    <resultMap id="StudentNoNameMap"
+               type="org.apache.ibatis.submitted.extends_with_constructor.StudentConstructor"
                extends="StudentConstructorMap">
         <constructor>
             <idArg column="id" javaType="int"/>

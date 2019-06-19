@@ -151,7 +151,8 @@ public class OurSqlBuilder {
     }
 
     public String buildSelectByIdProviderContextOnly(ProviderContext context) {
-        final boolean containsLogicalDelete = context.getMapperMethod().getAnnotation(BaseMapper.ContainsLogicalDelete.class) != null;
+        final boolean containsLogicalDelete =
+                context.getMapperMethod().getAnnotation(BaseMapper.ContainsLogicalDelete.class) != null;
         final String tableName = context.getMapperType().getAnnotation(BaseMapper.Meta.class).tableName();
         return new SQL() {{
             SELECT("*");
@@ -164,7 +165,8 @@ public class OurSqlBuilder {
     }
 
     public String buildSelectByNameOneParamAndProviderContext(ProviderContext context, final String name) {
-        final boolean containsLogicalDelete = context.getMapperMethod().getAnnotation(BaseMapper.ContainsLogicalDelete.class) != null;
+        final boolean containsLogicalDelete =
+                context.getMapperMethod().getAnnotation(BaseMapper.ContainsLogicalDelete.class) != null;
         final String tableName = context.getMapperType().getAnnotation(BaseMapper.Meta.class).tableName();
         return new SQL() {{
             SELECT("*");
@@ -179,7 +181,8 @@ public class OurSqlBuilder {
     }
 
     public String buildSelectByIdAndNameMultipleParamAndProviderContextWithAtParam(@Param("id") final Integer id, ProviderContext context, @Param("name") final String name) {
-        final boolean containsLogicalDelete = context.getMapperMethod().getAnnotation(BaseMapper.ContainsLogicalDelete.class) != null;
+        final boolean containsLogicalDelete =
+                context.getMapperMethod().getAnnotation(BaseMapper.ContainsLogicalDelete.class) != null;
         final String tableName = context.getMapperType().getAnnotation(BaseMapper.Meta.class).tableName();
         return new SQL() {{
             SELECT("*");
@@ -196,8 +199,10 @@ public class OurSqlBuilder {
         }}.toString();
     }
 
-    public String buildSelectByIdAndNameMultipleParamAndProviderContext(final Integer id, final String name, ProviderContext context) {
-        final boolean containsLogicalDelete = context.getMapperMethod().getAnnotation(BaseMapper.ContainsLogicalDelete.class) != null;
+    public String buildSelectByIdAndNameMultipleParamAndProviderContext(final Integer id, final String name
+            , ProviderContext context) {
+        final boolean containsLogicalDelete =
+                context.getMapperMethod().getAnnotation(BaseMapper.ContainsLogicalDelete.class) != null;
         final String tableName = context.getMapperType().getAnnotation(BaseMapper.Meta.class).tableName();
         return new SQL() {{
             SELECT("*");

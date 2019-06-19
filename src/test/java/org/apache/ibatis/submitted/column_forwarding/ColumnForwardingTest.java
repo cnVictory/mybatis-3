@@ -15,8 +15,6 @@
  */
 package org.apache.ibatis.submitted.column_forwarding;
 
-import java.io.Reader;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -26,6 +24,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+
 class ColumnForwardingTest {
 
     private static SqlSessionFactory sqlSessionFactory;
@@ -33,7 +33,8 @@ class ColumnForwardingTest {
     @BeforeAll
     static void setUp() throws Exception {
         // create a SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/column_forwarding/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/column_forwarding" +
+                "/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

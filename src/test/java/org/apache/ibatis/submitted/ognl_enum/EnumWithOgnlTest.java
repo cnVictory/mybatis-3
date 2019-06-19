@@ -15,9 +15,6 @@
  */
 package org.apache.ibatis.submitted.ognl_enum;
 
-import java.io.Reader;
-import java.util.List;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -28,13 +25,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+import java.util.List;
+
 class EnumWithOgnlTest {
 
     private static SqlSessionFactory sqlSessionFactory;
 
     @BeforeAll
     static void initDatabase() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/ognl_enum/ibatisConfig.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/ognl_enum" +
+                "/ibatisConfig.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 
@@ -82,7 +83,8 @@ class EnumWithOgnlTest {
     void testEnumWithOgnlDirectorNameAttributeWithInterface() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
-            List<Person> persons = personMapper.selectAllByTypeNameAttributeWithInterface(() -> Type.DIRECTOR);
+            List<Person> persons =
+                    personMapper.selectAllByTypeNameAttributeWithInterface(() -> Type.DIRECTOR);
             Assertions.assertEquals(1, persons.size(), "Persons must contain 1 persons");
         }
     }

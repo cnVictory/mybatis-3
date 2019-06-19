@@ -15,23 +15,19 @@
  */
 package org.apache.ibatis.builder.xml;
 
-import java.util.List;
-import java.util.Locale;
-
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.executor.keygen.NoKeyGenerator;
 import org.apache.ibatis.executor.keygen.SelectKeyGenerator;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ResultSetType;
-import org.apache.ibatis.mapping.SqlCommandType;
-import org.apache.ibatis.mapping.SqlSource;
-import org.apache.ibatis.mapping.StatementType;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Clinton Begin
@@ -42,11 +38,13 @@ public class XMLStatementBuilder extends BaseBuilder {
     private final XNode context;
     private final String requiredDatabaseId;
 
-    public XMLStatementBuilder(Configuration configuration, MapperBuilderAssistant builderAssistant, XNode context) {
+    public XMLStatementBuilder(Configuration configuration, MapperBuilderAssistant builderAssistant,
+                               XNode context) {
         this(configuration, builderAssistant, context, null);
     }
 
-    public XMLStatementBuilder(Configuration configuration, MapperBuilderAssistant builderAssistant, XNode context, String databaseId) {
+    public XMLStatementBuilder(Configuration configuration, MapperBuilderAssistant builderAssistant,
+                               XNode context, String databaseId) {
         super(configuration);
         this.builderAssistant = builderAssistant;
         this.context = context;
@@ -94,7 +92,8 @@ public class XMLStatementBuilder extends BaseBuilder {
         }
 
         SqlSource sqlSource = langDriver.createSqlSource(configuration, context, parameterTypeClass);
-        StatementType statementType = StatementType.valueOf(context.getStringAttribute("statementType", StatementType.PREPARED.toString()));
+        StatementType statementType = StatementType.valueOf(context.getStringAttribute("statementType",
+                StatementType.PREPARED.toString()));
         Integer fetchSize = context.getIntAttribute("fetchSize");
         Integer timeout = context.getIntAttribute("timeout");
         String parameterMap = context.getStringAttribute("parameterMap");
@@ -116,13 +115,15 @@ public class XMLStatementBuilder extends BaseBuilder {
     private void processSelectKeyNodes(String id, Class<?> parameterTypeClass, LanguageDriver langDriver) {
         List<XNode> selectKeyNodes = context.evalNodes("selectKey");
         if (configuration.getDatabaseId() != null) {
-            parseSelectKeyNodes(id, selectKeyNodes, parameterTypeClass, langDriver, configuration.getDatabaseId());
+            parseSelectKeyNodes(id, selectKeyNodes, parameterTypeClass, langDriver,
+                    configuration.getDatabaseId());
         }
         parseSelectKeyNodes(id, selectKeyNodes, parameterTypeClass, langDriver, null);
         removeSelectKeyNodes(selectKeyNodes);
     }
 
-    private void parseSelectKeyNodes(String parentId, List<XNode> list, Class<?> parameterTypeClass, LanguageDriver langDriver, String skRequiredDatabaseId) {
+    private void parseSelectKeyNodes(String parentId, List<XNode> list, Class<?> parameterTypeClass,
+                                     LanguageDriver langDriver, String skRequiredDatabaseId) {
         for (XNode nodeToHandle : list) {
             String id = parentId + SelectKeyGenerator.SELECT_KEY_SUFFIX;
             String databaseId = nodeToHandle.getStringAttribute("databaseId");
@@ -132,10 +133,12 @@ public class XMLStatementBuilder extends BaseBuilder {
         }
     }
 
-    private void parseSelectKeyNode(String id, XNode nodeToHandle, Class<?> parameterTypeClass, LanguageDriver langDriver, String databaseId) {
+    private void parseSelectKeyNode(String id, XNode nodeToHandle, Class<?> parameterTypeClass,
+                                    LanguageDriver langDriver, String databaseId) {
         String resultType = nodeToHandle.getStringAttribute("resultType");
         Class<?> resultTypeClass = resolveClass(resultType);
-        StatementType statementType = StatementType.valueOf(nodeToHandle.getStringAttribute("statementType", StatementType.PREPARED.toString()));
+        StatementType statementType = StatementType.valueOf(nodeToHandle.getStringAttribute("statementType"
+                , StatementType.PREPARED.toString()));
         String keyProperty = nodeToHandle.getStringAttribute("keyProperty");
         String keyColumn = nodeToHandle.getStringAttribute("keyColumn");
         boolean executeBefore = "BEFORE".equals(nodeToHandle.getStringAttribute("order", "AFTER"));

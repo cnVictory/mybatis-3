@@ -14,6 +14,8 @@
  * limitations under the License.
  * <p>
  * Parses XML files to create a Configuration
+ * <p>
+ * Parses XML files to create a Configuration
  */
 /**
  * Parses XML files to create a Configuration

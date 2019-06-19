@@ -15,18 +15,21 @@
  */
 package org.apache.ibatis.type;
 
-import java.sql.CallableStatement;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 /**
- * @since 3.4.5
  * @author Tomas Rohovsky
+ * @since 3.4.5
  */
 public class LocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
+
+    private static LocalDate getLocalDate(Date date) {
+        if (date != null) {
+            return date.toLocalDate();
+        }
+        return null;
+    }
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, LocalDate parameter, JdbcType jdbcType)
@@ -50,12 +53,5 @@ public class LocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
     public LocalDate getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         Date date = cs.getDate(columnIndex);
         return getLocalDate(date);
-    }
-
-    private static LocalDate getLocalDate(Date date) {
-        if (date != null) {
-            return date.toLocalDate();
-        }
-        return null;
     }
 }

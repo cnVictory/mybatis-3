@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -96,7 +96,8 @@
 </select>]]></source>
 
                 <p>
-                    これは selectPerson というステートメントで、int （または Integer）型の引数を取り、列名を key、値を value として保持する HashMap を返します。
+                    これは selectPerson というステートメントで、int （または Integer）型の引数を取り、列名を key、値を value として保持する HashMap
+                    を返します。
                 </p>
 
                 <p>
@@ -116,7 +117,8 @@ PreparedStatement ps = conn.prepareStatement(selectPerson);
 ps.setInt(1,id);]]></source>
 
                 <p>
-                    JDBC 単体で select 結果を展開してオブジェクトのインスタンスにマップするためにはもっと多くのコードが必要ですが、MyBatis を使えばそうしたコードは書かずに済みます。
+                    JDBC 単体で select 結果を展開してオブジェクトのインスタンスにマップするためにはもっと多くのコードが必要ですが、MyBatis
+                    を使えばそうしたコードは書かずに済みます。
                     パラメーターと結果のマッピングについては他にも知っておくべきことが数多くあります。
                     これらについては、後ほどそれぞれに独立した章を用意して説明します。
                 </p>
@@ -193,7 +195,8 @@ ps.setInt(1,id);]]></source>
                         <tr>
                             <td>flushCache</td>
                             <td>
-                                true を指定した場合、ステートメント実行時にローカルキャッシュおよび２次キャッシュがフラッシュ（＝クリア）されます。select ステートメントの場合、デフォルト値は <code>
+                                true を指定した場合、ステートメント実行時にローカルキャッシュおよび２次キャッシュがフラッシュ（＝クリア）されます。select
+                                ステートメントの場合、デフォルト値は <code>
                                 false
                             </code> です。
                             </td>
@@ -201,7 +204,8 @@ ps.setInt(1,id);]]></source>
                         <tr>
                             <td>useCache</td>
                             <td>
-                                true を指定した場合、ステートメントの結果が２次キャッシュに保存されます。select ステートメントの場合、デフォルト値は <code>true</code> です。
+                                true を指定した場合、ステートメントの結果が２次キャッシュに保存されます。select ステートメントの場合、デフォルト値は <code>true
+                            </code> です。
                             </td>
                         </tr>
                         <tr>
@@ -219,9 +223,11 @@ ps.setInt(1,id);]]></source>
                         <tr>
                             <td>statementType</td>
                             <td>
-                                MyBatis がクエリを実行する際に使用する Statement の種類を指定します。設定可能な値は <code>STATEMENT</code>, <code>
+                                MyBatis がクエリを実行する際に使用する Statement の種類を指定します。設定可能な値は <code>
+                                STATEMENT</code>, <code>
                                 PREPARED</code>, <code>CALLABLE</code> で、それぞれ <code>Statement</code>, <code>
-                                PreparedStatement</code>, <code>CallableStatement</code> が使用されます。デフォルトは <code>PREPARED
+                                PreparedStatement</code>, <code>CallableStatement</code> が使用されます。デフォルトは <code>
+                                PREPARED
                             </code> です。
                             </td>
                         </tr>
@@ -239,7 +245,8 @@ ps.setInt(1,id);]]></source>
                             <td>
                                 <code>databaseId</code>
                             </td>
-                            <td>databaseIdProvider が設定されている場合、MyBatis は定義されているステートメントの中で <code>databaseId</code> 属性が指定されていないステートメントおよび現在の設定と一致する <code>
+                            <td>databaseIdProvider が設定されている場合、MyBatis は定義されているステートメントの中で <code>databaseId
+                            </code> 属性が指定されていないステートメントおよび現在の設定と一致する <code>
                                 databaseId
                             </code> 属性を持ったステートメントをロードします。
                                 同じステートメントで、<code>databaseId</code> 属性が指定されているものと指定されていないものが両方定義されていた場合、指定がないステートメントは無視されます。
@@ -258,7 +265,8 @@ ps.setInt(1,id);]]></source>
                             <td>
                                 <code>resultSets</code>
                             </td>
-                            <td>複数の ResultSet を利用する場合にのみ有効です。ステートメントが返す ResultSet にそれぞれ任意の名前を付けてリストアップします。名前はカンマで区切ります。
+                            <td>複数の ResultSet を利用する場合にのみ有効です。ステートメントが返す ResultSet
+                                にそれぞれ任意の名前を付けてリストアップします。名前はカンマで区切ります。
                             </td>
                         </tr>
                     </tbody>
@@ -321,14 +329,16 @@ ps.setInt(1,id);]]></source>
                             </td>
                             <td>
                                 <strike>
-                                    別の場所で定義されている parameterMap を参照する非推奨の方法。インラインパラメーターマッピングと parameterType 属性を使用してください。
+                                    別の場所で定義されている parameterMap を参照する非推奨の方法。インラインパラメーターマッピングと parameterType
+                                    属性を使用してください。
                                 </strike>
                             </td>
                         </tr>
                         <tr>
                             <td>flushCache</td>
                             <td>
-                                true を指定した場合、ステートメント実行時にローカルキャッシュおよび２次キャッシュがフラッシュ（＝クリア）されます。insert, update, delete
+                                true を指定した場合、ステートメント実行時にローカルキャッシュおよび２次キャッシュがフラッシュ（＝クリア）されます。insert, update,
+                                delete
                                 ステートメントの場合、デフォルト値は <code>true</code> です。
                             </td>
                         </tr>
@@ -341,14 +351,16 @@ ps.setInt(1,id);]]></source>
                         <tr>
                             <td>statementType</td>
                             <td>
-                                MyBatis がクエリを実行する際に使用する Statement の種類を指定します。設定可能な値は STATEMENT, PREPARED, CALLABLE で、それぞれ
+                                MyBatis がクエリを実行する際に使用する Statement の種類を指定します。設定可能な値は STATEMENT, PREPARED,
+                                CALLABLE で、それぞれ
                                 Statement, PreparedStatement, CallableStatement が使用されます。デフォルトは PREPARED です。
                             </td>
                         </tr>
                         <tr>
                             <td>useGeneratedKeys</td>
                             <td>（insert, update のみ）MyBatis に対して、JDBC の getGeneratedKeys
-                                メソッドを使ってデータベース側で自動生成されたキーを取得するよう指示します（例えば MySQL や SQL Server のような RDBMS における auto
+                                メソッドを使ってデータベース側で自動生成されたキーを取得するよう指示します（例えば MySQL や SQL Server のような RDBMS における
+                                auto
                                 increment が設定された列の値が取得できます）。デフォルト値は false です。
                             </td>
                         </tr>
@@ -369,7 +381,8 @@ ps.setInt(1,id);]]></source>
                             <td>
                                 <code>databaseId</code>
                             </td>
-                            <td>databaseIdProvider が設定されている場合、MyBatis は定義されているステートメントの中で <code>databaseId</code> 属性が指定されていないステートメントおよび現在の設定と一致する <code>
+                            <td>databaseIdProvider が設定されている場合、MyBatis は定義されているステートメントの中で <code>databaseId
+                            </code> 属性が指定されていないステートメントおよび現在の設定と一致する <code>
                                 databaseId
                             </code> 属性を持ったステートメントをロードします。
                                 同じステートメントで、<code>databaseId</code> 属性が指定されているものと指定されていないものが両方定義されていた場合、指定がないステートメントは無視されます。
@@ -484,7 +497,8 @@ ps.setInt(1,id);]]></source>
                         <tr>
                             <td>order</td>
                             <td>
-                                BEFORE または AFTER が指定可能です。BEFORE を指定した場合、最初に selectKey を実行して keyProperty に取得したキーを設定し、その後で
+                                BEFORE または AFTER が指定可能です。BEFORE を指定した場合、最初に selectKey を実行して keyProperty
+                                に取得したキーを設定し、その後で
                                 insert を実行します。
                                 AFTER を指定した場合、先に insert を実行してから selectKey ステートメントを実行します。
                                 後者は、Oracle のように insert ステートメントの中に sequence の呼び出しを含むようなケースで良く使われます。
@@ -493,7 +507,8 @@ ps.setInt(1,id);]]></source>
                         <tr>
                             <td>statementType</td>
                             <td>
-                                select などと同じく Statement の種類を指定することができます。設定可能な値は STATEMENT, PREPARED, CALLABLE で、それぞれ
+                                select などと同じく Statement の種類を指定することができます。設定可能な値は STATEMENT, PREPARED, CALLABLE
+                                で、それぞれ
                                 Statement, PreparedStatement, CallableStatement が使用されます。
                             </td>
                         </tr>
@@ -525,7 +540,8 @@ ps.setInt(1,id);]]></source>
 </select>]]></source>
 
                 <p>
-                    呼び出し側の property 要素で指定された値を、sql 要素に内包された include 要素の refid 属性や property 要素の value 属性として指定することも可能です。
+                    呼び出し側の property 要素で指定された値を、sql 要素に内包された include 要素の refid 属性や property 要素の value
+                    属性として指定することも可能です。
                     <br/>
                     例：
                 </p>
@@ -563,7 +579,8 @@ ps.setInt(1,id);]]></source>
 </select>]]></source>
 
                 <p>
-                    上記は、名前を指定してパラメーターを参照するごく簡単な例です。parameterType が int と指定されていますので、好きな名前を使って参照することができます。プリミティブ型や
+                    上記は、名前を指定してパラメーターを参照するごく簡単な例です。parameterType が int
+                    と指定されていますので、好きな名前を使って参照することができます。プリミティブ型や
                     Integer, String などの単純型はプロパティを持たないので、引数の参照はパラメーターの値そのものに置き換えられます。
                     <br/>
                     パラメーターとして複合型を渡した場合はもう少し複雑です。次の例を見てください。
@@ -575,7 +592,8 @@ ps.setInt(1,id);]]></source>
 </insert>]]></source>
 
                 <p>
-                    User 型のオブジェクトがパラメーターとしてステートメントに渡されると、id, username, password の各プロパティが参照され、その値が PreparedStatement
+                    User 型のオブジェクトがパラメーターとしてステートメントに渡されると、id, username, password の各プロパティが参照され、その値が
+                    PreparedStatement
                     の引数として渡されます。
                 </p>
 
@@ -590,7 +608,8 @@ ps.setInt(1,id);]]></source>
                 <source><![CDATA[#{property,javaType=int,jdbcType=NUMERIC}]]></source>
 
                 <p>
-                    他と同様、ほとんどの場合 javaType は自動的に検出されますが、例外は HashMap です。パラメーターとして HashMap を使う場合は、正しい TypeHandler が使用されるよう
+                    他と同様、ほとんどの場合 javaType は自動的に検出されますが、例外は HashMap です。パラメーターとして HashMap を使う場合は、正しい TypeHandler
+                    が使用されるよう
                     javaType を指定してください。
                 </p>
 
@@ -619,8 +638,10 @@ ps.setInt(1,id);]]></source>
                 <p>
                     最後になりますが、mode 属性で IN, OUT, INOUT パラメーターを指定することができます。
                     OUT または INOUT の場合は、パラメーターオブジェクトのプロパティの値が変更されます。
-                    mode が OUT または INOUT で jdbcType が CURSOR（Oracle の REFCURSOR）の場合は、ResultSet とパラメーターの型をマッピングする
-                    resultMap を指定する必要があります。ただし jdbcType として CURSOR を指定した場合 javaType には自動的に ResultSet が設定されますので、javaType
+                    mode が OUT または INOUT で jdbcType が CURSOR（Oracle の REFCURSOR）の場合は、ResultSet
+                    とパラメーターの型をマッピングする
+                    resultMap を指定する必要があります。ただし jdbcType として CURSOR を指定した場合 javaType には自動的に ResultSet
+                    が設定されますので、javaType
                     の指定は省略可能です。
                 </p>
 
@@ -944,7 +965,8 @@ public class User {
                         <code>association</code>
                         – 複雑型のアソシエーションを定義します。多くのマッピングはこのタイプに当てはまります。
                         <ul>
-                            <li>ネストされた Result Map – アソシエーション自身も resultMap として記述します。他で定義されている resultMap を参照することもできます。
+                            <li>ネストされた Result Map – アソシエーション自身も resultMap として記述します。他で定義されている resultMap
+                                を参照することもできます。
                             </li>
                         </ul>
                     </li>
@@ -952,7 +974,9 @@ public class User {
                         <code>collection</code>
                         – 複雑型のコレクションを定義します。
                         <ul>
-                            <li>ネストされた Result Map – コレクション自身も resultMap として記述します。他で定義されている resultMap を参照することもできます。</li>
+                            <li>ネストされた Result Map – コレクション自身も resultMap として記述します。他で定義されている resultMap
+                                を参照することもできます。
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -1050,7 +1074,8 @@ public class User {
                         <tr>
                             <td>property</td>
                             <td>
-                                結果列の値をマップするフィールドまたはプロパティを指定します。名前が一致する JavaBean プロパティがあれば、そのプロパティが使われます。もしなければ、MyBatis
+                                結果列の値をマップするフィールドまたはプロパティを指定します。名前が一致する JavaBean
+                                プロパティがあれば、そのプロパティが使われます。もしなければ、MyBatis
                                 は次に名前が一致するフィールドを探します。
                                 どちらの場合も、ドット表記を使って複雑型のプロパティを指定することができます。
                                 例えば、 "username" のような単純なプロパティを指定することもできますし、 "address.street.number"
@@ -1076,7 +1101,8 @@ public class User {
                             <td>jdbcType</td>
                             <td>
                                 サポートされている JDBC データ型（この後のテーブルにリストがあります）を指定します。
-                                JDBC データ型の指定が必須となるのは、insert, update, delete の各ステートメントで null が許可されている列を指定した場合だけです。
+                                JDBC データ型の指定が必須となるのは、insert, update, delete の各ステートメントで null
+                                が許可されている列を指定した場合だけです。
                                 これは JDBC の仕様で MyBatis の仕様ではありません。
                                 ですから、直接 JDBC を使ったコードを書く場合でも null が許可されている列に対しては、やはりデータ型を指定する必要があります。
                             </td>
@@ -1144,7 +1170,8 @@ public class User {
                 <h4>constructor</h4>
 
                 <p>
-                    ほとんどの DTO (Data Transfer Object) やドメインモデルではプロパティを使って値を設定することができますが、時にはイミュータブルなクラスを使いたい場合もあるかも知れません。
+                    ほとんどの DTO (Data Transfer Object)
+                    やドメインモデルではプロパティを使って値を設定することができますが、時にはイミュータブルなクラスを使いたい場合もあるかも知れません。
                     通常更新されることのない参照用データを含むテーブルなどはイミュータブルクラスに向いています。
                     コンストラクタインジェクションを使うとインスタンス化の際に値を設定することができるので、カプセル化の妨げとなる public メソッドの定義が不要となります。
                     MyBatis は private として定義されているプロパティやフィールドもサポートしていますが、コンストラクタインジェクションを好む人もいると思います。
@@ -1165,7 +1192,8 @@ public class User {
 }]]></source>
 
                 <p>コンストラクタ経由で値をマップするためには、指定された引数にマッチするコンストラクタを特定する必要があります。
-                    下記の例では、MyBatis は３つの引数 <code>java.lang.Integer</code>, <code>java.lang.String</code>, <code>int
+                    下記の例では、MyBatis は３つの引数 <code>java.lang.Integer</code>, <code>java.lang.String</code>, <code>
+                        int
                     </code> をこの順番で持つコンストラクタを探します。
                 </p>
 
@@ -1224,7 +1252,8 @@ public class User {
                             <td>jdbcType</td>
                             <td>
                                 サポートされている JDBC データ型（この後のテーブルにリストがあります）を指定します。
-                                JDBC データ型の指定が必須となるのは、insert, update, delete の各ステートメントで null が許可されている列を指定した場合だけです。
+                                JDBC データ型の指定が必須となるのは、insert, update, delete の各ステートメントで null
+                                が許可されている列を指定した場合だけです。
                                 これは JDBC の仕様で MyBatis の仕様ではありません。
                                 ですから、直接 JDBC を使ったコードを書く場合でも null が許可されている列に対しては、やはりデータ型を指定する必要があります。
                             </td>
@@ -1250,9 +1279,11 @@ public class User {
                         <tr>
                             <td>resultMap</td>
                             <td>
-                                別の場所で定義されている ResultMap の ID を指定します。ネストされた結果をこのプロパティにマップする際、指定した ResultMap が使われます。
+                                別の場所で定義されている ResultMap の ID を指定します。ネストされた結果をこのプロパティにマップする際、指定した ResultMap
+                                が使われます。
                                 この方法は、別の select 文を実行する方法の代わりに使うことができ、複数のテーブルを結合して取得した ResultSet をマップすることができます。
-                                このような ResultSet には重複や繰り返しが含まれているため、正しく分解してからネストされたオブジェクトグラフにマップしてやる必要がありますが、MyBatis
+                                このような ResultSet
+                                には重複や繰り返しが含まれているため、正しく分解してからネストされたオブジェクトグラフにマップしてやる必要がありますが、MyBatis
                                 ではこの処理を実現するため Result Map を連結できるようになっています。
                                 <br/>
                                 詳細は association 要素の説明を参照してください。
@@ -1281,7 +1312,8 @@ public class User {
                     association 要素は "has-one" タイプのリレーションシップを扱います。
                     例えば、上で出てきたサンプルの Blog は１つの Author を持っています。
                     アソシエーションは、他の result とほぼ同じように動作します。
-                    値を設定するプロパティ、値の取得元となる列、プロパティの javaType （ほとんどの場合自動で検出可能）、必要なら jdbcType、またデフォルトのタイプハンドラーをオーバーライドしたい場合は
+                    値を設定するプロパティ、値の取得元となる列、プロパティの javaType （ほとんどの場合自動で検出可能）、必要なら
+                    jdbcType、またデフォルトのタイプハンドラーをオーバーライドしたい場合は
                     typeHandler を指定します。
                 </p>
 
@@ -1314,7 +1346,8 @@ public class User {
                         <tr>
                             <td>property</td>
                             <td>
-                                結果列の値をマップするフィールドまたはプロパティを指定します。名前が一致する JavaBean プロパティがあれば、そのプロパティが使われます。もしなければ、MyBatis
+                                結果列の値をマップするフィールドまたはプロパティを指定します。名前が一致する JavaBean
+                                プロパティがあれば、そのプロパティが使われます。もしなければ、MyBatis
                                 は次に名前が一致するフィールドを探します。
                                 どちらの場合も、ドット表記を使って複雑型のプロパティを指定することができます。
                                 例えば、 "username" のような単純なプロパティを指定することもできますし、 "address.street.number"
@@ -1333,7 +1366,8 @@ public class User {
                             <td>jdbcType</td>
                             <td>
                                 サポートされている JDBC データ型（この後のテーブルにリストがあります）を指定します。
-                                JDBC データ型の指定が必須となるのは、insert, update, delete の各ステートメントで null が許可されている列を指定した場合だけです。
+                                JDBC データ型の指定が必須となるのは、insert, update, delete の各ステートメントで null
+                                が許可されている列を指定した場合だけです。
                                 これは JDBC の仕様で MyBatis の仕様ではありません。
                                 ですから、直接 JDBC を使ったコードを書く場合でも null が許可されている列に対しては、やはりデータ型を指定する必要があります。
                             </td>
@@ -1362,10 +1396,12 @@ public class User {
                         <tr>
                             <td>column</td>
                             <td>
-                                ネストされた select ステートメントに引数として渡される列名、あるいは列の別名を指定します。resultSet.getString(columnName)
+                                ネストされた select
+                                ステートメントに引数として渡される列名、あるいは列の別名を指定します。resultSet.getString(columnName)
                                 メソッドの引数として渡される文字列と同じと考えてください。
                                 Note: 複合キー（composite key）を扱う場合、column="{prop1=col1,prop2=col2}
-                                のように記述することで複数の列名を指定することができます。この例ではネストされた select の実行時に prop1 と prop2 が引数として渡されます。
+                                のように記述することで複数の列名を指定することができます。この例ではネストされた select の実行時に prop1 と prop2
+                                が引数として渡されます。
                             </td>
                         </tr>
                         <tr>
@@ -1377,7 +1413,8 @@ public class User {
                                 <br/>
                                 この表の後に詳しいサンプルがあります。
                                 Note: 複合キー（composite key）を扱う場合、column="{prop1=col1,prop2=col2}
-                                のように記述することで複数の列名を指定することができます。この例ではネストされた select の実行時に prop1 と prop2 が引数として渡されます。
+                                のように記述することで複数の列名を指定することができます。この例ではネストされた select の実行時に prop1 と prop2
+                                が引数として渡されます。
                             </td>
                         </tr>
                         <tr>
@@ -1455,9 +1492,11 @@ public class User {
                         <tr>
                             <td>resultMap</td>
                             <td>
-                                別の場所で定義されている ResultMap の ID を指定します。ネストされた結果をこのプロパティにマップする際、指定した ResultMap が使われます。
+                                別の場所で定義されている ResultMap の ID を指定します。ネストされた結果をこのプロパティにマップする際、指定した ResultMap
+                                が使われます。
                                 この方法は、別の select 文を実行する方法の代わりに使うことができ、複数のテーブルを結合して取得した ResultSet をマップすることができます。
-                                このような ResultSet には重複や繰り返しが含まれているため、正しく分解してからネストされたオブジェクトグラフにマップしてやる必要がありますが、MyBatis
+                                このような ResultSet
+                                には重複や繰り返しが含まれているため、正しく分解してからネストされたオブジェクトグラフにマップしてやる必要がありますが、MyBatis
                                 ではこの処理を実現するため Result Map を連結できるようになっています。
                                 <br/>
                                 実際のサンプルを見た方が分かりやすいと思います。この表の後に例を挙げます。
@@ -1488,7 +1527,8 @@ public class User {
                                 <code>autoMapping</code>
                             </td>
                             <td>このプロパティに結果をマッピングする際、自動マッピングを使用するかどうかを true / false
-                                で指定します。ここでの指定はグローバルな設定（autoMappingBehavior）より優先されます。この設定は別の場所で定義されている ResultMap
+                                で指定します。ここでの指定はグローバルな設定（autoMappingBehavior）より優先されます。この設定は別の場所で定義されている
+                                ResultMap
                                 には適用されませんので、<code>select</code> や <code>resultMap</code> が指定されている場合は無効となります。デフォルト：未指定
                             </td>
                         </tr>
@@ -1496,7 +1536,8 @@ public class User {
                 </table>
 
                 <p>
-                    ネストされたアソシエーションについては、既にとても複雑な例を見ていただきました。次のサンプルは、それと比べるとずっと理解しやすいと思います。ここでは、独立した select を実行する代わりに
+                    ネストされたアソシエーションについては、既にとても複雑な例を見ていただきました。次のサンプルは、それと比べるとずっと理解しやすいと思います。ここでは、独立した select
+                    を実行する代わりに
                     Blog と Author のテーブルを結合するクエリを実行します。
                 </p>
 
@@ -1655,7 +1696,8 @@ public class User {
                     を返すことができます。この機能を利用すると、テーブルの結合（Join）を使わず一度の問い合わせで互いに関連する複数のデータを取得することができます。
                 </p>
 
-                <p>以下の例では、ストアドプロシージャが２つの ResultSet を返します。１つめの ResultSet には複数の Blog のデータが含まれており、２つめの ResultSet には複数の
+                <p>以下の例では、ストアドプロシージャが２つの ResultSet を返します。１つめの ResultSet には複数の Blog のデータが含まれており、２つめの ResultSet
+                    には複数の
                     Author のデータが含まれています。
                 </p>
 
@@ -1704,7 +1746,8 @@ SELECT * FROM AUTHOR WHERE ID = #{id}]]></source>
                 </p>
 
                 <p>
-                    引き続き上記のサンプルを使います。Blog に対する Author は一人だけですが、Post は複数存在します。この関係を Blog クラスで表現すると、次のようになると思います。
+                    引き続き上記のサンプルを使います。Blog に対する Author は一人だけですが、Post は複数存在します。この関係を Blog
+                    クラスで表現すると、次のようになると思います。
                 </p>
 
                 <source><![CDATA[private List<Post> posts;]]></source>
@@ -1812,7 +1855,8 @@ SELECT * FROM AUTHOR WHERE ID = #{id}]]></source>
                 <h4>複数の ResultSets を collection にマッピングする</h4>
 
                 <p>
-                    association で説明したのと同様に、２つの ResultSet を返すストアドプロシージャを呼び出すことができます。１つ目の ResultSet には Blog のリスト、２つ目の
+                    association で説明したのと同様に、２つの ResultSet を返すストアドプロシージャを呼び出すことができます。１つ目の ResultSet には Blog
+                    のリスト、２つ目の
                     ResultSet には Post のリストが含まれているものとします。
                 </p>
 
@@ -1868,7 +1912,8 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}]]></source>
                 <p>
                     discriminator を定義する場合は column と javaType 属性を指定します。
                     ここで指定した column は、MyBatis が比較対象の値を参照する際に使用されます。
-                    javaType は、値が等しいかどうかを調べる際、確実に正しい比較が行われるように指定します（ですが、ほとんどのケースでは String を指定すれば期待通りに動作するはずです）。
+                    javaType は、値が等しいかどうかを調べる際、確実に正しい比較が行われるように指定します（ですが、ほとんどのケースでは String
+                    を指定すれば期待通りに動作するはずです）。
                     使用例を見てみましょう。
                 </p>
 
@@ -1889,7 +1934,8 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}]]></source>
 
                 <p>
                     この例では、MyBatis は結果セットのレコードをひとつずつ取り出して vehicle_type の値を比較します。
-                    もし、vehicle_type の値が case で指定した条件のいずれかに一致した場合、その case 要素で指定されている resultMap を使って結果のマッピングを行います。
+                    もし、vehicle_type の値が case で指定した条件のいずれかに一致した場合、その case 要素で指定されている resultMap
+                    を使って結果のマッピングを行います。
                     この処理は排他的に行われます。言い換えると、使われなかった resultMap は無視されるということです（ただし resultMap
                     が継承されている場合は別です。これについてはすぐ後で説明します）。
                     一致する case が見つからない場合は、discriminator ブロックの外側で定義されている resultMap だけが適用されます。
@@ -1903,7 +1949,8 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}]]></source>
 
                 <p>
                     この場合、doorCount プロパティのみが読み込まれることになります。
-                    これによって、完全に独立した discriminator case のグループを定義することができます。親の resultMap と全く関連性のない resultMap であっても構いません。
+                    これによって、完全に独立した discriminator case のグループを定義することができます。親の resultMap と全く関連性のない resultMap
+                    であっても構いません。
                     今回のケースでは車は乗り物の一種（Car is-a Vehicle）なので、car と vehicle の間に関連性があることは明らかです。
                     当然、doorCount 以外のプロパティも読み込んで欲しいと思うでしょう。
                     resultMap を一箇所変更すれば、希望通りの動作になります。
@@ -1957,7 +2004,8 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}]]></source>
             <subsection name="自動マッピング">
 
                 <p>
-                    前章では、シンプルなケースでは MyBatis の自動マッピングが利用できるということと、複雑なケースではあなた自身で Result Map を記述する必要があるということを説明しました。
+                    前章では、シンプルなケースでは MyBatis の自動マッピングが利用できるということと、複雑なケースではあなた自身で Result Map
+                    を記述する必要があるということを説明しました。
                     この章では更に、この２つの方法を同時に利用する方法を説明していきます。
                     まず、自動マッピングの動作について詳しく見て行きましょう。
                 </p>
@@ -2036,7 +2084,8 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}]]></source>
 </resultMap>]]></source>
 
                 <p>
-                    この Result Map では、<i>Blog</i> と <i>Author</i> の両方が自動マッピングの対象となりますが、<i>Author</i> に <i>id</i> というプロパティがあり、ResultSet
+                    この Result Map では、<i>Blog</i> と <i>Author</i> の両方が自動マッピングの対象となりますが、<i>Author</i> に <i>id
+                </i> というプロパティがあり、ResultSet
                     に <i>id</i> という列が含まれているため、Author の id に Blog の id がセットされることになります。
                     自動マッピングで <code>FULL</code> を指定する場合は、こうした意図しないマッピングが行われないように注意する必要があります。
                 </p>
@@ -2190,7 +2239,8 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}]]></source>
 
                 <p>
                     3.4.2以降では, MyBatisはすべてのプロパティを設定した後に初期化メソッドを呼び出す仕組みをサポートしています。
-                    この機能の使用したい場合は、あなたが作成したキャッシュの実装クラスに<code>org.apache.ibatis.builder.InitializingObject</code>インタフェースを実装してください。
+                    この機能の使用したい場合は、あなたが作成したキャッシュの実装クラスに<code>
+                    org.apache.ibatis.builder.InitializingObject</code>インタフェースを実装してください。
                 </p>
 
                 <source><![CDATA[public interface InitializingObject {

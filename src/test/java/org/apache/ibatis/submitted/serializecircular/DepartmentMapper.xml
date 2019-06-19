@@ -26,7 +26,8 @@
         <association column="nr_attribute" property="attribute"
                      javaType="org.apache.ibatis.submitted.serializecircular.Attribute"
                      select="org.apache.ibatis.submitted.serializecircular.AttributeMapper.getById"/>
-        <collection column="person" property="person" javaType="org.apache.ibatis.submitted.serializecircular.Person"
+        <collection column="person" property="person"
+                    javaType="org.apache.ibatis.submitted.serializecircular.Person"
                     select="org.apache.ibatis.submitted.serializecircular.PersonMapper.getById"/>
     </resultMap>
 

@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.submitted.constructor_columnprefix;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.Reader;
-import java.util.List;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +22,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.Reader;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ConstructorColumnPrefixTest {
 
@@ -36,7 +36,8 @@ class ConstructorColumnPrefixTest {
     static void setUp() throws Exception {
         // create an SqlSessionFactory
         try (Reader reader = Resources
-                .getResourceAsReader("org/apache/ibatis/submitted/constructor_columnprefix/mybatis-config.xml")) {
+                .getResourceAsReader("org/apache/ibatis/submitted/constructor_columnprefix/mybatis-config" +
+                        ".xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

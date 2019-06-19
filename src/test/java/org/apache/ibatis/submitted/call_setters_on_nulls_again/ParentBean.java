@@ -18,6 +18,7 @@ package org.apache.ibatis.submitted.call_setters_on_nulls_again;
 public class ParentBean {
 
     private String name;
+    private ChildBean client;
 
     public String getName() {
         return name;
@@ -34,8 +35,6 @@ public class ParentBean {
     public void setClient(ChildBean client) {
         this.client = client;
     }
-
-    private ChildBean client;
 
     @Override
     public String toString() {

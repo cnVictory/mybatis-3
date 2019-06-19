@@ -15,13 +15,9 @@
  */
 package org.apache.ibatis.submitted.selectkey;
 
-import java.util.Map;
+import org.apache.ibatis.annotations.*;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.SelectKey;
-import org.apache.ibatis.annotations.Update;
+import java.util.Map;
 
 public interface AnnotatedMapper {
 
@@ -36,23 +32,27 @@ public interface AnnotatedMapper {
     int insertTable2WithGeneratedKeyXml(Name name);
 
     @Insert("insert into table2 (name) values(#{name})")
-    @SelectKey(statement = "select id, name_fred from table2 where id = identity()", keyProperty = "nameId,generatedName", keyColumn = "ID,NAME_FRED", before = false, resultType = Map.class)
+    @SelectKey(statement = "select id, name_fred from table2 where id = identity()", keyProperty = "nameId," +
+            "generatedName", keyColumn = "ID,NAME_FRED", before = false, resultType = Map.class)
     int insertTable2WithSelectKeyWithKeyMap(Name name);
 
     int insertTable2WithSelectKeyWithKeyMapXml(Name name);
 
     @Insert("insert into table2 (name) values(#{name})")
-    @SelectKey(statement = "select id as nameId, name_fred as generatedName from table2 where id = identity()", keyProperty = "nameId,generatedName", before = false, resultType = Name.class)
+    @SelectKey(statement = "select id as nameId, name_fred as generatedName from table2 where id = identity" +
+            "()", keyProperty = "nameId,generatedName", before = false, resultType = Name.class)
     int insertTable2WithSelectKeyWithKeyObject(Name name);
 
     int insertTable2WithSelectKeyWithKeyObjectXml(Name name);
 
     @Insert("insert into table3 (id, name) values(#{nameId}, #{name})")
-    @SelectKey(statement = "call next value for TestSequence", keyProperty = "nameId", before = true, resultType = int.class)
+    @SelectKey(statement = "call next value for TestSequence", keyProperty = "nameId", before = true,
+            resultType = int.class)
     int insertTable3(Name name);
 
     @InsertProvider(type = SqlProvider.class, method = "insertTable3_2")
-    @SelectKey(statement = "call next value for TestSequence", keyProperty = "nameId", before = true, resultType = int.class)
+    @SelectKey(statement = "call next value for TestSequence", keyProperty = "nameId", before = true,
+            resultType = int.class)
     int insertTable3_2(Name name);
 
     @Update("update table2 set name = #{name} where id = #{nameId}")
@@ -62,13 +62,15 @@ public interface AnnotatedMapper {
     int updateTable2WithGeneratedKeyXml(Name name);
 
     @Update("update table2 set name = #{name} where id = #{nameId}")
-    @SelectKey(statement = "select name_fred from table2 where id = #{nameId}", keyProperty = "generatedName", keyColumn = "NAME_FRED", before = false, resultType = String.class)
+    @SelectKey(statement = "select name_fred from table2 where id = #{nameId}", keyProperty =
+            "generatedName", keyColumn = "NAME_FRED", before = false, resultType = String.class)
     int updateTable2WithSelectKeyWithKeyMap(Name name);
 
     int updateTable2WithSelectKeyWithKeyMapXml(Name name);
 
     @Update("update table2 set name = #{name} where id = #{nameId}")
-    @SelectKey(statement = "select name_fred as generatedName from table2 where id = #{nameId}", keyProperty = "generatedName", before = false, resultType = Name.class)
+    @SelectKey(statement = "select name_fred as generatedName from table2 where id = #{nameId}",
+            keyProperty = "generatedName", before = false, resultType = Name.class)
     int updateTable2WithSelectKeyWithKeyObject(Name name);
 
     int updateTable2WithSelectKeyWithKeyObjectXml(Name name);

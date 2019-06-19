@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -169,10 +169,12 @@ SqlSessionFactory factory =
 
                 <p>
                     <span class="label important">NOTE</span>
-                    Also If you are used already the <code>":"</code> as property key(e.g. <code>db:username</code>)
+                    Also If you are used already the <code>":"</code> as property key(e.g. <code>
+                    db:username</code>)
                     or you are used already the ternary operator of OGNL expression(e.g. <code>
                     ${tableName != null ? tableName : 'global_constants'}</code>) on your sql definition,
-                    you should be change the character that separate key and default value by adding a special property
+                    you should be change the character that separate key and default value by adding a special
+                    property
                     as follow:
                 </p>
 
@@ -228,9 +230,11 @@ SqlSessionFactory factory =
                                 lazyLoadingEnabled
                             </td>
                             <td>
-                                Globally enables or disables lazy loading. When enabled, all relations will be lazily
+                                Globally enables or disables lazy loading. When enabled, all relations will be
+                                lazily
                                 loaded.
-                                This value can be superseded for an specific relation by using the <code>fetchType
+                                This value can be superseded for an specific relation by using the <code>
+                                fetchType
                             </code> attribute on it.
                             </td>
                             <td>
@@ -340,7 +344,8 @@ SqlSessionFactory factory =
                                 autoMappingUnknownColumnBehavior
                             </td>
                             <td>
-                                Specify the behavior when detects an unknown column (or unknown property type) of
+                                Specify the behavior when detects an unknown column (or unknown property type)
+                                of
                                 automatic mapping target.
                                 <ul>
                                     <li><code>NONE</code>: Do nothing
@@ -349,7 +354,8 @@ SqlSessionFactory factory =
                                         'org.apache.ibatis.session.AutoMappingUnknownColumnBehavior'
                                     </code> must be set to <code>WARN</code>)
                                     </li>
-                                    <li><code>FAILING</code>: Fail mapping (Throw <code>SqlSessionException</code>)
+                                    <li><code>FAILING</code>: Fail mapping (Throw <code>
+                                        SqlSessionException</code>)
                                     </li>
                                 </ul>
                             </td>
@@ -465,11 +471,13 @@ SqlSessionFactory factory =
                                 localCacheScope
                             </td>
                             <td>
-                                MyBatis uses local cache to prevent circular references and speed up repeated nested
+                                MyBatis uses local cache to prevent circular references and speed up repeated
+                                nested
                                 queries.
                                 By default (SESSION) all queries executed during a session are cached. If
                                 localCacheScope=STATEMENT local session will be used just for
-                                statement execution, no data will be shared between two different calls to the same
+                                statement execution, no data will be shared between two different calls to the
+                                same
                                 SqlSession.
                             </td>
                             <td>
@@ -484,9 +492,11 @@ SqlSessionFactory factory =
                                 jdbcTypeForNull
                             </td>
                             <td>
-                                Specifies the JDBC type for null values when no specific JDBC type was provided for the
+                                Specifies the JDBC type for null values when no specific JDBC type was
+                                provided for the
                                 parameter.
-                                Some drivers require specifying the column JDBC type but others work with generic values
+                                Some drivers require specifying the column JDBC type but others work with
+                                generic values
                                 like NULL, VARCHAR or OTHER.
                             </td>
                             <td>
@@ -529,7 +539,8 @@ SqlSessionFactory factory =
                                 defaultEnumTypeHandler
                             </td>
                             <td>
-                                Specifies the <code>TypeHandler</code> used by default for Enum. (Since: 3.4.5)
+                                Specifies the <code>TypeHandler</code> used by default for Enum. (Since:
+                                3.4.5)
                             </td>
                             <td>
                                 A type alias or fully qualified class name.
@@ -543,8 +554,10 @@ SqlSessionFactory factory =
                                 callSettersOnNulls
                             </td>
                             <td>
-                                Specifies if setters or map's put method will be called when a retrieved value is null.
-                                It is useful when you rely on Map.keySet() or null value initialization. Note primitives
+                                Specifies if setters or map's put method will be called when a retrieved value
+                                is null.
+                                It is useful when you rely on Map.keySet() or null value initialization. Note
+                                primitives
                                 such as (int,boolean,etc.) will not be set to null.
                             </td>
                             <td>
@@ -559,10 +572,12 @@ SqlSessionFactory factory =
                                 returnInstanceForEmptyRow
                             </td>
                             <td>
-                                MyBatis, by default, returns <code>null</code> when all the columns of a returned row
+                                MyBatis, by default, returns <code>null</code> when all the columns of a
+                                returned row
                                 are NULL.
                                 When this setting is enabled, MyBatis returns an empty instance instead.
-                                Note that it is also applied to nested results (i.e. collectioin and association).
+                                Note that it is also applied to nested results (i.e. collectioin and
+                                association).
                                 Since: 3.4.2
                             </td>
                             <td>
@@ -591,11 +606,13 @@ SqlSessionFactory factory =
                                 logImpl
                             </td>
                             <td>
-                                Specifies which logging implementation MyBatis should use. If this setting is not
+                                Specifies which logging implementation MyBatis should use. If this setting is
+                                not
                                 present logging implementation will be autodiscovered.
                             </td>
                             <td>
-                                SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING
+                                SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING |
+                                NO_LOGGING
                             </td>
                             <td>
                                 Not set
@@ -606,7 +623,8 @@ SqlSessionFactory factory =
                                 proxyFactory
                             </td>
                             <td>
-                                Specifies the proxy tool that MyBatis will use for creating lazy loading capable
+                                Specifies the proxy tool that MyBatis will use for creating lazy loading
+                                capable
                                 objects.
                             </td>
                             <td>
@@ -635,9 +653,11 @@ SqlSessionFactory factory =
                                 useActualParamName
                             </td>
                             <td>
-                                Allow referencing statement parameters by their actual names declared in the method
+                                Allow referencing statement parameters by their actual names declared in the
+                                method
                                 signature.
-                                To use this feature, your project must be compiled in Java 8 with <code>-parameters
+                                To use this feature, your project must be compiled in Java 8 with <code>
+                                -parameters
                             </code> option. (Since: 3.4.1)
                             </td>
                             <td>
@@ -653,7 +673,8 @@ SqlSessionFactory factory =
                             </td>
                             <td>
                                 Specifies the class that provides an instance of <code>Configuration</code>.
-                                The returned Configuration instance is used to load lazy properties of deserialized
+                                The returned Configuration instance is used to load lazy properties of
+                                deserialized
                                 objects.
                                 This class must have a method with a signature <code>static Configuration
                                 getConfiguration()</code>. (Since: 3.2.3)
@@ -1297,7 +1318,8 @@ public class Author {
                                 Enumeration Type
                             </td>
                             <td>
-                                Any compatible <code>NUMERIC</code> or <code>DOUBLE</code>, as the position is stored
+                                Any compatible <code>NUMERIC</code> or <code>DOUBLE</code>, as the position is
+                                stored
                                 (not the code itself).
                             </td>
                         </tr>
@@ -1497,8 +1519,9 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
                     you can override this behavior by two means:
                 </p>
                 <ul>
-                    <li>Adding a <code>javaType</code> attribute to the typeHandler element (for example: <code>
-                        javaType="String"</code>)
+                    <li>Adding a <code>javaType</code> attribute to the typeHandler element (for
+                        example: <code>
+                            javaType="String"</code>)
                     </li>
                     <li>Adding a <code>@MappedTypes</code> annotation to your TypeHandler class specifying
                         the list of java types to associate it with. This annotation will be ignored if
@@ -1509,7 +1532,8 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
                 <p>Associated JDBC type can be specified by two means:</p>
                 <ul>
                     <li>
-                        Adding a <code>jdbcType</code> attribute to the typeHandler element (for example: <code>
+                        Adding a <code>jdbcType</code> attribute to the typeHandler element (for
+                        example: <code>
                         jdbcType="VARCHAR"</code>).
                     </li>
                     <li>Adding a <code>@MappedJdbcTypes</code> annotation to your TypeHandler class specifying
@@ -1520,11 +1544,14 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
 
                 <p>
                     When deciding which TypeHandler to use in a <code>ResultMap</code>, the Java type is known
-                    (from the result type), but the JDBC type is unknown. MyBatis therefore uses the combination
+                    (from the result type), but the JDBC type is unknown. MyBatis therefore uses the
+                    combination
                     <code>javaType=[TheJavaType], jdbcType=null</code>
                     to choose a TypeHandler. This means that
-                    using a <code>@MappedJdbcTypes</code> annotation <i>restricts</i> the scope of a TypeHandler
-                    and makes it unavailable for use in <code>ResultMap</code>s unless explicity set. To make a
+                    using a <code>@MappedJdbcTypes</code> annotation <i>restricts</i> the scope of a
+                    TypeHandler
+                    and makes it unavailable for use in <code>ResultMap</code>s unless explicity set. To make
+                    a
                     TypeHandler available for use in a <code>ResultMap</code>, set
                     <code>includeNullJdbcType=true</code>
                     on the <code>@MappedJdbcTypes</code> annotation. Since Mybatis 3.4.0 however, if a
@@ -1547,8 +1574,10 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
                 </p>
 
                 <p>
-                    You can create a generic TypeHandler that is able to handle more than one class. For that purpose
-                    add a constructor that receives the class as a parameter and MyBatis will pass the actual class when
+                    You can create a generic TypeHandler that is able to handle more than one class. For that
+                    purpose
+                    add a constructor that receives the class as a parameter and MyBatis will pass the actual
+                    class when
                     constructing the TypeHandler.
                 </p>
 
@@ -2067,8 +2096,10 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, propert
                     <li>
                         <code>poolMaximumLocalBadConnectionTolerance</code>
                         – This is a low level setting about
-                        tolerance of bad connections got for any thread. If a thread got a bad connection, it may
-                        still have another chance to re-attempt to get another connection which is valid. But the
+                        tolerance of bad connections got for any thread. If a thread got a bad connection, it
+                        may
+                        still have another chance to re-attempt to get another connection which is valid. But
+                        the
                         retrying times should not more than the sum of
                         <code>poolMaximumIdleConnections</code>
                         and <code>poolMaximumLocalBadConnectionTolerance</code>.
@@ -2202,7 +2233,8 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
                 <p>
                     The DB_VENDOR implementation databaseIdProvider sets as databaseId the String returned by
                     <code>DatabaseMetaData#getDatabaseProductName()</code>.
-                    Given that usually that string is too long and that different versions of the same product may
+                    Given that usually that string is too long and that different versions of the same product
+                    may
                     return different values,
                     you may want to convert it to a shorter one by adding properties like follows:
                 </p>
@@ -2214,10 +2246,13 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
 </databaseIdProvider>]]></source>
 
                 <p>
-                    When properties are provided, the DB_VENDOR databaseIdProvider will search the property value
+                    When properties are provided, the DB_VENDOR databaseIdProvider will search the property
+                    value
                     corresponding to the
-                    first key found in the returned database product name or "null" if there is not a matching property.
-                    In this case, if <code>getDatabaseProductName()</code> returns "Oracle (DataDirect)" the databaseId
+                    first key found in the returned database product name or "null" if there is not a matching
+                    property.
+                    In this case, if <code>getDatabaseProductName()</code> returns "Oracle (DataDirect)" the
+                    databaseId
                     will be set to "oracle".
                 </p>
 

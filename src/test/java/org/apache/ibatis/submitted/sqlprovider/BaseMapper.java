@@ -40,18 +40,22 @@ public interface BaseMapper<T> {
     @SelectProvider(type = OurSqlBuilder.class, method = "buildSelectByNameOneParamAndProviderContext")
     List<T> selectActiveByName(String name);
 
-    @SelectProvider(type = OurSqlBuilder.class, method = "buildSelectByIdAndNameMultipleParamAndProviderContextWithAtParam")
+    @SelectProvider(type = OurSqlBuilder.class, method =
+            "buildSelectByIdAndNameMultipleParamAndProviderContextWithAtParam")
     @ContainsLogicalDelete
     List<T> selectByIdAndNameWithAtParam(@Param("id") Integer id, @Param("name") String name);
 
-    @SelectProvider(type = OurSqlBuilder.class, method = "buildSelectByIdAndNameMultipleParamAndProviderContextWithAtParam")
+    @SelectProvider(type = OurSqlBuilder.class, method =
+            "buildSelectByIdAndNameMultipleParamAndProviderContextWithAtParam")
     List<T> selectActiveByIdAndNameWithAtParam(@Param("id") Integer id, @Param("name") String name);
 
-    @SelectProvider(type = OurSqlBuilder.class, method = "buildSelectByIdAndNameMultipleParamAndProviderContext")
+    @SelectProvider(type = OurSqlBuilder.class, method =
+            "buildSelectByIdAndNameMultipleParamAndProviderContext")
     @ContainsLogicalDelete
     List<T> selectByIdAndName(Integer id, String name);
 
-    @SelectProvider(type = OurSqlBuilder.class, method = "buildSelectByIdAndNameMultipleParamAndProviderContext")
+    @SelectProvider(type = OurSqlBuilder.class, method =
+            "buildSelectByIdAndNameMultipleParamAndProviderContext")
     List<T> selectActiveByIdAndName(Integer id, String name);
 
     @Retention(RetentionPolicy.RUNTIME)

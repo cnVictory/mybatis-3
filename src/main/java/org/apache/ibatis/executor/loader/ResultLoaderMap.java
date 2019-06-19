@@ -15,19 +15,6 @@
  */
 package org.apache.ibatis.executor.loader;
 
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.executor.BaseExecutor;
 import org.apache.ibatis.executor.BatchResult;
@@ -41,6 +28,15 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
+import java.sql.SQLException;
+import java.util.*;
+
 /**
  * @author Clinton Begin
  * @author Franta Mejta
@@ -49,12 +45,18 @@ public class ResultLoaderMap {
 
     private final Map<String, LoadPair> loaderMap = new HashMap<>();
 
+    private static String getUppercaseFirstProperty(String property) {
+        String[] parts = property.split("\\.");
+        return parts[0].toUpperCase(Locale.ENGLISH);
+    }
+
     public void addLoader(String property, MetaObject metaResultObject, ResultLoader resultLoader) {
         String upperFirst = getUppercaseFirstProperty(property);
         if (!upperFirst.equalsIgnoreCase(property) && loaderMap.containsKey(upperFirst)) {
             throw new ExecutorException("Nested lazy loaded result property '" + property
                     + "' for query id '" + resultLoader.mappedStatement.getId()
-                    + " already exists in the result map. The leftmost property of all lazy loaded properties must be unique within a result map.");
+                    + " already exists in the result map. The leftmost property of all lazy loaded " +
+                    "properties must be unique within a result map.");
         }
         loaderMap.put(upperFirst, new LoadPair(property, metaResultObject, resultLoader));
     }
@@ -94,11 +96,6 @@ public class ResultLoaderMap {
         for (String methodName : methodNames) {
             load(methodName);
         }
-    }
-
-    private static String getUppercaseFirstProperty(String property) {
-        String[] parts = property.split("\\.");
-        return parts[0].toUpperCase(Locale.ENGLISH);
     }
 
     /**
@@ -212,7 +209,8 @@ public class ResultLoaderMap {
              * A better approach would be making executors thread safe. */
             if (this.serializationCheck == null) {
                 final ResultLoader old = this.resultLoader;
-                this.resultLoader = new ResultLoader(old.configuration, new ClosedExecutor(), old.mappedStatement,
+                this.resultLoader = new ResultLoader(old.configuration, new ClosedExecutor(),
+                        old.mappedStatement,
                         old.parameterObject, old.targetType, old.cacheKey, old.boundSql);
             }
 
@@ -234,7 +232,8 @@ public class ResultLoaderMap {
                 }
 
                 if (!factoryMethod.isAccessible()) {
-                    configurationObject = AccessController.doPrivileged((PrivilegedExceptionAction<Object>) () -> {
+                    configurationObject =
+                            AccessController.doPrivileged((PrivilegedExceptionAction<Object>) () -> {
                         try {
                             factoryMethod.setAccessible(true);
                             return factoryMethod.invoke(null);
@@ -301,12 +300,14 @@ public class ResultLoaderMap {
         }
 
         @Override
-        protected <E> List<E> doQuery(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+        protected <E> List<E> doQuery(MappedStatement ms, Object parameter, RowBounds rowBounds,
+                                      ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        protected <E> Cursor<E> doQueryCursor(MappedStatement ms, Object parameter, RowBounds rowBounds, BoundSql boundSql) throws SQLException {
+        protected <E> Cursor<E> doQueryCursor(MappedStatement ms, Object parameter, RowBounds rowBounds,
+                                              BoundSql boundSql) throws SQLException {
             throw new UnsupportedOperationException("Not supported.");
         }
     }

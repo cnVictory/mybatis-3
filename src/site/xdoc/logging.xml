@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -76,8 +76,10 @@
   </settings>
 </configuration>]]>
             </source>
-            <p>Valid values are SLF4J, LOG4J, LOG4J2, JDK_LOGGING, COMMONS_LOGGING, STDOUT_LOGGING, NO_LOGGING or
-                a full qualified class name that implements <code>org.apache.ibatis.logging.Log</code> and gets
+            <p>Valid values are SLF4J, LOG4J, LOG4J2, JDK_LOGGING, COMMONS_LOGGING, STDOUT_LOGGING, NO_LOGGING
+                or
+                a full qualified class name that implements <code>org.apache.ibatis.logging.Log</code> and
+                gets
                 an string as a constructor parameter.
             </p>
             <p>You can also select the implementation by calling one of the following methods:
@@ -187,7 +189,8 @@ log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n]]></source>
                 <source>log4j.logger.org.mybatis.example=TRACE</source>
 
                 <p>There are queries that can return huge result sets. In that cases you may want to see the
-                    SQL statement but not the results. For that purpose SQL statements are logged at the DEBUG level
+                    SQL statement but not the results. For that purpose SQL statements are logged at the DEBUG
+                    level
                     (FINE in JDK logging) and results at the TRACE level (FINER in JDK logging), so in case
                     you want to see the statement but not the result, set the level to DEBUG.
                 </p>

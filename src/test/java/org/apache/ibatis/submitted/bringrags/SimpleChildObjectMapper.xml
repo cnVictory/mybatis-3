@@ -40,7 +40,8 @@
             <idArg column="so_id" javaType="String"/>
         </constructor>
         <collection property="simpleChildObjects" javaType="List"
-                    ofType="org.apache.ibatis.submitted.bringrags.SimpleChildObject" resultMap="SimpleChildObjectMap"/>
+                    ofType="org.apache.ibatis.submitted.bringrags.SimpleChildObject"
+                    resultMap="SimpleChildObjectMap"/>
     </resultMap>
 
 </mapper>

@@ -36,7 +36,8 @@ class XmlMapperBuilderTest {
         Configuration configuration = new Configuration();
         String resource = "org/apache/ibatis/builder/xsd/AuthorMapper.xml";
         try (InputStream inputStream = Resources.getResourceAsStream(resource)) {
-            XMLMapperBuilder builder = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
+            XMLMapperBuilder builder = new XMLMapperBuilder(inputStream, configuration, resource,
+                    configuration.getSqlFragments());
             builder.parse();
 
             MappedStatement mappedStatement = configuration.getMappedStatement("selectWithOptions");

@@ -24,14 +24,16 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 
-import static com.googlecode.catchexception.apis.BDDCatchException.*;
+import static com.googlecode.catchexception.apis.BDDCatchException.caughtException;
+import static com.googlecode.catchexception.apis.BDDCatchException.when;
 import static org.assertj.core.api.BDDAssertions.then;
 
 class CacheBuilderTest {
 
     @Test
     void testInitializing() {
-        InitializingCache cache = unwrap(new CacheBuilder("test").implementation(InitializingCache.class).build());
+        InitializingCache cache =
+                unwrap(new CacheBuilder("test").implementation(InitializingCache.class).build());
 
         Assertions.assertThat(cache.initialized).isTrue();
     }
@@ -40,7 +42,8 @@ class CacheBuilderTest {
     void testInitializingFailure() {
         when(new CacheBuilder("test").implementation(InitializingFailureCache.class)).build();
         then(caughtException()).isInstanceOf(CacheException.class)
-                .hasMessage("Failed cache initialization for 'test' on 'org.apache.ibatis.mapping.CacheBuilderTest$InitializingFailureCache'");
+                .hasMessage("Failed cache initialization for 'test' on 'org.apache.ibatis.mapping" +
+                        ".CacheBuilderTest$InitializingFailureCache'");
     }
 
     @SuppressWarnings("unchecked")

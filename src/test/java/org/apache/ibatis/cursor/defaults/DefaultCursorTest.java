@@ -16,32 +16,12 @@
 
 package org.apache.ibatis.cursor.defaults;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
-
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.resultset.DefaultResultSetHandler;
 import org.apache.ibatis.executor.resultset.ResultSetWrapper;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ResultMap;
-import org.apache.ibatis.mapping.ResultMapping;
-import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
@@ -52,12 +32,22 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class DefaultCursorTest {
-    @Spy
-    private ImpatientResultSet rs;
     @Mock
     protected ResultSetMetaData rsmd;
+    @Spy
+    private ImpatientResultSet rs;
 
     @SuppressWarnings("unchecked")
     @Test
@@ -71,7 +61,8 @@ class DefaultCursorTest {
         final BoundSql boundSql = null;
         final RowBounds rowBounds = RowBounds.DEFAULT;
 
-        final DefaultResultSetHandler resultSetHandler = new DefaultResultSetHandler(executor, ms, parameterHandler,
+        final DefaultResultSetHandler resultSetHandler = new DefaultResultSetHandler(executor, ms,
+                parameterHandler,
                 resultHandler, boundSql, rowBounds);
 
 
@@ -109,19 +100,23 @@ class DefaultCursorTest {
         ResultMap nestedResultMap = new ResultMap.Builder(config, "roleMap", HashMap.class,
                 new ArrayList<ResultMapping>() {
                     {
-                        add(new ResultMapping.Builder(config, "role", "role", registry.getTypeHandler(String.class))
+                        add(new ResultMapping.Builder(config, "role", "role",
+                                registry.getTypeHandler(String.class))
                                 .build());
                     }
                 }).build();
         config.addResultMap(nestedResultMap);
 
-        return new MappedStatement.Builder(config, "selectPerson", new StaticSqlSource(config, "select person..."),
+        return new MappedStatement.Builder(config, "selectPerson", new StaticSqlSource(config, "select " +
+                "person..."),
                 SqlCommandType.SELECT).resultMaps(
                 new ArrayList<ResultMap>() {
                     {
-                        add(new ResultMap.Builder(config, "personMap", HashMap.class, new ArrayList<ResultMapping>() {
+                        add(new ResultMap.Builder(config, "personMap", HashMap.class,
+                                new ArrayList<ResultMapping>() {
                             {
-                                add(new ResultMapping.Builder(config, "id", "id", registry.getTypeHandler(Integer.class))
+                                add(new ResultMapping.Builder(config, "id", "id",
+                                        registry.getTypeHandler(Integer.class))
                                         .build());
                                 add(new ResultMapping.Builder(config, "roles").nestedResultMapId("roleMap").build());
                             }

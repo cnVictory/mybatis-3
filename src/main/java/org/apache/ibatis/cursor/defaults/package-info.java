@@ -14,6 +14,8 @@
  * limitations under the License.
  * <p>
  * Default implementation for cursor feature
+ * <p>
+ * Default implementation for cursor feature
  */
 /**
  * Default implementation for cursor feature

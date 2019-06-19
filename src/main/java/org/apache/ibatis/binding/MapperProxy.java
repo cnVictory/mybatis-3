@@ -15,6 +15,9 @@
  */
 package org.apache.ibatis.binding;
 
+import org.apache.ibatis.reflection.ExceptionUtil;
+import org.apache.ibatis.session.SqlSession;
+
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
@@ -22,9 +25,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
-
-import org.apache.ibatis.reflection.ExceptionUtil;
-import org.apache.ibatis.session.SqlSession;
 
 /**
  * @author Clinton Begin
@@ -37,7 +37,8 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
     private final Class<T> mapperInterface;
     private final Map<Method, MapperMethod> methodCache;
 
-    public MapperProxy(SqlSession sqlSession, Class<T> mapperInterface, Map<Method, MapperMethod> methodCache) {
+    public MapperProxy(SqlSession sqlSession, Class<T> mapperInterface,
+                       Map<Method, MapperMethod> methodCache) {
         this.sqlSession = sqlSession;
         this.mapperInterface = mapperInterface;
         this.methodCache = methodCache;
@@ -59,7 +60,8 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
     }
 
     private MapperMethod cachedMapperMethod(Method method) {
-        return methodCache.computeIfAbsent(method, k -> new MapperMethod(mapperInterface, method, sqlSession.getConfiguration()));
+        return methodCache.computeIfAbsent(method, k -> new MapperMethod(mapperInterface, method,
+                sqlSession.getConfiguration()));
     }
 
     private Object invokeDefaultMethod(Object proxy, Method method, Object[] args)

@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.submitted.autodiscover;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.Reader;
-import java.math.BigInteger;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -29,13 +24,19 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+import java.math.BigInteger;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class AutodiscoverTest {
 
     protected static SqlSessionFactory sqlSessionFactory;
 
     @BeforeAll
     static void setup() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/autodiscover/MapperConfig.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/autodiscover" +
+                "/MapperConfig.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
     }
@@ -48,7 +49,8 @@ class AutodiscoverTest {
 
     @Test
     void testTypeHandler() {
-        TypeHandlerRegistry typeHandlerRegistry = sqlSessionFactory.getConfiguration().getTypeHandlerRegistry();
+        TypeHandlerRegistry typeHandlerRegistry =
+                sqlSessionFactory.getConfiguration().getTypeHandlerRegistry();
         assertTrue(typeHandlerRegistry.hasTypeHandler(BigInteger.class));
     }
 

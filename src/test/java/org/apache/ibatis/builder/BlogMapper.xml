@@ -117,7 +117,8 @@
         </discriminator>
     </resultMap>
 
-    <select id="selectBlogJoinedWithPostsAndAuthor" parameterType="int" resultMap="blogJoinedWithPostsAndAuthor">
+    <select id="selectBlogJoinedWithPostsAndAuthor" parameterType="int"
+            resultMap="blogJoinedWithPostsAndAuthor">
     select
     B.id as blog_id,
     B.title as blog_title,

@@ -15,19 +15,20 @@
  */
 package org.apache.ibatis.type;
 
+import org.apache.ibatis.executor.result.ResultMapException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
-import org.apache.ibatis.executor.result.ResultMapException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 class UnknownTypeHandlerTest extends BaseTypeHandlerTest {
 
-    private static final TypeHandler<Object> TYPE_HANDLER = spy(new UnknownTypeHandler(new TypeHandlerRegistry()));
+    private static final TypeHandler<Object> TYPE_HANDLER =
+            spy(new UnknownTypeHandler(new TypeHandlerRegistry()));
 
     @Override
     @Test

@@ -21,8 +21,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.Reader;
@@ -32,13 +32,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Tests for type handler of enum using annotations.
  *
- * @since #444
- *
  * @author Kazuki Shimizu
- *
  * @see org.apache.ibatis.annotations.Arg
  * @see org.apache.ibatis.annotations.Result
  * @see org.apache.ibatis.annotations.TypeDiscriminator
+ * @since #444
  */
 class EnumTypeHandlerUsingAnnotationTest {
 
@@ -47,7 +45,8 @@ class EnumTypeHandlerUsingAnnotationTest {
 
     @BeforeAll
     static void initDatabase() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/enumtypehandler_on_annotation/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/enumtypehandler_on_annotation/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             sqlSessionFactory.getConfiguration().getMapperRegistry().addMapper(PersonMapper.class);
         }

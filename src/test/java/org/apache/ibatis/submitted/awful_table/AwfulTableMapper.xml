@@ -143,7 +143,8 @@
             #{active,jdbcType=BIT},
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="org.apache.ibatis.submitted.awful_table.AwfulTable">
+    <update id="updateByPrimaryKeySelective"
+            parameterType="org.apache.ibatis.submitted.awful_table.AwfulTable">
         update "awful table"
         <set>
             <if test="firstFirstName != null">

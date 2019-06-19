@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.executor.loader;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.sql.DataSource;
-
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.ExecutorException;
@@ -33,6 +28,10 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.transaction.Transaction;
 import org.apache.ibatis.transaction.TransactionFactory;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author Clinton Begin
@@ -53,7 +52,8 @@ public class ResultLoader {
     protected boolean loaded;
     protected Object resultObject;
 
-    public ResultLoader(Configuration config, Executor executor, MappedStatement mappedStatement, Object parameterObject, Class<?> targetType, CacheKey cacheKey, BoundSql boundSql) {
+    public ResultLoader(Configuration config, Executor executor, MappedStatement mappedStatement,
+                        Object parameterObject, Class<?> targetType, CacheKey cacheKey, BoundSql boundSql) {
         this.configuration = config;
         this.executor = executor;
         this.mappedStatement = mappedStatement;
@@ -78,7 +78,8 @@ public class ResultLoader {
             localExecutor = newExecutor();
         }
         try {
-            return localExecutor.query(mappedStatement, parameterObject, RowBounds.DEFAULT, Executor.NO_RESULT_HANDLER, cacheKey, boundSql);
+            return localExecutor.query(mappedStatement, parameterObject, RowBounds.DEFAULT,
+                    Executor.NO_RESULT_HANDLER, cacheKey, boundSql);
         } finally {
             if (localExecutor != executor) {
                 localExecutor.close(false);
@@ -89,11 +90,13 @@ public class ResultLoader {
     private Executor newExecutor() {
         final Environment environment = configuration.getEnvironment();
         if (environment == null) {
-            throw new ExecutorException("ResultLoader could not load lazily.  Environment was not configured.");
+            throw new ExecutorException("ResultLoader could not load lazily.  Environment was not " +
+                    "configured.");
         }
         final DataSource ds = environment.getDataSource();
         if (ds == null) {
-            throw new ExecutorException("ResultLoader could not load lazily.  DataSource was not configured.");
+            throw new ExecutorException("ResultLoader could not load lazily.  DataSource was not configured" +
+                    ".");
         }
         final TransactionFactory transactionFactory = environment.getTransactionFactory();
         final Transaction tx = transactionFactory.newTransaction(ds, null, false);

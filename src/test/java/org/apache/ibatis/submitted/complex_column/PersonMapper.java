@@ -49,7 +49,8 @@ public interface PersonMapper {
     })
     @Results({
             @Result(id = true, column = "id", property = "id"),
-            @Result(property = "parent", column = "{firstName=parent_firstName,lastName=parent_lastName}", one = @One(select = "getParentWithParamAttributes"))
+            @Result(property = "parent", column = "{firstName=parent_firstName,lastName=parent_lastName}",
+                    one = @One(select = "getParentWithParamAttributes"))
 
     })
     Person getComplexWithParamAttributes(Long id);
@@ -59,5 +60,6 @@ public interface PersonMapper {
             " WHERE firstName = #{firstName,jdbcType=VARCHAR}" +
             " AND lastName = #{lastName,jdbcType=VARCHAR}" +
             " LIMIT 1")
-    Person getParentWithParamAttributes(@Param("firstName") String firstName, @Param("lastName") String lastname);
+    Person getParentWithParamAttributes(@Param("firstName") String firstName,
+                                        @Param("lastName") String lastname);
 }

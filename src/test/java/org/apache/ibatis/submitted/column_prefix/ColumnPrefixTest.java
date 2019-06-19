@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.submitted.column_prefix;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.Reader;
-import java.util.List;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +22,12 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.Reader;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ColumnPrefixTest {
 
@@ -120,7 +121,8 @@ class ColumnPrefixTest {
     }
 
     protected List<Person> getPersons(SqlSession sqlSession) {
-        List<Person> list = sqlSession.selectList("org.apache.ibatis.submitted.column_prefix.Mapper.selectPersons");
+        List<Person> list = sqlSession.selectList("org.apache.ibatis.submitted.column_prefix.Mapper" +
+                ".selectPersons");
         return list;
     }
 

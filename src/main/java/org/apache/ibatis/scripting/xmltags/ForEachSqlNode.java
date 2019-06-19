@@ -15,10 +15,10 @@
  */
 package org.apache.ibatis.scripting.xmltags;
 
-import java.util.Map;
-
 import org.apache.ibatis.parsing.GenericTokenParser;
 import org.apache.ibatis.session.Configuration;
+
+import java.util.Map;
 
 /**
  * @author Clinton Begin
@@ -36,7 +36,8 @@ public class ForEachSqlNode implements SqlNode {
     private final String index;
     private final Configuration configuration;
 
-    public ForEachSqlNode(Configuration configuration, SqlNode contents, String collectionExpression, String index, String item, String open, String close, String separator) {
+    public ForEachSqlNode(Configuration configuration, SqlNode contents, String collectionExpression,
+                          String index, String item, String open, String close, String separator) {
         this.evaluator = new ExpressionEvaluator();
         this.collectionExpression = collectionExpression;
         this.contents = contents;
@@ -46,6 +47,10 @@ public class ForEachSqlNode implements SqlNode {
         this.index = index;
         this.item = item;
         this.configuration = configuration;
+    }
+
+    private static String itemizeItem(String item, int i) {
+        return ITEM_PREFIX + item + "_" + i;
     }
 
     @Override
@@ -115,17 +120,14 @@ public class ForEachSqlNode implements SqlNode {
         }
     }
 
-    private static String itemizeItem(String item, int i) {
-        return ITEM_PREFIX + item + "_" + i;
-    }
-
     private static class FilteredDynamicContext extends DynamicContext {
         private final DynamicContext delegate;
         private final int index;
         private final String itemIndex;
         private final String item;
 
-        public FilteredDynamicContext(Configuration configuration, DynamicContext delegate, String itemIndex, String item, int i) {
+        public FilteredDynamicContext(Configuration configuration, DynamicContext delegate,
+                                      String itemIndex, String item, int i) {
             super(configuration, null);
             this.delegate = delegate;
             this.index = i;
@@ -151,9 +153,11 @@ public class ForEachSqlNode implements SqlNode {
         @Override
         public void appendSql(String sql) {
             GenericTokenParser parser = new GenericTokenParser("#{", "}", content -> {
-                String newContent = content.replaceFirst("^\\s*" + item + "(?![^.,:\\s])", itemizeItem(item, index));
+                String newContent = content.replaceFirst("^\\s*" + item + "(?![^.,:\\s])", itemizeItem(item
+                        , index));
                 if (itemIndex != null && newContent.equals(content)) {
-                    newContent = content.replaceFirst("^\\s*" + itemIndex + "(?![^.,:\\s])", itemizeItem(itemIndex, index));
+                    newContent = content.replaceFirst("^\\s*" + itemIndex + "(?![^.,:\\s])",
+                            itemizeItem(itemIndex, index));
                 }
                 return "#{" + newContent + "}";
             });

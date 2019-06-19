@@ -18,9 +18,6 @@ package org.apache.ibatis.datasource.jndi;
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.datasource.DataSourceException;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +30,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JndiDataSourceFactoryTest extends BaseDataTest {
 
@@ -52,7 +51,8 @@ class JndiDataSourceFactoryTest extends BaseDataTest {
         JndiDataSourceFactory factory = new JndiDataSourceFactory();
         factory.setProperties(new Properties() {
             {
-                setProperty(JndiDataSourceFactory.ENV_PREFIX + Context.INITIAL_CONTEXT_FACTORY, TEST_INITIAL_CONTEXT_FACTORY);
+                setProperty(JndiDataSourceFactory.ENV_PREFIX + Context.INITIAL_CONTEXT_FACTORY,
+                        TEST_INITIAL_CONTEXT_FACTORY);
                 setProperty(JndiDataSourceFactory.INITIAL_CONTEXT, TEST_INITIAL_CONTEXT);
                 setProperty(JndiDataSourceFactory.DATA_SOURCE, TEST_DATA_SOURCE);
             }
@@ -72,7 +72,8 @@ class JndiDataSourceFactoryTest extends BaseDataTest {
             InitialContext initCtx = new InitialContext(env);
             initCtx.bind(TEST_INITIAL_CONTEXT, ctx);
         } catch (NamingException e) {
-            throw new DataSourceException("There was an error configuring JndiDataSourceTransactionPool. Cause: " + e, e);
+            throw new DataSourceException("There was an error configuring JndiDataSourceTransactionPool. " +
+                    "Cause: " + e, e);
         }
     }
 

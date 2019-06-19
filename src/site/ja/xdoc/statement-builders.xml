@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -29,8 +29,10 @@
         <section name="SQL ビルダークラス">
             <subsection name="問題">
                 <p>Java のコードに SQL を埋め込むのは、Java 開発者にとって最も不愉快なことの一つでしょう。通常これは、SQL
-                    を動的に生成する必要がある場合に行われます（そうでなければ、別ファイルやストアドプロシージャといった形で外部化できるはずなので）。これまで見てきたように、MyBatis では XML
-                    マッピング機能を使って動的に SQL を生成することができます。しかし、時には Java のコード内で SQL ステートメントを構築しなくてはならない場合もあります。こうした場合に '+'
+                    を動的に生成する必要がある場合に行われます（そうでなければ、別ファイルやストアドプロシージャといった形で外部化できるはずなので）。これまで見てきたように、MyBatis では
+                    XML
+                    マッピング機能を使って動的に SQL を生成することができます。しかし、時には Java のコード内で SQL ステートメントを構築しなくてはならない場合もあります。こうした場合に
+                    '+'
                     記号や引用符、改行、整形などの典型的な問題や余分なカンマや AND 演算子を扱うために条件式を入れ子にしたりしなくて済むように、MyBatis にはもう一つの方法を提供しています。
                 </p>
 
@@ -52,7 +54,8 @@ String sql = "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, "
         ]]></source>
             </subsection>
             <subsection name="解決策">
-                <p>MyBatis 3 ではこうした問題を解決する際の助けとなる便利なクラス 'SQL' が用意されています。SQL クラスのインスタンスを作成し、順番にメソッドを呼び出していくことで SQL
+                <p>MyBatis 3 ではこうした問題を解決する際の助けとなる便利なクラス 'SQL' が用意されています。SQL クラスのインスタンスを作成し、順番にメソッドを呼び出していくことで
+                    SQL
                     文を構築することができるようになっています。上記のコードは SQL クラスを使うと次のように書き換えることができます。
                 </p>
 
@@ -174,7 +177,8 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>SELECT 句を開始、あるいは SELECT 句に文字列を追加します。このメソッドは複数回呼び出すことができ、その場合は引数として渡した文字列が SELECT
+                            <td>SELECT 句を開始、あるいは SELECT 句に文字列を追加します。このメソッドは複数回呼び出すことができ、その場合は引数として渡した文字列が
+                                SELECT
                                 句に追加されます。引数は通常カンマ区切りの列名あるいはエイリアスのリストですが、ドライバが受け付ける文字列であれば何でも構いません。
                             </td>
                         </tr>
@@ -252,7 +256,8 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>新しい WHERE 条件を AND で連結して追加します。このメソッドは複数回呼び出すことができ、その場合は引数で指定した新しい条件が AND と共に追加されます。複数の条件を
+                            <td>新しい WHERE 条件を AND で連結して追加します。このメソッドは複数回呼び出すことができ、その場合は引数で指定した新しい条件が AND
+                                と共に追加されます。複数の条件を
                                 OR で連結する場合は OR() メソッドを使ってください。
                             </td>
                         </tr>
@@ -267,7 +272,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>AND()</code>
                             </td>
-                            <td>現在の WHERE 条件を AND で分割します。複数回呼ぶこともできますが、連続して呼び出すと不正な SQL が生成される可能性があります。<code>WHERE
+                            <td>現在の WHERE 条件を AND で分割します。複数回呼ぶこともできますが、連続して呼び出すと不正な SQL が生成される可能性があります。<code>
+                                WHERE
                             </code> と <code>HAVING</code> はどちらも自動的に <code>AND</code> を挟んで引数を連結するので、このメソッドを使うことはまずないと思います。あくまでも
                                 API の整合性のために用意されていると考えてください。
                             </td>
@@ -297,7 +303,8 @@ public String updatePersonSql() {
                                     </li>
                                 </ul>
                             </td>
-                            <td>AND を挟んで新しい <code>HAVING</code> 句を追加します。複数回呼ぶことができ、その度に AND を挟んで新しい条件が追加されます。複数の条件を OR
+                            <td>AND を挟んで新しい <code>HAVING</code> 句を追加します。複数回呼ぶことができ、その度に AND
+                                を挟んで新しい条件が追加されます。複数の条件を OR
                                 で連結する場合は OR() メソッドを使ってください。
                             </td>
                         </tr>
@@ -347,7 +354,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>UPDATE(String)</code>
                             </td>
-                            <td>対象となるテーブルを指定して update ステートメントを開始します。通常、この後に一回以上の SET() メソッドと WHERE() メソッドの呼び出しが続きます。
+                            <td>対象となるテーブルを指定して update ステートメントを開始します。通常、この後に一回以上の SET() メソッドと WHERE()
+                                メソッドの呼び出しが続きます。
                             </td>
                         </tr>
                         <tr>
@@ -434,8 +442,10 @@ public String updatePersonSql() {
                                 /
                                 <code>RESET()</code>
                             </td>
-                            <td>SelectBuilder クラスの ThreadLocal の状態をクリアし、新たなステートメント構築に備えます。新しいステートメントを開始するときは BEGIN()
-                                を使い、実行中にステートメントをクリアする場合（条件次第で全く別のステートメントが必要となるようなケース）は RESET() を使うようにすると読みやすいコードになります。
+                            <td>SelectBuilder クラスの ThreadLocal の状態をクリアし、新たなステートメント構築に備えます。新しいステートメントを開始するときは
+                                BEGIN()
+                                を使い、実行中にステートメントをクリアする場合（条件次第で全く別のステートメントが必要となるようなケース）は RESET()
+                                を使うようにすると読みやすいコードになります。
                             </td>
                         </tr>
                         <tr>
@@ -450,7 +460,8 @@ public String updatePersonSql() {
                     </tbody>
                 </table>
 
-                <p>SelectBuilder や SqlBuilder クラスは魔法ではないので、仕組みを理解しておく必要があります。SelectBuilder, SqlBuilder は静的インポート（Static
+                <p>SelectBuilder や SqlBuilder クラスは魔法ではないので、仕組みを理解しておく必要があります。SelectBuilder, SqlBuilder
+                    は静的インポート（Static
                     Import）と ThreadLocal 変数を組み合わせることで、条件分岐と相性の良いクリーンな構文で SQL
                     に求められるフォーマット処理を可能にしています。まずどちらかのクラスを静的にインポートしておく必要があります（両方ではありません）。
                 </p>

@@ -15,30 +15,25 @@
  */
 package org.apache.ibatis.submitted.cursor_simple;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.apache.ibatis.BaseDataTest;
+import org.apache.ibatis.cursor.Cursor;
+import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.session.*;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
+import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Iterator;
 
-import org.apache.ibatis.BaseDataTest;
-import org.apache.ibatis.cursor.Cursor;
-import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-
-import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
-import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("EmbeddedPostgresqlTests")
 class PostgresCursorTest {
@@ -51,11 +46,13 @@ class PostgresCursorTest {
     static void setUp() throws Exception {
         // Launch PostgreSQL server. Download / unarchive if necessary.
         String url = postgres.start(
-                EmbeddedPostgres.cachedRuntimeConfig(Paths.get(System.getProperty("java.io.tmpdir"), "pgembed")), "localhost",
+                EmbeddedPostgres.cachedRuntimeConfig(Paths.get(System.getProperty("java.io.tmpdir"),
+                        "pgembed")), "localhost",
                 SocketUtil.findFreePort(), "cursor_simple", "postgres", "root", Collections.emptyList());
 
         Configuration configuration = new Configuration();
-        Environment environment = new Environment("development", new JdbcTransactionFactory(), new UnpooledDataSource(
+        Environment environment = new Environment("development", new JdbcTransactionFactory(),
+                new UnpooledDataSource(
                 "org.postgresql.Driver", url, null));
         configuration.setEnvironment(environment);
         configuration.addMapper(Mapper.class);

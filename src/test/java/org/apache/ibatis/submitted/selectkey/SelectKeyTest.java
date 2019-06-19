@@ -21,9 +21,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -33,13 +30,17 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class SelectKeyTest {
 
     protected static SqlSessionFactory sqlSessionFactory;
 
     @BeforeEach
     void setUp() throws Exception {
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/selectkey/MapperConfig.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/selectkey" +
+                "/MapperConfig.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             sqlSessionFactory.getConfiguration().addMapper(AnnotatedMapper.class);
         }
@@ -87,7 +88,8 @@ class SelectKeyTest {
             Map<String, String> parms = new HashMap<>();
             parms.put("name", "Fred");
             Assertions.assertThrows(PersistenceException.class,
-                    () -> sqlSession.insert("org.apache.ibatis.submitted.selectkey.Table2.insertNoValuesInSelectKey", parms));
+                    () -> sqlSession.insert("org.apache.ibatis.submitted.selectkey.Table2" +
+                            ".insertNoValuesInSelectKey", parms));
         }
     }
 
@@ -96,9 +98,11 @@ class SelectKeyTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             Map<String, String> parms = new HashMap<>();
             parms.put("name", "Fred");
-            sqlSession.insert("org.apache.ibatis.submitted.selectkey.Table2.insertTooManyValuesInSelectKey", parms);
+            sqlSession.insert("org.apache.ibatis.submitted.selectkey.Table2.insertTooManyValuesInSelectKey"
+                    , parms);
             Assertions.assertThrows(PersistenceException.class,
-                    () -> sqlSession.insert("org.apache.ibatis.submitted.selectkey.Table2.insertTooManyValuesInSelectKey", parms));
+                    () -> sqlSession.insert("org.apache.ibatis.submitted.selectkey.Table2" +
+                            ".insertTooManyValuesInSelectKey", parms));
         }
     }
 
@@ -338,7 +342,8 @@ class SelectKeyTest {
             Name name = new Name();
             name.setName("Kyoto");
             Assertions.assertThrows(PersistenceException.class,
-                    () -> sqlSession.insert("org.apache.ibatis.submitted.selectkey.Table2.insertWrongKeyProperty", name));
+                    () -> sqlSession.insert("org.apache.ibatis.submitted.selectkey.Table2" +
+                            ".insertWrongKeyProperty", name));
         }
     }
 }

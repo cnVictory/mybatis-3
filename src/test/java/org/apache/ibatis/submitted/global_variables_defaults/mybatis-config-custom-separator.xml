@@ -26,7 +26,8 @@
         <setting name="jdbcTypeForNull" value="${settings:jdbcTypeForNull?:NULL}"/>
     </settings>
 
-    <objectFactory type="org.apache.ibatis.submitted.global_variables_defaults.SupportClasses$CustomObjectFactory">
+    <objectFactory
+            type="org.apache.ibatis.submitted.global_variables_defaults.SupportClasses$CustomObjectFactory">
         <property name="name" value="${objectFactory:name?:default}"/>
     </objectFactory>
 

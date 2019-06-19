@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -359,7 +359,8 @@ public String updatePersonSql() {
                                 <code>UPDATE(String)</code>
                             </td>
                             <td>update구문을 시작하고 update수정할 테이블을 명시한다.
-                                수정할 칼럼과 값을 명시하기 위해 SET()메소드 호출을 여러번 할수 있고 대개 수정할 대상 데이터를 한정하기 위해 WHERE()메소드도 호출한다.
+                                수정할 칼럼과 값을 명시하기 위해 SET()메소드 호출을 여러번 할수 있고 대개 수정할 대상 데이터를 한정하기 위해 WHERE()메소드도
+                                호출한다.
                             </td>
                         </tr>
                         <tr>
@@ -457,7 +458,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>SQL()</code>
                             </td>
-                            <td>생성된 <code>SQL()</code>를 리턴하고 <code>SelectBuilder</code>상태를 재설정(마치 <code>BEGIN()</code>이나 <code>
+                            <td>생성된 <code>SQL()</code>를 리턴하고 <code>SelectBuilder</code>상태를 재설정(마치 <code>
+                                BEGIN()</code>이나 <code>
                                 RESET()</code>을 호출한것처럼)한다.
                                 이 메소드는 한번만 호출할 수 있다.
                             </td>

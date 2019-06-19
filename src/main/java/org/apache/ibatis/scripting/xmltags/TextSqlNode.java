@@ -15,12 +15,12 @@
  */
 package org.apache.ibatis.scripting.xmltags;
 
-import java.util.regex.Pattern;
-
 import org.apache.ibatis.parsing.GenericTokenParser;
 import org.apache.ibatis.parsing.TokenHandler;
 import org.apache.ibatis.scripting.ScriptingException;
 import org.apache.ibatis.type.SimpleTypeRegistry;
+
+import java.util.regex.Pattern;
 
 /**
  * @author Clinton Begin
@@ -75,7 +75,8 @@ public class TextSqlNode implements SqlNode {
                 context.getBindings().put("value", parameter);
             }
             Object value = OgnlCache.getValue(content, context.getBindings());
-            String srtValue = value == null ? "" : String.valueOf(value); // issue #274 return "" instead of "null"
+            String srtValue = value == null ? "" : String.valueOf(value); // issue #274 return "" instead
+            // of "null"
             checkInjection(srtValue);
             return srtValue;
         }

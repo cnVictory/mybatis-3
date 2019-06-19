@@ -28,13 +28,13 @@ public class SupportClasses {
         private static final long serialVersionUID = 4576592418878031661L;
         private Properties properties;
 
+        public Properties getProperties() {
+            return properties;
+        }
+
         @Override
         public void setProperties(Properties properties) {
             this.properties = properties;
-        }
-
-        public Properties getProperties() {
-            return properties;
         }
     }
 

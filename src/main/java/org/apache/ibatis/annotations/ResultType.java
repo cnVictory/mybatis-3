@@ -15,11 +15,7 @@
  */
 package org.apache.ibatis.annotations;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * This annotation can be used when a @Select method is using a
@@ -27,8 +23,8 @@ import java.lang.annotation.Target;
  * this annotation can be used to tell MyBatis what kind of object
  * it should build for each row.
  *
- * @since 3.2.0
  * @author Jeff Butler
+ * @since 3.2.0
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

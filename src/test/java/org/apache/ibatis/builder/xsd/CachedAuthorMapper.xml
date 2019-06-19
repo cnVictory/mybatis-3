@@ -16,9 +16,9 @@
        limitations under the License.
 
 -->
-<mapper namespace="org.apache.ibatis.builder.xsd.CachedAuthorMapper"
+<mapper xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        namespace="org.apache.ibatis.builder.xsd.CachedAuthorMapper"
         xmlns="http://mybatis.org/schema/mybatis-mapper"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://mybatis.org/schema/mybatis-mapper http://mybatis.org/schema/mybatis-mapper.xsd">
 
     <cache readOnly="true"/>

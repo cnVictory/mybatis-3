@@ -15,6 +15,9 @@
  */
 package org.apache.ibatis.logging.jdbc;
 
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.reflection.ExceptionUtil;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -22,15 +25,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.reflection.ExceptionUtil;
-
 /**
  * Connection proxy to add logging.
  *
  * @author Clinton Begin
  * @author Eduardo Macarron
- *
  */
 public final class ConnectionLogger extends BaseJdbcLogger implements InvocationHandler {
 
@@ -39,6 +38,18 @@ public final class ConnectionLogger extends BaseJdbcLogger implements Invocation
     private ConnectionLogger(Connection conn, Log statementLog, int queryStack) {
         super(statementLog, queryStack);
         this.connection = conn;
+    }
+
+    /**
+     * Creates a logging version of a connection.
+     *
+     * @param conn - the original connection
+     * @return - the connection with logging
+     */
+    public static Connection newInstance(Connection conn, Log statementLog, int queryStack) {
+        InvocationHandler handler = new ConnectionLogger(conn, statementLog, queryStack);
+        ClassLoader cl = Connection.class.getClassLoader();
+        return (Connection) Proxy.newProxyInstance(cl, new Class[]{Connection.class}, handler);
     }
 
     @Override
@@ -72,18 +83,6 @@ public final class ConnectionLogger extends BaseJdbcLogger implements Invocation
         } catch (Throwable t) {
             throw ExceptionUtil.unwrapThrowable(t);
         }
-    }
-
-    /**
-     * Creates a logging version of a connection.
-     *
-     * @param conn - the original connection
-     * @return - the connection with logging
-     */
-    public static Connection newInstance(Connection conn, Log statementLog, int queryStack) {
-        InvocationHandler handler = new ConnectionLogger(conn, statementLog, queryStack);
-        ClassLoader cl = Connection.class.getClassLoader();
-        return (Connection) Proxy.newProxyInstance(cl, new Class[]{Connection.class}, handler);
     }
 
     /**

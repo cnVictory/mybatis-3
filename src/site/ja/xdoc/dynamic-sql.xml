@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -53,7 +53,8 @@
     AND title like #{title}
   </if>
 </select>]]></source>
-                <p>このステートメントによって「任意の検索項目」を実現することができます。title を指定しなければ全ての ACTIVE な Blog が返されますが、title を指定した場合は指定したタイトルを持った
+                <p>このステートメントによって「任意の検索項目」を実現することができます。title を指定しなければ全ての ACTIVE な Blog が返されますが、title
+                    を指定した場合は指定したタイトルを持った
                     Blog が返されます（このステートメントでは like 演算子を使っているので、渡された title にワイルドカードを使うこともできます）。
                 </p>
                 <p>
@@ -116,7 +117,8 @@ WHERE]]></source>
                 <source><![CDATA[SELECT * FROM BLOG
 WHERE
 AND title like ‘someTitle’]]></source>
-                <p>これまた構文エラーで失敗するでしょう。動的 SQL の問題は単なる条件分岐だけで解決できるものではありません。自分で書いたことがある方なら、もう二度と書きたくないと思うはずです。</p>
+                <p>これまた構文エラーで失敗するでしょう。動的 SQL の問題は単なる条件分岐だけで解決できるものではありません。自分で書いたことがある方なら、もう二度と書きたくないと思うはずです。
+                </p>
                 <p>MyBatis は約 90% のケースをうまく処理できる簡単な解決策を提供します。残りの 10%
                     についても、カスタマイズすることで処理できるようになります。上記の例は、一箇所修正するだけで期待通りに動作するようになります。
                 </p>
@@ -137,7 +139,8 @@ AND title like ‘someTitle’]]></source>
 </select>]]></source>
                 <p>
                     <em>where</em>
-                    要素は、内包するタグのどれかが結果を返すときだけ "WHERE" を挿入します。更に、内包するタグから返された結果が "AND" または "OR" で始まっていた場合はこれを削除します。
+                    要素は、内包するタグのどれかが結果を返すときだけ "WHERE" を挿入します。更に、内包するタグから返された結果が "AND" または "OR"
+                    で始まっていた場合はこれを削除します。
                 </p>
                 <p>
                     <em>where</em>
@@ -188,12 +191,15 @@ AND title like ‘someTitle’]]></source>
                 <p>
                     <em>foreach</em>
                     要素は非常に強力で、イテレーション処理の対象となるコレクションを指定する collection と、ループ内で要素を格納する変数 item、ループ回数を格納する index
-                    変数を宣言することができます。また、開始・終了の文字列とイテレーションの合間に出力する区切り文字を指定することもできます。foreach タグは賢いので、余分な区切り文字を出力することはありません。
+                    変数を宣言することができます。また、開始・終了の文字列とイテレーションの合間に出力する区切り文字を指定することもできます。foreach
+                    タグは賢いので、余分な区切り文字を出力することはありません。
                 </p>
                 <p>
                     <span class="label important">NOTE</span>
-                    collection には Iterable を実装したオブジェクト（List や Set など）の他に Map や Array を指定することもできます。collection に Iterable
-                    または Array を指定した場合、 index で指定した変数にはインデックスの数値、 item で指定した変数にはコレクション、配列の要素が格納されます。Map あるいは Map.Entry
+                    collection には Iterable を実装したオブジェクト（List や Set など）の他に Map や Array を指定することもできます。collection に
+                    Iterable
+                    または Array を指定した場合、 index で指定した変数にはインデックスの数値、 item で指定した変数にはコレクション、配列の要素が格納されます。Map あるいは
+                    Map.Entry
                     のコレクションを指定した場合は index にマップのキー、item にマップの値が格納されます。
                 </p>
                 <p>XML 設定ファイルと XML Mapper ファイルについての説明はここまでになります。次の章では、Java API について詳しく見ていきます。</p>
@@ -212,7 +218,8 @@ AND title like ‘someTitle’]]></source>
             </subsection>
             <subsection name="複数データベースのサポート">
                 <p>databaseIdProvider が設定されている場合、条件式で "_databaseId"
-                    変数が利用可能となります。この変数を使うと、実行時のデータベースに応じてステートメントを使い分けることができます。oracle と db2 で異なる select 文を発行する例を次に挙げておきます。
+                    変数が利用可能となります。この変数を使うと、実行時のデータベースに応じてステートメントを使い分けることができます。oracle と db2 で異なる select
+                    文を発行する例を次に挙げておきます。
                 </p>
                 <source><![CDATA[<insert id="insert">
   <selectKey keyProperty="id" resultType="int" order="BEFORE">
@@ -228,7 +235,9 @@ AND title like ‘someTitle’]]></source>
 ]]></source>
             </subsection>
             <subsection name="ダイナミック SQL 記述言語">
-                <p>バージョン 3.2 以降、ダイナミック SQL の記述言語が Pluggable になりました。言語ドライバーを記述することで、任意の言語でダイナミック SQL を記述することができます。</p>
+                <p>バージョン 3.2 以降、ダイナミック SQL の記述言語が Pluggable になりました。言語ドライバーを記述することで、任意の言語でダイナミック SQL
+                    を記述することができます。
+                </p>
                 <p>カスタムの言語ドライバーを使用する場合、まずは LanguageDriver インターフェイスを実装したクラスを作成します。</p>
                 <source><![CDATA[public interface LanguageDriver {
   ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql);
@@ -263,7 +272,8 @@ AND title like ‘someTitle’]]></source>
                     Apache Velocity を使ってダイナミック SQL を記述することができます。MyBatis-Velocity プロジェクトを参照してください。
                 </p>
 
-                <p>これまでのセクションで出てきた XML タグは、全てデフォルトの言語ドライバー <code>org.apache.ibatis.scripting.xmltags.XmlLanguageDriver
+                <p>これまでのセクションで出てきた XML タグは、全てデフォルトの言語ドライバー <code>
+                    org.apache.ibatis.scripting.xmltags.XmlLanguageDriver
                 </code> （エイリアスは <code>xml</code> ）によって提供されているものです。
                 </p>
 

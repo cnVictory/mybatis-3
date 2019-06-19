@@ -127,7 +127,8 @@ public interface BoundBlogMapper {
     @ConstructorArgs({
             @Arg(column = "id", javaType = int.class, id = true),
             @Arg(column = "title", javaType = String.class),
-            @Arg(column = "author_id", javaType = Author.class, select = "org.apache.ibatis.binding.BoundAuthorMapper.selectAuthor"),
+            @Arg(column = "author_id", javaType = Author.class, select = "org.apache.ibatis.binding" +
+                    ".BoundAuthorMapper.selectAuthor"),
             @Arg(column = "id", javaType = List.class, select = "selectPostsForBlog")
     })
     Blog selectBlogUsingConstructor(int id);
@@ -193,7 +194,8 @@ public interface BoundBlogMapper {
 
     @Select("SELECT * FROM blog " +
             "WHERE ${column} = #{id} AND title = #{value}")
-    Blog selectBlogWithAParamNamedValue(@Param("column") String column, @Param("id") int id, @Param("value") String title);
+    Blog selectBlogWithAParamNamedValue(@Param("column") String column, @Param("id") int id,
+                                        @Param("value") String title);
 
     //======================================================
 
@@ -202,7 +204,8 @@ public interface BoundBlogMapper {
             "FROM blog"
     })
     @Results({
-            @Result(property = "author", column = "author_id", one = @One(select = "org.apache.ibatis.binding.BoundAuthorMapper.selectAuthor")),
+            @Result(property = "author", column = "author_id", one = @One(select = "org.apache.ibatis" +
+                    ".binding.BoundAuthorMapper.selectAuthor")),
             @Result(property = "posts", column = "id", many = @Many(select = "selectPostsById"))
     })
     List<Blog> selectBlogsWithAutorAndPosts();
@@ -212,8 +215,10 @@ public interface BoundBlogMapper {
             "FROM blog"
     })
     @Results({
-            @Result(property = "author", column = "author_id", one = @One(select = "org.apache.ibatis.binding.BoundAuthorMapper.selectAuthor", fetchType = FetchType.EAGER)),
-            @Result(property = "posts", column = "id", many = @Many(select = "selectPostsById", fetchType = FetchType.EAGER))
+            @Result(property = "author", column = "author_id", one = @One(select = "org.apache.ibatis" +
+                    ".binding.BoundAuthorMapper.selectAuthor", fetchType = FetchType.EAGER)),
+            @Result(property = "posts", column = "id", many = @Many(select = "selectPostsById", fetchType =
+                    FetchType.EAGER))
     })
     List<Blog> selectBlogsWithAutorAndPostsEagerly();
 

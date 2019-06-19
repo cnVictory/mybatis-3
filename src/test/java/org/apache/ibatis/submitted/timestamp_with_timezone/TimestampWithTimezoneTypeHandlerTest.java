@@ -15,13 +15,6 @@
  */
 package org.apache.ibatis.submitted.timestamp_with_timezone;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.Reader;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
-import java.time.ZoneOffset;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -31,6 +24,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class TimestampWithTimezoneTypeHandlerTest {
 
     private static SqlSessionFactory sqlSessionFactory;
@@ -38,7 +38,8 @@ class TimestampWithTimezoneTypeHandlerTest {
     @BeforeAll
     static void setUp() throws Exception {
         try (Reader reader = Resources
-                .getResourceAsReader("org/apache/ibatis/submitted/timestamp_with_timezone/mybatis-config.xml")) {
+                .getResourceAsReader("org/apache/ibatis/submitted/timestamp_with_timezone/mybatis-config" +
+                        ".xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
         BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
@@ -50,7 +51,8 @@ class TimestampWithTimezoneTypeHandlerTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             Mapper mapper = sqlSession.getMapper(Mapper.class);
             Record record = mapper.selectById(1);
-            assertEquals(OffsetDateTime.of(2018, 1, 2, 11, 22, 33, 123456000, ZoneOffset.ofHoursMinutes(1, 23)),
+            assertEquals(OffsetDateTime.of(2018, 1, 2, 11, 22, 33, 123456000, ZoneOffset.ofHoursMinutes(1,
+                    23)),
                     record.getOdt());
             // HSQLDB 2.4.1 truncates nano seconds.
             assertEquals(OffsetTime.of(11, 22, 33, 0, ZoneOffset.ofHoursMinutes(1, 23)), record.getOt());
@@ -59,7 +61,8 @@ class TimestampWithTimezoneTypeHandlerTest {
 
     @Test
     void shouldInsertOffsetDateTime() {
-        OffsetDateTime odt = OffsetDateTime.of(2018, 1, 2, 11, 22, 33, 123456000, ZoneOffset.ofHoursMinutes(1, 23));
+        OffsetDateTime odt = OffsetDateTime.of(2018, 1, 2, 11, 22, 33, 123456000,
+                ZoneOffset.ofHoursMinutes(1, 23));
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             Mapper mapper = sqlSession.getMapper(Mapper.class);
             Record record = new Record();

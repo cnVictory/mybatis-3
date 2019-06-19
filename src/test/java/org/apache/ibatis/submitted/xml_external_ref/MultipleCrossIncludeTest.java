@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.submitted.xml_external_ref;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.sql.SQLException;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
@@ -34,7 +28,19 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 class MultipleCrossIncludeTest {
+
+    private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
+        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
+                "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
+    }
 
     @Test
     void testMultipleCrossIncludeXmlConfig() throws Exception {
@@ -48,23 +54,28 @@ class MultipleCrossIncludeTest {
 
     @Test
     void testMappedStatementCache() throws Exception {
-        try (Reader configReader = Resources.getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref/MultipleCrossIncludeMapperConfig.xml")) {
+        try (Reader configReader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/xml_external_ref/MultipleCrossIncludeMapperConfig.xml")) {
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configReader);
 
             Configuration configuration = sqlSessionFactory.getConfiguration();
             configuration.getMappedStatementNames();
 
-            MappedStatement selectPetStatement = configuration.getMappedStatement("org.apache.ibatis.submitted.xml_external_ref.MultipleCrossIncludePetMapper.select");
-            MappedStatement selectPersonStatement = configuration.getMappedStatement("org.apache.ibatis.submitted.xml_external_ref.MultipleCrossIncludePersonMapper.select");
+            MappedStatement selectPetStatement = configuration.getMappedStatement("org.apache.ibatis" +
+                    ".submitted.xml_external_ref.MultipleCrossIncludePetMapper.select");
+            MappedStatement selectPersonStatement = configuration.getMappedStatement("org.apache.ibatis" +
+                    ".submitted.xml_external_ref.MultipleCrossIncludePersonMapper.select");
             Cache cache = selectPetStatement.getCache();
-            assertEquals("org.apache.ibatis.submitted.xml_external_ref.MultipleCrossIncludePetMapper", cache.getId());
+            assertEquals("org.apache.ibatis.submitted.xml_external_ref.MultipleCrossIncludePetMapper",
+                    cache.getId());
             assertSame(cache, selectPersonStatement.getCache());
         }
     }
 
     private void testCrossReference(SqlSessionFactory sqlSessionFactory) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            MultipleCrossIncludePersonMapper personMapper = sqlSession.getMapper(MultipleCrossIncludePersonMapper.class);
+            MultipleCrossIncludePersonMapper personMapper =
+                    sqlSession.getMapper(MultipleCrossIncludePersonMapper.class);
             Person person = personMapper.select(1);
             assertEquals((Integer) 1, person.getId());
             assertEquals(2, person.getPets().size());
@@ -73,7 +84,8 @@ class MultipleCrossIncludeTest {
             Pet pet = personMapper.selectPet(1);
             assertEquals(Integer.valueOf(1), pet.getId());
 
-            MultipleCrossIncludePetMapper petMapper = sqlSession.getMapper(MultipleCrossIncludePetMapper.class);
+            MultipleCrossIncludePetMapper petMapper =
+                    sqlSession.getMapper(MultipleCrossIncludePetMapper.class);
             Pet pet2 = petMapper.select(3);
             assertEquals((Integer) 3, pet2.getId());
             assertEquals((Integer) 2, pet2.getOwner().getId());
@@ -82,7 +94,8 @@ class MultipleCrossIncludeTest {
 
     private SqlSessionFactory getSqlSessionFactoryXmlConfig() throws Exception {
         try (Reader configReader = Resources
-                .getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref/MultipleCrossIncludeMapperConfig.xml")) {
+                .getResourceAsReader("org/apache/ibatis/submitted/xml_external_ref" +
+                        "/MultipleCrossIncludeMapperConfig.xml")) {
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configReader);
 
             initDb(sqlSessionFactory);
@@ -93,7 +106,8 @@ class MultipleCrossIncludeTest {
 
     private SqlSessionFactory getSqlSessionFactoryJavaConfig() throws Exception {
         Configuration configuration = new Configuration();
-        Environment environment = new Environment("development", new JdbcTransactionFactory(), new UnpooledDataSource(
+        Environment environment = new Environment("development", new JdbcTransactionFactory(),
+                new UnpooledDataSource(
                 "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:xmlextref", null));
         configuration.setEnvironment(environment);
         configuration.addMapper(MultipleCrossIncludePersonMapper.class);
@@ -103,11 +117,6 @@ class MultipleCrossIncludeTest {
         initDb(sqlSessionFactory);
 
         return sqlSessionFactory;
-    }
-
-    private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
-        BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-                "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
     }
 
 }

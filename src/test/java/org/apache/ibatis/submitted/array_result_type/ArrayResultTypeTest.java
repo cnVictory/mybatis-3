@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.array_result_type;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.Reader;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +23,10 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ArrayResultTypeTest {
 
     private static SqlSessionFactory sqlSessionFactory;
@@ -34,7 +34,8 @@ class ArrayResultTypeTest {
     @BeforeAll
     static void setUp() throws Exception {
         // create an SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/array_result_type/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/array_result_type" +
+                "/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 

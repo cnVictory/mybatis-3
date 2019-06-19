@@ -15,17 +15,13 @@
  */
 package org.apache.ibatis.type;
 
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLXML;
+import java.sql.*;
 
 /**
  * Convert <code>String</code> to/from <code>SQLXML</code>.
  *
- * @since 3.5.0
  * @author Iwao AVE!
+ * @since 3.5.0
  */
 public class SqlxmlTypeHandler extends BaseTypeHandler<String> {
 

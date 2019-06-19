@@ -28,13 +28,14 @@ import java.io.Reader;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
 
 /**
  * Tests for support the {@code java.util.Optional} as return type of mapper method.
  *
- * @since 3.5.0
  * @author Kazuki Shimizu
+ * @since 3.5.0
  */
 class OptionalOnMapperMethodTest {
 

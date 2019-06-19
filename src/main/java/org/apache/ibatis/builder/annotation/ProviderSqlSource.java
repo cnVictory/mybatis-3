@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.builder.annotation;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.builder.SqlSourceBuilder;
 import org.apache.ibatis.mapping.BoundSql;
@@ -27,6 +22,11 @@ import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.parsing.PropertyParser;
 import org.apache.ibatis.reflection.ParamNameResolver;
 import org.apache.ibatis.session.Configuration;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Clinton Begin
@@ -44,7 +44,8 @@ public class ProviderSqlSource implements SqlSource {
     private Integer providerContextIndex;
 
     /**
-     * @deprecated Please use the {@link #ProviderSqlSource(Configuration, Object, Class, Method)} instead of this.
+     * @deprecated Please use the {@link #ProviderSqlSource(Configuration, Object, Class, Method)} instead
+     * of this.
      */
     @Deprecated
     public ProviderSqlSource(Configuration configuration, Object provider) {
@@ -54,7 +55,8 @@ public class ProviderSqlSource implements SqlSource {
     /**
      * @since 3.4.5
      */
-    public ProviderSqlSource(Configuration configuration, Object provider, Class<?> mapperType, Method mapperMethod) {
+    public ProviderSqlSource(Configuration configuration, Object provider, Class<?> mapperType,
+                             Method mapperMethod) {
         String providerMethodName;
         try {
             this.configuration = configuration;
@@ -81,13 +83,15 @@ public class ProviderSqlSource implements SqlSource {
         }
         if (this.providerMethod == null) {
             throw new BuilderException("Error creating SqlSource for SqlProvider. Method '"
-                    + providerMethodName + "' not found in SqlProvider '" + this.providerType.getName() + "'.");
+                    + providerMethodName + "' not found in SqlProvider '" + this.providerType.getName() +
+                    "'.");
         }
         for (int i = 0; i < this.providerMethodParameterTypes.length; i++) {
             Class<?> parameterType = this.providerMethodParameterTypes[i];
             if (parameterType == ProviderContext.class) {
                 if (this.providerContext != null) {
-                    throw new BuilderException("Error creating SqlSource for SqlProvider. ProviderContext found multiple in SqlProvider method ("
+                    throw new BuilderException("Error creating SqlSource for SqlProvider. ProviderContext " +
+                            "found multiple in SqlProvider method ("
                             + this.providerType.getName() + "." + providerMethod.getName()
                             + "). ProviderContext can not define multiple in SqlProvider method argument.");
                 }
@@ -117,13 +121,15 @@ public class ProviderSqlSource implements SqlSource {
             } else if (parameterObject instanceof Map) {
                 @SuppressWarnings("unchecked")
                 Map<String, Object> params = (Map<String, Object>) parameterObject;
-                sql = invokeProviderMethod(extractProviderMethodArguments(params, providerMethodArgumentNames));
+                sql = invokeProviderMethod(extractProviderMethodArguments(params,
+                        providerMethodArgumentNames));
             } else {
                 throw new BuilderException("Error invoking SqlProvider method ("
                         + providerType.getName() + "." + providerMethod.getName()
                         + "). Cannot invoke a method that holds "
                         + (bindParameterCount == 1 ? "named argument(@Param)" : "multiple arguments")
-                        + " using a specifying parameterObject. In this case, please specify a 'java.util.Map' object.");
+                        + " using a specifying parameterObject. In this case, please specify a 'java.util" +
+                        ".Map' object.");
             }
             Class<?> parameterType = parameterObject == null ? Object.class : parameterObject.getClass();
             return sqlSourceParser.parse(replacePlaceholder(sql), parameterType, new HashMap<>());

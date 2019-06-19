@@ -15,14 +15,10 @@
  */
 package org.apache.ibatis.submitted.sqlprovider;
 
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.DeleteProvider;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.UpdateProvider;
 
 @BaseMapper.Meta(tableName = "users")
 public interface Mapper extends BaseMapper<User> {
@@ -48,7 +44,8 @@ public interface Mapper extends BaseMapper<User> {
     List<User> getUsersByNameUsingMap(String name, String orderByColumn);
 
     @SelectProvider(type = OurSqlBuilder.class, method = "buildGetUsersByNameWithParamNameAndOrderByQuery")
-    List<User> getUsersByNameWithParamNameAndOrderBy(@Param("name") String name, @Param("orderByColumn") String orderByColumn);
+    List<User> getUsersByNameWithParamNameAndOrderBy(@Param("name") String name,
+                                                     @Param("orderByColumn") String orderByColumn);
 
     @SelectProvider(type = OurSqlBuilder.class, method = "buildGetUsersByNameWithParamNameQuery")
     List<User> getUsersByNameWithParamName(@Param("name") String name);

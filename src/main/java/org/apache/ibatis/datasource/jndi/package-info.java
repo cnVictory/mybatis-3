@@ -14,6 +14,8 @@
  * limitations under the License.
  * <p>
  * JNDI Datasource factory
+ * <p>
+ * JNDI Datasource factory
  */
 /**
  * JNDI Datasource factory

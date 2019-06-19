@@ -262,12 +262,12 @@ public class Order implements Serializable {
         this.status = status;
     }
 
-    public void setLineItems(List<LineItem> lineItems) {
-        this.lineItems = lineItems;
-    }
-
     public List<LineItem> getLineItems() {
         return lineItems;
+    }
+
+    public void setLineItems(List<LineItem> lineItems) {
+        this.lineItems = lineItems;
     }
 
     public void initOrder(Account account, Cart cart) {

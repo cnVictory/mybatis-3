@@ -36,13 +36,13 @@ public class ExamplePlugin implements Interceptor {
         return Plugin.wrap(target, this);
     }
 
+    public Properties getProperties() {
+        return properties;
+    }
+
     @Override
     public void setProperties(Properties properties) {
         this.properties = properties;
-    }
-
-    public Properties getProperties() {
-        return properties;
     }
 
 }

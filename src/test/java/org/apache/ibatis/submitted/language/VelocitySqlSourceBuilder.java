@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.language;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.builder.ParameterExpression;
@@ -31,12 +27,17 @@ import org.apache.ibatis.reflection.MetaClass;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.JdbcType;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Just a test case. Not a real Velocity implementation.
  */
 public class VelocitySqlSourceBuilder extends BaseBuilder {
 
-    private static final String parameterProperties = "javaType,jdbcType,mode,numericScale,resultMap,typeHandler,jdbcTypeName";
+    private static final String parameterProperties = "javaType,jdbcType,mode,numericScale,resultMap," +
+            "typeHandler,jdbcTypeName";
 
     public VelocitySqlSourceBuilder(Configuration configuration) {
         super(configuration);
@@ -88,7 +89,8 @@ public class VelocitySqlSourceBuilder extends BaseBuilder {
             } else {
                 propertyType = Object.class;
             }
-            ParameterMapping.Builder builder = new ParameterMapping.Builder(configuration, property, propertyType);
+            ParameterMapping.Builder builder = new ParameterMapping.Builder(configuration, property,
+                    propertyType);
             if (jdbcType != null) {
                 builder.jdbcType(resolveJdbcType(jdbcType));
             }
@@ -132,7 +134,8 @@ public class VelocitySqlSourceBuilder extends BaseBuilder {
             } catch (BuilderException ex) {
                 throw ex;
             } catch (Exception ex) {
-                throw new BuilderException("Parsing error was found in mapping @{" + content + "}.  Check syntax #{property|(expression), var1=value1, var2=value2, ...} ", ex);
+                throw new BuilderException("Parsing error was found in mapping @{" + content + "}.  Check " +
+                        "syntax #{property|(expression), var1=value1, var2=value2, ...} ", ex);
             }
         }
     }

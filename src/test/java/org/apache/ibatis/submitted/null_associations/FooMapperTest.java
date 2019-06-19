@@ -15,19 +15,15 @@
  */
 package org.apache.ibatis.submitted.null_associations;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 class FooMapperTest {
 
@@ -37,12 +33,19 @@ class FooMapperTest {
 
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
-        final SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader(SQL_MAP_CONFIG));
+        final SqlSessionFactory factory =
+                new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader(SQL_MAP_CONFIG));
         session = factory.openSession();
         conn = session.getConnection();
 
         BaseDataTest.runScript(factory.getConfiguration().getEnvironment().getDataSource(),
                 "org/apache/ibatis/submitted/null_associations/create-schema-mysql.sql");
+    }
+
+    @AfterAll
+    static void tearDownAfterClass() throws SQLException {
+        conn.close();
+        session.close();
     }
 
     @BeforeEach
@@ -78,12 +81,6 @@ class FooMapperTest {
         Assertions.assertEquals(1L, read.getField2().getField1(), "Invalid mapping");
         Assertions.assertEquals(2L, read.getField2().getField2(), "Invalid mapping");
         Assertions.assertEquals(3L, read.getField2().getField3(), "Invalid mapping");
-    }
-
-    @AfterAll
-    static void tearDownAfterClass() throws SQLException {
-        conn.close();
-        session.close();
     }
 
 }

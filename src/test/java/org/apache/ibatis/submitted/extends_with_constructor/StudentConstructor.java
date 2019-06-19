@@ -19,16 +19,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class StudentConstructor {
-    public enum Constructor {
-        ID,
-        ID_NAME
-    }
-
-    private List<Constructor> constructors = new LinkedList<>();
     private final int id;
+    private List<Constructor> constructors = new LinkedList<>();
     private String name;
     private Teacher teacher;
-
     public StudentConstructor(Integer id) {
         constructors.add(Constructor.ID);
         this.id = id;
@@ -62,5 +56,10 @@ public class StudentConstructor {
 
     public List<Constructor> getConstructors() {
         return constructors;
+    }
+
+    public enum Constructor {
+        ID,
+        ID_NAME
     }
 }

@@ -47,7 +47,7 @@ public interface Cache {
     String getId();
 
     /**
-     * @param key Can be any object but usually it is a {@link CacheKey}
+     * @param key   Can be any object but usually it is a {@link CacheKey}
      * @param value The result of a select.
      */
     void putObject(Object key, Object value);
@@ -67,7 +67,6 @@ public interface Cache {
      * and releases it when the value is back again.
      * This way other threads will wait for the value to be
      * available instead of hitting the database.
-     *
      *
      * @param key The key
      * @return Not used

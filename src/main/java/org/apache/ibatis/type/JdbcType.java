@@ -69,7 +69,6 @@ public enum JdbcType {
     TIME_WITH_TIMEZONE(Types.TIME_WITH_TIMEZONE), // JDBC 4.2 JDK8
     TIMESTAMP_WITH_TIMEZONE(Types.TIMESTAMP_WITH_TIMEZONE); // JDBC 4.2 JDK8
 
-    public final int TYPE_CODE;
     private static Map<Integer, JdbcType> codeLookup = new HashMap<>();
 
     static {
@@ -77,6 +76,8 @@ public enum JdbcType {
             codeLookup.put(type.TYPE_CODE, type);
         }
     }
+
+    public final int TYPE_CODE;
 
     JdbcType(int code) {
         this.TYPE_CODE = code;

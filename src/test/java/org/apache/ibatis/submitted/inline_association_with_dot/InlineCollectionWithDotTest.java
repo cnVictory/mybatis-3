@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.inline_association_with_dot;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.Reader;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -27,13 +23,18 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class InlineCollectionWithDotTest {
 
     private SqlSession sqlSession;
 
     public void openSession(String aConfig) throws Exception {
 
-        final String resource = "org/apache/ibatis/submitted/inline_association_with_dot/ibatis-" + aConfig + ".xml";
+        final String resource =
+                "org/apache/ibatis/submitted/inline_association_with_dot/ibatis-" + aConfig + ".xml";
         try (Reader batisConfigReader = Resources.getResourceAsReader(resource)) {
 
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(batisConfigReader);

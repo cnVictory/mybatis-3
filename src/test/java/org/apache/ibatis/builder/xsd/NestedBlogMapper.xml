@@ -16,9 +16,9 @@
        limitations under the License.
 
 -->
-<mapper namespace="org.apache.ibatis.domain.blog.mappers.NestedBlogMapper"
+<mapper xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        namespace="org.apache.ibatis.domain.blog.mappers.NestedBlogMapper"
         xmlns="http://mybatis.org/schema/mybatis-mapper"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://mybatis.org/schema/mybatis-mapper http://mybatis.org/schema/mybatis-mapper.xsd">
 
     <cache-ref namespace="org.apache.ibatis.domain.blog.mappers.BlogMapper"/>
@@ -26,7 +26,8 @@
     <resultMap id="blogJoinedWithPostsAndAuthor" type="Blog">
         <id property="id" column="blog_id"/>
         <result property="title" column="blog_title"/>
-        <association property="author" column="blog_author_id" javaType="org.apache.ibatis.domain.blog.Author">
+        <association property="author" column="blog_author_id"
+                     javaType="org.apache.ibatis.domain.blog.Author">
             <id property="id" column="author_id"/>
             <result property="username" column="author_username"/>
             <result property="password" column="author_password"/>
@@ -37,7 +38,8 @@
         <collection property="posts" ofType="org.apache.ibatis.domain.blog.Post">
             <id property="id" column="post_id"/>
             <result property="subject" column="post_subject"/>
-            <association property="author" column="post_author_id" javaType="org.apache.ibatis.domain.blog.Author"/>
+            <association property="author" column="post_author_id"
+                         javaType="org.apache.ibatis.domain.blog.Author"/>
             <collection property="comments" column="post_id" ofType="org.apache.ibatis.domain.blog.Comment">
                 <id property="id" column="comment_id"/>
             </collection>
@@ -50,7 +52,8 @@
         </collection>
     </resultMap>
 
-    <select id="selectBlogJoinedWithPostsAndAuthor" parameterType="int" resultMap="blogJoinedWithPostsAndAuthor">
+    <select id="selectBlogJoinedWithPostsAndAuthor" parameterType="int"
+            resultMap="blogJoinedWithPostsAndAuthor">
         select
         B.id as blog_id,
         B.title as blog_title,

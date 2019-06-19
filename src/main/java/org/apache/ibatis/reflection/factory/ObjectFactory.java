@@ -27,12 +27,14 @@ public interface ObjectFactory {
 
     /**
      * Sets configuration properties.
+     *
      * @param properties configuration properties
      */
     void setProperties(Properties properties);
 
     /**
      * Creates a new object with default constructor.
+     *
      * @param type Object type
      * @return
      */
@@ -40,9 +42,10 @@ public interface ObjectFactory {
 
     /**
      * Creates a new object with the specified constructor and params.
-     * @param type Object type
+     *
+     * @param type                Object type
      * @param constructorArgTypes Constructor argument types
-     * @param constructorArgs Constructor argument values
+     * @param constructorArgs     Constructor argument values
      * @return
      */
     <T> T create(Class<T> type, List<Class<?>> constructorArgTypes, List<Object> constructorArgs);

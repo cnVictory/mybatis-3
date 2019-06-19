@@ -15,6 +15,11 @@
  */
 package org.apache.ibatis.datasource.pooled;
 
+import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
+
+import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -24,12 +29,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Logger;
-
-import javax.sql.DataSource;
-
-import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
 
 /**
  * This is a simple, synchronous, thread-safe database connection pool.
@@ -66,22 +65,44 @@ public class PooledDataSource implements DataSource {
 
     public PooledDataSource(String driver, String url, String username, String password) {
         dataSource = new UnpooledDataSource(driver, url, username, password);
-        expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(), dataSource.getUsername(), dataSource.getPassword());
+        expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(),
+                dataSource.getUsername(), dataSource.getPassword());
     }
 
     public PooledDataSource(String driver, String url, Properties driverProperties) {
         dataSource = new UnpooledDataSource(driver, url, driverProperties);
-        expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(), dataSource.getUsername(), dataSource.getPassword());
+        expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(),
+                dataSource.getUsername(), dataSource.getPassword());
     }
 
-    public PooledDataSource(ClassLoader driverClassLoader, String driver, String url, String username, String password) {
+    public PooledDataSource(ClassLoader driverClassLoader, String driver, String url, String username,
+                            String password) {
         dataSource = new UnpooledDataSource(driverClassLoader, driver, url, username, password);
-        expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(), dataSource.getUsername(), dataSource.getPassword());
+        expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(),
+                dataSource.getUsername(), dataSource.getPassword());
     }
 
-    public PooledDataSource(ClassLoader driverClassLoader, String driver, String url, Properties driverProperties) {
+    public PooledDataSource(ClassLoader driverClassLoader, String driver, String url,
+                            Properties driverProperties) {
         dataSource = new UnpooledDataSource(driverClassLoader, driver, url, driverProperties);
-        expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(), dataSource.getUsername(), dataSource.getPassword());
+        expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(),
+                dataSource.getUsername(), dataSource.getPassword());
+    }
+
+    /**
+     * Unwraps a pooled connection to get to the 'real' connection
+     *
+     * @param conn - the pooled connection to unwrap
+     * @return The 'real' connection
+     */
+    public static Connection unwrapConnection(Connection conn) {
+        if (Proxy.isProxyClass(conn.getClass())) {
+            InvocationHandler handler = Proxy.getInvocationHandler(conn);
+            if (handler instanceof PooledConnection) {
+                return ((PooledConnection) handler).getRealConnection();
+            }
+        }
+        return conn;
     }
 
     @Override
@@ -95,18 +116,13 @@ public class PooledDataSource implements DataSource {
     }
 
     @Override
-    public void setLoginTimeout(int loginTimeout) {
-        DriverManager.setLoginTimeout(loginTimeout);
-    }
-
-    @Override
     public int getLoginTimeout() {
         return DriverManager.getLoginTimeout();
     }
 
     @Override
-    public void setLogWriter(PrintWriter logWriter) {
-        DriverManager.setLogWriter(logWriter);
+    public void setLoginTimeout(int loginTimeout) {
+        DriverManager.setLoginTimeout(loginTimeout);
     }
 
     @Override
@@ -114,24 +130,9 @@ public class PooledDataSource implements DataSource {
         return DriverManager.getLogWriter();
     }
 
-    public void setDriver(String driver) {
-        dataSource.setDriver(driver);
-        forceCloseAll();
-    }
-
-    public void setUrl(String url) {
-        dataSource.setUrl(url);
-        forceCloseAll();
-    }
-
-    public void setUsername(String username) {
-        dataSource.setUsername(username);
-        forceCloseAll();
-    }
-
-    public void setPassword(String password) {
-        dataSource.setPassword(password);
-        forceCloseAll();
+    @Override
+    public void setLogWriter(PrintWriter logWriter) {
+        DriverManager.setLogWriter(logWriter);
     }
 
     public void setDefaultAutoCommit(boolean defaultAutoCommit) {
@@ -139,14 +140,66 @@ public class PooledDataSource implements DataSource {
         forceCloseAll();
     }
 
+    public String getDriver() {
+        return dataSource.getDriver();
+    }
+
+    public void setDriver(String driver) {
+        dataSource.setDriver(driver);
+        forceCloseAll();
+    }
+
+    public String getUrl() {
+        return dataSource.getUrl();
+    }
+
+    public void setUrl(String url) {
+        dataSource.setUrl(url);
+        forceCloseAll();
+    }
+
+    public String getUsername() {
+        return dataSource.getUsername();
+    }
+
+    public void setUsername(String username) {
+        dataSource.setUsername(username);
+        forceCloseAll();
+    }
+
+    public String getPassword() {
+        return dataSource.getPassword();
+    }
+
+    public void setPassword(String password) {
+        dataSource.setPassword(password);
+        forceCloseAll();
+    }
+
+    public boolean isAutoCommit() {
+        return dataSource.isAutoCommit();
+    }
+
+    public Integer getDefaultTransactionIsolationLevel() {
+        return dataSource.getDefaultTransactionIsolationLevel();
+    }
+
     public void setDefaultTransactionIsolationLevel(Integer defaultTransactionIsolationLevel) {
         dataSource.setDefaultTransactionIsolationLevel(defaultTransactionIsolationLevel);
         forceCloseAll();
     }
 
+    public Properties getDriverProperties() {
+        return dataSource.getDriverProperties();
+    }
+
     public void setDriverProperties(Properties driverProps) {
         dataSource.setDriverProperties(driverProps);
         forceCloseAll();
+    }
+
+    public int getPoolMaximumActiveConnections() {
+        return poolMaximumActiveConnections;
     }
 
     /**
@@ -159,6 +212,10 @@ public class PooledDataSource implements DataSource {
         forceCloseAll();
     }
 
+    public int getPoolMaximumIdleConnections() {
+        return poolMaximumIdleConnections;
+    }
+
     /**
      * The maximum number of idle connections.
      *
@@ -169,18 +226,24 @@ public class PooledDataSource implements DataSource {
         forceCloseAll();
     }
 
+    public int getPoolMaximumLocalBadConnectionTolerance() {
+        return poolMaximumLocalBadConnectionTolerance;
+    }
+
     /**
      * The maximum number of tolerance for bad connection happens in one thread
      * which are applying for new {@link PooledConnection}.
      *
-     * @param poolMaximumLocalBadConnectionTolerance
-     * max tolerance for bad connection happens in one thread
-     *
+     * @param poolMaximumLocalBadConnectionTolerance max tolerance for bad connection happens in one thread
      * @since 3.4.5
      */
     public void setPoolMaximumLocalBadConnectionTolerance(
             int poolMaximumLocalBadConnectionTolerance) {
         this.poolMaximumLocalBadConnectionTolerance = poolMaximumLocalBadConnectionTolerance;
+    }
+
+    public int getPoolMaximumCheckoutTime() {
+        return poolMaximumCheckoutTime;
     }
 
     /**
@@ -194,6 +257,10 @@ public class PooledDataSource implements DataSource {
         forceCloseAll();
     }
 
+    public int getPoolTimeToWait() {
+        return poolTimeToWait;
+    }
+
     /**
      * The time to wait before retrying to get a connection.
      *
@@ -202,6 +269,10 @@ public class PooledDataSource implements DataSource {
     public void setPoolTimeToWait(int poolTimeToWait) {
         this.poolTimeToWait = poolTimeToWait;
         forceCloseAll();
+    }
+
+    public String getPoolPingQuery() {
+        return poolPingQuery;
     }
 
     /**
@@ -214,6 +285,10 @@ public class PooledDataSource implements DataSource {
         forceCloseAll();
     }
 
+    public boolean isPoolPingEnabled() {
+        return poolPingEnabled;
+    }
+
     /**
      * Determines if the ping query should be used.
      *
@@ -222,6 +297,10 @@ public class PooledDataSource implements DataSource {
     public void setPoolPingEnabled(boolean poolPingEnabled) {
         this.poolPingEnabled = poolPingEnabled;
         forceCloseAll();
+    }
+
+    public int getPoolPingConnectionsNotUsedFor() {
+        return poolPingConnectionsNotUsedFor;
     }
 
     /**
@@ -235,72 +314,13 @@ public class PooledDataSource implements DataSource {
         forceCloseAll();
     }
 
-    public String getDriver() {
-        return dataSource.getDriver();
-    }
-
-    public String getUrl() {
-        return dataSource.getUrl();
-    }
-
-    public String getUsername() {
-        return dataSource.getUsername();
-    }
-
-    public String getPassword() {
-        return dataSource.getPassword();
-    }
-
-    public boolean isAutoCommit() {
-        return dataSource.isAutoCommit();
-    }
-
-    public Integer getDefaultTransactionIsolationLevel() {
-        return dataSource.getDefaultTransactionIsolationLevel();
-    }
-
-    public Properties getDriverProperties() {
-        return dataSource.getDriverProperties();
-    }
-
-    public int getPoolMaximumActiveConnections() {
-        return poolMaximumActiveConnections;
-    }
-
-    public int getPoolMaximumIdleConnections() {
-        return poolMaximumIdleConnections;
-    }
-
-    public int getPoolMaximumLocalBadConnectionTolerance() {
-        return poolMaximumLocalBadConnectionTolerance;
-    }
-
-    public int getPoolMaximumCheckoutTime() {
-        return poolMaximumCheckoutTime;
-    }
-
-    public int getPoolTimeToWait() {
-        return poolTimeToWait;
-    }
-
-    public String getPoolPingQuery() {
-        return poolPingQuery;
-    }
-
-    public boolean isPoolPingEnabled() {
-        return poolPingEnabled;
-    }
-
-    public int getPoolPingConnectionsNotUsedFor() {
-        return poolPingConnectionsNotUsedFor;
-    }
-
     /**
      * Closes all active and idle connections in the pool.
      */
     public void forceCloseAll() {
         synchronized (state) {
-            expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(), dataSource.getUsername(), dataSource.getPassword());
+            expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(),
+                    dataSource.getUsername(), dataSource.getPassword());
             for (int i = state.activeConnections.size(); i > 0; i--) {
                 try {
                     PooledConnection conn = state.activeConnections.remove(i - 1);
@@ -375,7 +395,8 @@ public class PooledDataSource implements DataSource {
                 }
             } else {
                 if (log.isDebugEnabled()) {
-                    log.debug("A bad connection (" + conn.getRealHashCode() + ") attempted to return to the pool, discarding connection.");
+                    log.debug("A bad connection (" + conn.getRealHashCode() + ") attempted to return to the" +
+                            " pool, discarding connection.");
                 }
                 state.badConnectionCount++;
             }
@@ -444,7 +465,8 @@ public class PooledDataSource implements DataSource {
                                     countedWait = true;
                                 }
                                 if (log.isDebugEnabled()) {
-                                    log.debug("Waiting as long as " + poolTimeToWait + " milliseconds for connection.");
+                                    log.debug("Waiting as long as " + poolTimeToWait + " milliseconds for " +
+                                            "connection.");
                                 }
                                 long wt = System.currentTimeMillis();
                                 state.wait(poolTimeToWait);
@@ -461,7 +483,8 @@ public class PooledDataSource implements DataSource {
                         if (!conn.getRealConnection().getAutoCommit()) {
                             conn.getRealConnection().rollback();
                         }
-                        conn.setConnectionTypeCode(assembleConnectionTypeCode(dataSource.getUrl(), username, password));
+                        conn.setConnectionTypeCode(assembleConnectionTypeCode(dataSource.getUrl(), username
+                                , password));
                         conn.setCheckoutTimestamp(System.currentTimeMillis());
                         conn.setLastUsedTimestamp(System.currentTimeMillis());
                         state.activeConnections.add(conn);
@@ -469,16 +492,19 @@ public class PooledDataSource implements DataSource {
                         state.accumulatedRequestTime += System.currentTimeMillis() - t;
                     } else {
                         if (log.isDebugEnabled()) {
-                            log.debug("A bad connection (" + conn.getRealHashCode() + ") was returned from the pool, getting another connection.");
+                            log.debug("A bad connection (" + conn.getRealHashCode() + ") was returned from " +
+                                    "the pool, getting another connection.");
                         }
                         state.badConnectionCount++;
                         localBadConnectionCount++;
                         conn = null;
                         if (localBadConnectionCount > (poolMaximumIdleConnections + poolMaximumLocalBadConnectionTolerance)) {
                             if (log.isDebugEnabled()) {
-                                log.debug("PooledDataSource: Could not get a good connection to the database.");
+                                log.debug("PooledDataSource: Could not get a good connection to the " +
+                                        "database.");
                             }
-                            throw new SQLException("PooledDataSource: Could not get a good connection to the database.");
+                            throw new SQLException("PooledDataSource: Could not get a good connection to " +
+                                    "the database.");
                         }
                     }
                 }
@@ -488,9 +514,11 @@ public class PooledDataSource implements DataSource {
 
         if (conn == null) {
             if (log.isDebugEnabled()) {
-                log.debug("PooledDataSource: Unknown severe error condition.  The connection pool returned a null connection.");
+                log.debug("PooledDataSource: Unknown severe error condition.  The connection pool returned " +
+                        "a null connection.");
             }
-            throw new SQLException("PooledDataSource: Unknown severe error condition.  The connection pool returned a null connection.");
+            throw new SQLException("PooledDataSource: Unknown severe error condition.  The connection pool " +
+                    "returned a null connection.");
         }
 
         return conn;
@@ -548,22 +576,6 @@ public class PooledDataSource implements DataSource {
             }
         }
         return result;
-    }
-
-    /**
-     * Unwraps a pooled connection to get to the 'real' connection
-     *
-     * @param conn - the pooled connection to unwrap
-     * @return The 'real' connection
-     */
-    public static Connection unwrapConnection(Connection conn) {
-        if (Proxy.isProxyClass(conn.getClass())) {
-            InvocationHandler handler = Proxy.getInvocationHandler(conn);
-            if (handler instanceof PooledConnection) {
-                return ((PooledConnection) handler).getRealConnection();
-            }
-        }
-        return conn;
     }
 
     protected void finalize() throws Throwable {

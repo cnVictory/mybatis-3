@@ -307,10 +307,6 @@ public abstract class AbstractSQL<T> {
 
     private static class SQLStatement {
 
-        public enum StatementType {
-            DELETE, INSERT, SELECT, UPDATE
-        }
-
         StatementType statementType;
         List<String> sets = new ArrayList<>();
         List<String> select = new ArrayList<>();
@@ -328,12 +324,12 @@ public abstract class AbstractSQL<T> {
         List<String> columns = new ArrayList<>();
         List<String> values = new ArrayList<>();
         boolean distinct;
-
         public SQLStatement() {
             // Prevent Synthetic Access
         }
 
-        private void sqlClause(SafeAppendable builder, String keyword, List<String> parts, String open, String close,
+        private void sqlClause(SafeAppendable builder, String keyword, List<String> parts, String open,
+                               String close,
                                String conjunction) {
             if (!parts.isEmpty()) {
                 if (!builder.isEmpty()) {
@@ -430,6 +426,10 @@ public abstract class AbstractSQL<T> {
             }
 
             return answer;
+        }
+
+        public enum StatementType {
+            DELETE, INSERT, SELECT, UPDATE
         }
     }
 }

@@ -15,37 +15,45 @@
  */
 package org.apache.ibatis.submitted.overwritingproperties;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /*
  * @author jjensen
  */
 class FooMapperTest {
 
-    private final static String SQL_MAP_CONFIG = "org/apache/ibatis/submitted/overwritingproperties/sqlmap.xml";
+    private final static String SQL_MAP_CONFIG = "org/apache/ibatis/submitted/overwritingproperties/sqlmap" +
+            ".xml";
     private static SqlSession session;
     private static Connection conn;
 
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
-        final SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader(SQL_MAP_CONFIG));
+        final SqlSessionFactory factory =
+                new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader(SQL_MAP_CONFIG));
         session = factory.openSession();
         conn = session.getConnection();
 
         BaseDataTest.runScript(factory.getConfiguration().getEnvironment().getDataSource(),
                 "org/apache/ibatis/submitted/overwritingproperties/create-schema-mysql.sql");
+    }
+
+    @AfterAll
+    static void tearDownAfterClass() {
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            Assertions.fail(e.getMessage());
+        }
+        session.close();
     }
 
     @BeforeEach
@@ -82,16 +90,6 @@ class FooMapperTest {
         // <result property="field1" column="bar_field1" jdbcType="INTEGER"/>
         // </association>
         Assertions.assertEquals(inserted.getField2().getField1(), selected.getField2().getField1());
-    }
-
-    @AfterAll
-    static void tearDownAfterClass() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            Assertions.fail(e.getMessage());
-        }
-        session.close();
     }
 
 }

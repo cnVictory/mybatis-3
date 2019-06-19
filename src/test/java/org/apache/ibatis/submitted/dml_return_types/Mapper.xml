@@ -22,7 +22,8 @@
 
 <mapper namespace="org.apache.ibatis.submitted.dml_return_types.Mapper">
 
-    <select id="getUser" parameterType="Integer" resultType="org.apache.ibatis.submitted.dml_return_types.User">
+    <select id="getUser" parameterType="Integer"
+            resultType="org.apache.ibatis.submitted.dml_return_types.User">
         select * from users where id = #{id}
     </select>
 
@@ -34,7 +35,8 @@
         <include refid="update"/>
     </update>
 
-    <update id="updateReturnsPrimitiveInteger" parameterType="org.apache.ibatis.submitted.dml_return_types.User">
+    <update id="updateReturnsPrimitiveInteger"
+            parameterType="org.apache.ibatis.submitted.dml_return_types.User">
         <include refid="update"/>
     </update>
 
@@ -50,7 +52,8 @@
         <include refid="update"/>
     </update>
 
-    <update id="updateReturnsPrimitiveBoolean" parameterType="org.apache.ibatis.submitted.dml_return_types.User">
+    <update id="updateReturnsPrimitiveBoolean"
+            parameterType="org.apache.ibatis.submitted.dml_return_types.User">
         <include refid="update"/>
     </update>
 

@@ -36,11 +36,13 @@ public class XmlMapperTest {
         Properties props = new Properties();
         props.setProperty(PropertyParser.KEY_ENABLE_DEFAULT_VALUE, "true");
 
-        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/global_variables_defaults/mybatis-config.xml");
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/global_variables_defaults/mybatis-config.xml");
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, props);
         Configuration configuration = factory.getConfiguration();
         configuration.addMapper(XmlMapper.class);
-        SupportClasses.CustomCache cache = SupportClasses.Utils.unwrap(configuration.getCache(XmlMapper.class.getName()));
+        SupportClasses.CustomCache cache =
+                SupportClasses.Utils.unwrap(configuration.getCache(XmlMapper.class.getName()));
 
         Assertions.assertThat(cache.getName()).isEqualTo("default");
 
@@ -63,11 +65,13 @@ public class XmlMapperTest {
         props.setProperty("cache.name", "custom");
         props.setProperty("select.columns", "'5555'");
 
-        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/global_variables_defaults/mybatis-config.xml");
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted" +
+                "/global_variables_defaults/mybatis-config.xml");
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, props);
         Configuration configuration = factory.getConfiguration();
         configuration.addMapper(XmlMapper.class);
-        SupportClasses.CustomCache cache = SupportClasses.Utils.unwrap(configuration.getCache(XmlMapper.class.getName()));
+        SupportClasses.CustomCache cache =
+                SupportClasses.Utils.unwrap(configuration.getCache(XmlMapper.class.getName()));
 
         Assertions.assertThat(cache.getName()).isEqualTo("custom");
 

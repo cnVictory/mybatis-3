@@ -16,7 +16,7 @@
        limitations under the License.
 
 -->
-<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/XDOC/2.0"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
     <properties>
@@ -27,18 +27,25 @@
     <body>
         <section name="The SQL Builder Class">
             <subsection name="The Problem">
-                <p>One of the nastiest things a Java developer will ever have to do is embed SQL in Java code. Usually
+                <p>One of the nastiest things a Java developer will ever have to do is embed SQL in Java code.
+                    Usually
                     this is
-                    done because the SQL has to be dynamically generated - otherwise you could externalize it in a file
+                    done because the SQL has to be dynamically generated - otherwise you could externalize it
+                    in a file
                     or a
-                    stored proc. As you've already seen, MyBatis has a powerful answer for dynamic SQL generation in its
-                    XML mapping features. However, sometimes it becomes necessary to build a SQL statement string inside
+                    stored proc. As you've already seen, MyBatis has a powerful answer for dynamic SQL
+                    generation in its
+                    XML mapping features. However, sometimes it becomes necessary to build a SQL statement
+                    string inside
                     of Java
-                    code. In that case, MyBatis has one more feature to help you out, before reducing yourself to the
+                    code. In that case, MyBatis has one more feature to help you out, before reducing yourself
+                    to the
                     typical mess
-                    of plus signs, quotes, newlines, formatting problems and nested conditionals to deal with extra
+                    of plus signs, quotes, newlines, formatting problems and nested conditionals to deal with
+                    extra
                     commas or
-                    AND conjunctions. Indeed, dynamically generating SQL code in Java can be a real nightmare. For
+                    AND conjunctions. Indeed, dynamically generating SQL code in Java can be a real nightmare.
+                    For
                     example:
                 </p>
 
@@ -58,9 +65,11 @@ String sql = "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, "
             </subsection>
             <subsection name="The Solution">
                 <p>MyBatis 3 offers a convenient utility class to help with the problem.
-                    With the SQL class, you simply create an instance that lets you call methods against it to build a
+                    With the SQL class, you simply create an instance that lets you call methods against it to
+                    build a
                     SQL statement
-                    one step at a time. The example problem above would look like this when rewritten with the SQL
+                    one step at a time. The example problem above would look like this when rewritten with the
+                    SQL
                     class:
                 </p>
 
@@ -87,7 +96,8 @@ private String selectPersonSql() {
 }
 ]]></source>
 
-                <p>What is so special about that example? Well, if you look closely, it doesn't have to worry about
+                <p>What is so special about that example? Well, if you look closely, it doesn't have to worry
+                    about
                     accidentally duplicating "AND" keywords, or choosing between "WHERE"
                     and "AND" or none at all. The SQL class takes care of understanding where "WHERE"
                     needs to go, where an "AND" should be used and all of the String concatenation.
@@ -184,7 +194,8 @@ public String updatePersonSql() {
                                 clause. Can be called more than once, and parameters will be appended to
                                 the
                                 <code>SELECT</code>
-                                clause. The parameters are usually a comma separated list of columns and aliases, but
+                                clause. The parameters are usually a comma separated list of columns and
+                                aliases, but
                                 can be
                                 anything acceptable to the driver.
                             </td>
@@ -227,7 +238,8 @@ public String updatePersonSql() {
                                 <code>FROM</code>
                                 clause. Can be called more than once, and parameters will be appended to the
                                 <code>FROM</code>
-                                clause. Parameters are usually a table name and an alias, or anything acceptable to the
+                                clause. Parameters are usually a table name and an alias, or anything
+                                acceptable to the
                                 driver.
                             </td>
                         </tr>
@@ -262,7 +274,8 @@ public String updatePersonSql() {
                             </td>
                             <td>Adds a new
                                 <code>JOIN</code>
-                                clause of the appropriate type, depending on the method called. The parameter can
+                                clause of the appropriate type, depending on the method called. The parameter
+                                can
                                 include
                                 a standard join consisting of the columns and the conditions to join on.
                             </td>
@@ -280,7 +293,8 @@ public String updatePersonSql() {
                             </td>
                             <td>Appends a new
                                 <code>WHERE</code>
-                                clause condition, concatenated by<code>AND</code>. Can be called multiple times, which
+                                clause condition, concatenated by<code>AND</code>. Can be called multiple
+                                times, which
                                 causes it
                                 to concatenate the new conditions each time with<code>AND</code>. Use
                                 <code>OR()</code>
@@ -293,7 +307,8 @@ public String updatePersonSql() {
                             </td>
                             <td>Splits the current
                                 <code>WHERE</code>
-                                clause conditions with an<code>OR</code>. Can be called more than once, but calling more
+                                clause conditions with an<code>OR</code>. Can be called more than once, but
+                                calling more
                                 than once in a row will generate erratic<code>SQL</code>.
                             </td>
                         </tr>
@@ -303,14 +318,16 @@ public String updatePersonSql() {
                             </td>
                             <td>Splits the current
                                 <code>WHERE</code>
-                                clause conditions with an<code>AND</code>. Can be called more than once, but calling
+                                clause conditions with an<code>AND</code>. Can be called more than once, but
+                                calling
                                 more
                                 than once in a row will generate erratic<code>SQL</code>. Because
                                 <code>WHERE</code>
                                 and
                                 <code>HAVING</code>
                                 both automatically concatenate with
-                                <code>AND</code>, this is a very uncommon method to use and is only really included for
+                                <code>AND</code>, this is a very uncommon method to use and is only really
+                                included for
                                 completeness.
                             </td>
                         </tr>
@@ -344,7 +361,8 @@ public String updatePersonSql() {
                             </td>
                             <td>Appends a new
                                 <code>HAVING</code>
-                                clause condition, concatenated by AND. Can be called multiple times, which causes it
+                                clause condition, concatenated by AND. Can be called multiple times, which
+                                causes it
                                 to concatenate the new conditions each time with<code>AND</code>. Use
                                 <code>OR()</code>
                                 to split with an<code>OR</code>.
@@ -371,7 +389,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>DELETE_FROM(String)</code>
                             </td>
-                            <td>Starts a delete statement and specifies the table to delete from. Generally this should
+                            <td>Starts a delete statement and specifies the table to delete from. Generally
+                                this should
                                 be followed by
                                 a
                                 WHERE statement!
@@ -381,7 +400,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>INSERT_INTO(String)</code>
                             </td>
-                            <td>Starts an insert statement and specifies the table to insert into. This should be
+                            <td>Starts an insert statement and specifies the table to insert into. This should
+                                be
                                 followed by one or
                                 more VALUES() or INTO_COLUMNS() and INTO_VALUES() calls.
                             </td>
@@ -403,7 +423,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>UPDATE(String)</code>
                             </td>
-                            <td>Starts an update statement and specifies the table to update. This should be followed by
+                            <td>Starts an update statement and specifies the table to update. This should be
+                                followed by
                                 one or more
                                 SET() calls, and usually a WHERE() call.
                             </td>
@@ -412,7 +433,8 @@ public String updatePersonSql() {
                             <td>
                                 <code>VALUES(String, String)</code>
                             </td>
-                            <td>Appends to an insert statement. The first parameter is the column(s) to insert, the
+                            <td>Appends to an insert statement. The first parameter is the column(s) to
+                                insert, the
                                 second parameter
                                 is
                                 the value(s).
@@ -473,11 +495,14 @@ public String updatePersonSql() {
 
             <subsection name="SqlBuilder and SelectBuilder (DEPRECATED)">
                 <p>
-                    Before version 3.2 we took a bit of a different approach, by utilizing a ThreadLocal variable to
+                    Before version 3.2 we took a bit of a different approach, by utilizing a ThreadLocal
+                    variable to
                     mask some of the
-                    language limitations that make Java DSLs a bit cumbersome. However, this approach is now deprecated,
+                    language limitations that make Java DSLs a bit cumbersome. However, this approach is now
+                    deprecated,
                     as modern
-                    frameworks have warmed people to the idea of using builder-type patterns and anonymous inner classes
+                    frameworks have warmed people to the idea of using builder-type patterns and anonymous
+                    inner classes
                     for such
                     things. Therefore the SelectBuilder and SqlBuilder classes have been deprecated.
                 </p>
@@ -498,7 +523,8 @@ public String updatePersonSql() {
                                 /
                                 <code>RESET()</code>
                             </td>
-                            <td>These methods clear the ThreadLocal state of the SelectBuilder class, and prepare it for
+                            <td>These methods clear the ThreadLocal state of the SelectBuilder class, and
+                                prepare it for
                                 a new
                                 statement to be
                                 built.
@@ -506,7 +532,8 @@ public String updatePersonSql() {
                                 reads best when starting a new statement.
                                 <code>RESET()</code>
                                 reads best when clearing a
-                                statement in the middle of execution for some reason (perhaps if the logic demands a
+                                statement in the middle of execution for some reason (perhaps if the logic
+                                demands a
                                 completely
                                 different
                                 statement under some conditions).
@@ -532,11 +559,14 @@ public String updatePersonSql() {
                 </table>
 
                 <p>
-                    The SelectBuilder and SqlBuilder classes are not magical, but it's important to know how they work.
+                    The SelectBuilder and SqlBuilder classes are not magical, but it's important to know how
+                    they work.
                     SelectBuilder and SqlBuilder use a combination of
-                    Static Imports and a ThreadLocal variable to enable a clean syntax that can be easily interlaced
+                    Static Imports and a ThreadLocal variable to enable a clean syntax that can be easily
+                    interlaced
                     with
-                    conditionals. To use them, you statically import the methods from the classes like this (one or the
+                    conditionals. To use them, you statically import the methods from the classes like this
+                    (one or the
                     other,
                     not both):
                 </p>

@@ -40,7 +40,8 @@ class CursorSimpleTest {
     @BeforeAll
     static void setUp() throws Exception {
         // create a SqlSessionFactory
-        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/cursor_simple/mybatis-config.xml")) {
+        try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/cursor_simple" +
+                "/mybatis-config.xml")) {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         }
 
@@ -368,7 +369,8 @@ class CursorSimpleTest {
         }
         try {
             usersCursor.iterator();
-            Assertions.fail("Should throws the IllegalStateException when call the iterator method after session is closed.");
+            Assertions.fail("Should throws the IllegalStateException when call the iterator method after " +
+                    "session is closed.");
         } catch (IllegalStateException e) {
             Assertions.assertEquals("A Cursor is already closed.", e.getMessage());
         }

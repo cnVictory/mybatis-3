@@ -15,30 +15,29 @@
  */
 package org.apache.ibatis.cache.decorators;
 
+import org.apache.ibatis.cache.Cache;
+import org.apache.ibatis.cache.CacheException;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.ibatis.cache.Cache;
-import org.apache.ibatis.cache.CacheException;
-
 /**
  * Simple blocking decorator
- *
+ * <p>
  * Simple and inefficient version of EhCache's BlockingCache decorator.
  * It sets a lock over a cache key when the element is not found in cache.
  * This way, other threads will wait until this element is filled instead of hitting the database.
  *
  * @author Eduardo Macarron
- *
  */
 public class BlockingCache implements Cache {
 
-    private long timeout;
     private final Cache delegate;
     private final ConcurrentHashMap<Object, ReentrantLock> locks;
+    private long timeout;
 
     public BlockingCache(Cache delegate) {
         this.delegate = delegate;
@@ -101,7 +100,8 @@ public class BlockingCache implements Cache {
             try {
                 boolean acquired = lock.tryLock(timeout, TimeUnit.MILLISECONDS);
                 if (!acquired) {
-                    throw new CacheException("Couldn't get a lock in " + timeout + " for the key " + key + " at the cache " + delegate.getId());
+                    throw new CacheException("Couldn't get a lock in " + timeout + " for the key " + key +
+                            " at the cache " + delegate.getId());
                 }
             } catch (InterruptedException e) {
                 throw new CacheException("Got interrupted while trying to acquire lock for key " + key, e);

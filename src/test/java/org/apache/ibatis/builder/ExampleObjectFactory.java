@@ -33,14 +33,14 @@ public class ExampleObjectFactory extends DefaultObjectFactory {
         return super.<T>create(type, constructorArgTypes, constructorArgs);
     }
 
+    public Properties getProperties() {
+        return properties;
+    }
+
     @Override
     public void setProperties(Properties properties) {
         super.setProperties(properties);
         this.properties = properties;
-    }
-
-    public Properties getProperties() {
-        return properties;
     }
 
 }
